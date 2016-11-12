@@ -4,6 +4,8 @@ import VueRouter from 'vue-router';
 import Navigation from 'components/Navigation/navigation';
 import Loader from 'components/Loader/Loader';
 
+// import auth from 'helpers/auth';
+
 Vue.use(VueRouter);
 Vue.use(VueResource);
 

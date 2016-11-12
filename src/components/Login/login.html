@@ -1,7 +1,18 @@
 <div>
+  <div v-if="auth.loggedIn">
+    <p>
+      You are logged in.
+    </p>
 
-  <p>
-    You are not logged in.
-  </p>
+    <button v-on:click="logout">LOG OUT</button>
+  </div>
+
+  <div v-else>
+    <p>
+      You are not logged in.
+    </p>
+
+    <button v-on:click="login">LOG IN</button>
+  </div>
 
 </div>
