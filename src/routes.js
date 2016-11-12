@@ -1,5 +1,5 @@
 import Home from 'components/Home/home';
-import Login from 'components/Login/login';
+import User from 'components/User/user';
 import NotFound from 'components/NotFound/notFound';
 
 import auth from './helpers/auth';
@@ -8,7 +8,6 @@ import auth from './helpers/auth';
 function checkAuth(to, from, next) {
   // redirect to login page if not authenticated, avoid looping
   if (!auth.check() && to.path !== '/login') {
-    console.log('redirect to login');
     next({
       path: '/login'
     });
@@ -25,7 +24,12 @@ const routes = [
   },
   {
     path: '/login',
-    component: Login,
+    component: User,
+    beforeEnter: checkAuth
+  },
+  {
+    path: '/user',
+    component: User,
     beforeEnter: checkAuth
   },
   {
