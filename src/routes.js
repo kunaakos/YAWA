@@ -2,9 +2,9 @@ import Home from 'components/Home/home';
 import User from 'components/User/user';
 import NotFound from 'components/NotFound/notFound';
 
-import { PubSub } from 'src/main';
+import auth from 'helpers/auth';
 
-import auth from './helpers/auth';
+import { PubSub } from 'src/main';
 
 // guard/filter that checks for authentication
 function checkAuth(to, from, next) {

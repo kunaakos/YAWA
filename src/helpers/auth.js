@@ -1,5 +1,7 @@
 import * as firebase from 'firebase';
 
+import { PubSub } from 'src/main';
+
 var firebaseConfig = {
   apiKey: 'AIzaSyCfPzIUom73nGO6DlD1oIV6g_M-RKBJb2g',
   authDomain: 'project-3546681884328698666.firebaseapp.com',
@@ -17,16 +19,18 @@ firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
     auth.state.user = user;
     auth.state.loggedIn = true;
-    console.log('LOGGED IN');
   } else {
     auth.state.user = null;
     auth.state.loggedIn = false;
-    console.log('NOT LOGGED IN');
   }
+  console.log('auth state: ' + auth.state.loggedIn);
+  auth.state.initialized = true;
+  PubSub.$emit('authStateChanged', auth.state.loggedIn);
 });
 
 var auth = {
   state: {
+    initialized: false,
     loggedIn: false,
     user: null
   },
