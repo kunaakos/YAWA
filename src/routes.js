@@ -2,20 +2,20 @@ import Home from 'components/Home/home';
 import User from 'components/User/user';
 import NotFound from 'components/NotFound/notFound';
 
-import { LoadingState } from 'src/main';
+import { PubSub } from 'src/main';
 
 import auth from './helpers/auth';
 
 // guard/filter that checks for authentication
 function checkAuth(to, from, next) {
   // ye olde loader
-  LoadingState.$emit('toggle', true);
+  PubSub.$emit('toggleLoader', true);
 
   var redirectToLogin = (to.path !== '/login');
 
   if (!auth.check()) {
     var cbSuccess = function() {
-      LoadingState.$emit('toggle', false);
+      PubSub.$emit('toggleLoader', false);
       console.log('sucessfully logged in adter redirect!');
       next();
     };
@@ -27,14 +27,14 @@ function checkAuth(to, from, next) {
           path: '/login'
         });
       } else {
-        LoadingState.$emit('toggle', false);
+        PubSub.$emit('toggleLoader', false);
         next();
       }
     };
     auth.checkRedirect(cbSuccess, cbFail);
   } else {
     console.log('authOk');
-    LoadingState.$emit('toggle', false);
+    PubSub.$emit('toggleLoader', false);
     next();
   }
 }

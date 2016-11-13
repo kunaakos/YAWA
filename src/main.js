@@ -13,7 +13,7 @@ Vue.use(VueResource);
 import routes from 'src/routes';
 import 'src/style.scss';
 
-export const LoadingState = new Vue();
+export const PubSub = new Vue();
 
 export const router = new VueRouter({
   routes,
@@ -32,12 +32,12 @@ export const App = new Vue({
   },
 
   data: {
-    isLoading: true
+    loaderState: true
   },
 
   created: function(){
-    LoadingState.$on('toggle', (isLoading) => {
-      this.isLoading = isLoading;
+    PubSub.$on('toggleLoader', (loaderState) => {
+      this.loaderState = loaderState;
     });
   }
 
