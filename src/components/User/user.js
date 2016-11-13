@@ -10,10 +10,12 @@ export default Vue.extend({
       auth: auth.state
     };
   },
+  ready: function() {
+    auth.checkRedirect();
+  },
   methods: {
     login: function() {
       auth.login();
-      this.$router.push('/user');
     },
     logout: function() {
       auth.logout();

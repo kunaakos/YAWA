@@ -2,16 +2,39 @@ import Home from 'components/Home/home';
 import User from 'components/User/user';
 import NotFound from 'components/NotFound/notFound';
 
+import { LoadingState } from 'src/main';
+
 import auth from './helpers/auth';
 
-// guar/filter that checks for authentication
+// guard/filter that checks for authentication
 function checkAuth(to, from, next) {
-  // redirect to login page if not authenticated, avoid looping
-  if (!auth.check() && to.path !== '/login') {
-    next({
-      path: '/login'
-    });
+  // ye olde loader
+  LoadingState.$emit('toggle', true);
+
+  var redirectToLogin = (to.path !== '/login');
+
+  if (!auth.check()) {
+    var cbSuccess = function() {
+      LoadingState.$emit('toggle', false);
+      console.log('sucessfully logged in adter redirect!');
+      next();
+    };
+    var cbFail = function() {
+      console.log('no facebook login redirect data');
+      if (redirectToLogin) {
+        console.log('redirecting to login page...');
+        next({
+          path: '/login'
+        });
+      } else {
+        LoadingState.$emit('toggle', false);
+        next();
+      }
+    };
+    auth.checkRedirect(cbSuccess, cbFail);
   } else {
+    console.log('authOk');
+    LoadingState.$emit('toggle', false);
     next();
   }
 }

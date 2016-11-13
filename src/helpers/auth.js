@@ -1,33 +1,72 @@
-// auth module placeholder
+import * as firebase from 'firebase';
 
-export default {
+var firebaseConfig = {
+  apiKey: 'AIzaSyCfPzIUom73nGO6DlD1oIV6g_M-RKBJb2g',
+  authDomain: 'project-3546681884328698666.firebaseapp.com',
+  databaseURL: 'https://project-3546681884328698666.firebaseio.com',
+  storageBucket: 'project-3546681884328698666.appspot.com',
+};
+
+var firebaseApp = firebase.initializeApp(firebaseConfig);
+// var db = firebaseApp.database();
+if (firebaseApp) {
+  // avoid unused var crap
+}
+
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    auth.state.user = user;
+    auth.state.loggedIn = true;
+    console.log('LOGGED IN');
+  } else {
+    auth.state.user = null;
+    auth.state.loggedIn = false;
+    console.log('NOT LOGGED IN');
+  }
+});
+
+var auth = {
   state: {
     loggedIn: false,
+    user: null
   },
 
-  // check login state in localStorage AND update store object at the same time
   check() {
-    // localStorage doesn't do bools, so we use strings <3
-    if (localStorage.loggedIn === 'true') {
-      this.state.loggedIn = true;
-    } else {
-      this.state.loggedIn = false;
-    }
     return this.state.loggedIn;
   },
 
-  // fake login
-  login() {
-    localStorage.loggedIn = 'true';
-    this.state.loggedIn = true;
-    console.log('logged in');
+  checkRedirect(cbSuccess, cbFail) {
+    firebase.auth().getRedirectResult().then(function(result) {
+      if (result.user) {
+        cbSuccess();
+      } else {
+        cbFail();
+      }
+    }).catch(function(error) {
+      if (error) {
+        console.log(error);
+      }
+    });
   },
 
-  // fake logout
+  login() {
+    var provider = new firebase.auth.FacebookAuthProvider();
+    firebase.auth().signInWithRedirect(provider);
+  },
+
   logout() {
-    localStorage.loggedIn = 'false';
-    this.state.loggedIn = false;
-    console.log('logged out');
+    var self = this;
+    firebase.auth().signOut().then(function() {
+      self.state.loggedIn = false;
+      self.state.user = null;
+    }, function(error) {
+      if (error) {
+        console.log(error);
+      }
+    });
+
   }
 
 };
+
+export default auth;

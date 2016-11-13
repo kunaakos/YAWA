@@ -3,6 +3,6 @@
       <img alt="Brand" src="~assets/images/logo.png" height="20">
     </router-link>
     <router-link v-if="auth.loggedIn" class="navbar-brand float-xs-right" to="/user">
-      USER
+      {{ auth.user.displayName }}
     </router-link>
 </nav>

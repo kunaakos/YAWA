@@ -1,11 +1,12 @@
 import Vue from 'vue';
 import VueResource from 'vue-resource';
 import VueRouter from 'vue-router';
+import VueFire from 'vuefire';
+
 import Navigation from 'components/Navigation/navigation';
 import Loader from 'components/Loader/Loader';
 
-// import auth from 'helpers/auth';
-
+Vue.use(VueFire);
 Vue.use(VueRouter);
 Vue.use(VueResource);
 
@@ -31,7 +32,7 @@ export const App = new Vue({
   },
 
   data: {
-    isLoading: false
+    isLoading: true
   },
 
   created: function(){
