@@ -10,7 +10,7 @@ Vue.use(VueFire);
 Vue.use(VueRouter);
 Vue.use(VueResource);
 
-import routes from 'src/routes';
+import { routes, authGate } from 'src/routes';
 import 'src/style.scss';
 
 export const PubSub = new Vue();
@@ -19,6 +19,10 @@ export const router = new VueRouter({
   routes,
   mode: 'history',
   linkActiveClass: 'active'
+});
+
+router.beforeEach((to, from, next) => {
+  authGate(to, from, next);
 });
 
 export const App = new Vue({

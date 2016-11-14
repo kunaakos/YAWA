@@ -3,16 +3,6 @@
     <p>
       Hi {{ auth.user.displayName }}! You are in.
     </p>
-
     <button v-on:click="logout">LOG OUT</button>
   </div>
-
-  <div v-else>
-    <p>
-      You are not logged in.
-    </p>
-
-    <button v-on:click="login">LOG IN WITH FACEBOOK</button>
-  </div>
-
 </div>

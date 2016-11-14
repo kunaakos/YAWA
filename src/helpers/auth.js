@@ -42,8 +42,10 @@ var auth = {
   checkRedirect(cbSuccess, cbFail) {
     firebase.auth().getRedirectResult().then(function(result) {
       if (result.user) {
-        cbSuccess();
-      } else {
+        if (cbSuccess) {
+          cbSuccess();
+        }
+      } else if (cbFail) {
         cbFail();
       }
     }).catch(function(error) {
@@ -58,17 +60,22 @@ var auth = {
     firebase.auth().signInWithRedirect(provider);
   },
 
-  logout() {
+  logout(cbSuccess, cbFail) {
     var self = this;
     firebase.auth().signOut().then(function() {
       self.state.loggedIn = false;
       self.state.user = null;
+      if (cbSuccess) {
+        cbSuccess();
+      }
     }, function(error) {
       if (error) {
         console.log(error);
+        if (cbSuccess) {
+          cbFail(error);
+        }
       }
     });
-
   }
 
 };

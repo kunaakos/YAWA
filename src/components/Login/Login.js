@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import template from './user.html';
+import template from './login.html';
 
 import auth from 'helpers/auth';
 
@@ -11,10 +11,8 @@ export default Vue.extend({
     };
   },
   methods: {
-    logout: function() {
-      auth.logout(()=>{
-        this.$router.push('/login');
-      });
+    login: function() {
+      auth.login();
     }
   }
 });

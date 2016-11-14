@@ -1,41 +1,57 @@
 import Home from 'components/Home/home';
 import User from 'components/User/user';
+import Login from 'components/Login/login';
 import NotFound from 'components/NotFound/notFound';
 
 import auth from 'helpers/auth';
 
 import { PubSub } from 'src/main';
 
-// guard/filter that checks for authentication
-function checkAuth(to, from, next) {
-  // ye olde loader
+// wait until auth is up and running
+function authGate(to, from, next){
+  // start by showing ye olde loader
   PubSub.$emit('toggleLoader', true);
-
-  var redirectToLogin = (to.path !== '/login');
-
-  if (!auth.check()) {
-    var cbSuccess = function() {
-      PubSub.$emit('toggleLoader', false);
-      console.log('sucessfully logged in adter redirect!');
-      next();
-    };
-    var cbFail = function() {
-      console.log('no facebook login redirect data');
-      if (redirectToLogin) {
-        console.log('redirecting to login page...');
-        next({
-          path: '/login'
-        });
-      } else {
-        PubSub.$emit('toggleLoader', false);
-        next();
-      }
-    };
-    auth.checkRedirect(cbSuccess, cbFail);
+  // check auth module state
+  if (auth.state.initialized) {
+    routeGuard(to, from, next);
   } else {
-    console.log('authOk');
-    PubSub.$emit('toggleLoader', false);
+    // we need to wait until it gets its act together before we move on
+    PubSub.$once('authStateChanged', function(){
+      routeGuard(to, from, next);
+    });
+  }
+}
+
+// restricts access for unauthd users, handles redirects
+function routeGuard(to, from, next) {
+  console.log('guard');
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    // this route requires auth, check if logged in
+    // if not, redirect to login page.
+    if (!auth.state.loggedIn) {
+      next({
+        path: '/login'
+      });
+      PubSub.$emit('toggleLoader', false);
+    } else {
+      next();
+      PubSub.$emit('toggleLoader', false);
+    }
+  } else {
     next();
+    PubSub.$emit('toggleLoader', false);
+  }
+}
+
+// handles /login stuff
+function handleAuth(to, from, next) {
+  if (!auth.state.loggedIn) {
+    auth.checkRedirect(next, next);
+  } else {
+    // if already logged in go to user page instead
+    next({
+      path: '/user'
+    });
   }
 }
 
@@ -43,17 +59,17 @@ const routes = [
   {
     path: '/',
     component: Home,
-    beforeEnter: checkAuth
+    meta: { requiresAuth: true }
   },
   {
     path: '/login',
-    component: User,
-    beforeEnter: checkAuth
+    component: Login,
+    beforeEnter: handleAuth,
   },
   {
     path: '/user',
     component: User,
-    beforeEnter: checkAuth
+    meta: { requiresAuth: true }
   },
   {
     path: '*',
@@ -61,4 +77,4 @@ const routes = [
   }
 ];
 
-export default routes;
+export { routes, authGate };
