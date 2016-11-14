@@ -22,22 +22,17 @@ function authGate(to, from, next){
   }
 }
 
-// restricts access for unauthd users, handles redirects
+// restricts access for unauthd users
 function routeGuard(to, from, next) {
-  console.log('guard');
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    // this route requires auth, check if logged in
-    // if not, redirect to login page.
-    if (!auth.state.loggedIn) {
-      next({
-        path: '/login'
-      });
-      PubSub.$emit('toggleLoader', false);
-    } else {
-      next();
-      PubSub.$emit('toggleLoader', false);
-    }
+  // check if route requires authorization, and if user is authd
+  if (to.matched.some(record => record.meta.requiresAuth) && !auth.state.loggedIn) {
+    // yep and nope, redirect to login
+    next({
+      path: '/login'
+    });
+    PubSub.$emit('toggleLoader', false);
   } else {
+    // can proceed
     next();
     PubSub.$emit('toggleLoader', false);
   }
