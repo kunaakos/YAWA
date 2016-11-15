@@ -1,12 +1,17 @@
 import Vue from 'vue';
 import template from './home.html';
 
-import weather from 'helpers/weather';
+import CitySearch from 'components/CitySearch/citysearch';
 
-console.log(weather);
+// import weather from 'helpers/weather';
+
+// console.log(weather);
 
 export default Vue.extend({
   template,
+  components: {
+    CitySearch
+  },
   data: function() {
     return {
       // weather: weather
@@ -14,16 +19,16 @@ export default Vue.extend({
   },
   methods: {
     search: function() {
-      weather.getCities('Buda', 4).then(
-        (data) => {
-          // success yay
-          console.log(data);
-        },
-        (data) => {
-          // fail nooo
-          console.log(data);
-        }
-      );
+      // weather.getCities('Buda', 4).then(
+      //   (data) => {
+      //     // success yay
+      //     console.log(data);
+      //   },
+      //   (data) => {
+      //     // fail nooo
+      //     console.log(data);
+      //   }
+      // );
     }
   }
 });
