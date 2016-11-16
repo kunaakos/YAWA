@@ -12,9 +12,26 @@ $brand-primary: #41b883;
 $brand-inverse: $gray-dark !default;
 
 .CityCard {
+  position: relative;
   width: 100%;
   padding: 15px 25px;
-  background: $gray-lightest;
-  color: $gray;
   margin: 20px 0;
+  transition: all 1s;
+  background: $gray-lightest;
+  color: $gray-light;
+  &.night {
+    background: $gray-light;
+    color: $gray-lightest;
+  }
+  .loader-icon {
+    width: 100%;
+    text-align: center;
+  }
+  .weather-icon {
+    position: absolute;
+    text-align: center;
+    width: 70px;
+    right: 20px;
+    top: 20px;
+  }
 }

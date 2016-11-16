@@ -5,6 +5,7 @@ import VueResource from 'vue-resource';
 
 const API_BASE = 'http://api.openweathermap.org/data/2.5';
 const API_KEY = 'f37343549ea4135c63a784ad005a08e9';
+// const API_KEY = 'c1f017e502a92e9deba979867fc29de6';
 
 Vue.use(VueResource);
 
@@ -16,6 +17,84 @@ var weather = {
   state: {
     result: null
   },
+  // get weather data for a specific cityId
+  getCityById(cityId) {
+    // discard values we don't need
+    function processResult(result) {
+      // OpenWeatherMap icon codes:
+      // NNd day
+      // NNn night
+      // 01X clear sky
+      // 02X few clouds
+      // 03X scattered clouds
+      // 04X broken clouds
+      // 09X shower rain
+      // 10X rain
+      // 11X thunderstorm
+      // 13X snow
+      // 50X mist
+      // let's make use of them!
+      var iconCodeRegEx = new RegExp(/^(\d{2})(\D{1})$/, 'g');
+      var iconData = iconCodeRegEx.exec(result.weather[0].icon);
+
+      // return a word that describes the current weather conditions
+      // a few simple values will do
+      var description = '';
+
+      switch (parseInt(iconData[1])) {
+        case 1:
+          description = 'clear';
+          break;
+        case 2:
+        case 3:
+        case 4:
+          description = 'cloudy';
+          break;
+        case 9:
+        case 10:
+          description = 'rainy';
+          break;
+        case 11:
+          description = 'thunderstorm';
+          break;
+        case 13:
+          description = 'snow';
+          break;
+        case 50:
+          description = 'low-viz';
+          break;
+        default:
+          description = 'error';
+      }
+
+      var processedResult = {
+        name: result.name,
+        currentTemp: Math.round(result.main.temp * 10) / 10,
+        description: description,
+        night: (iconData[2] === 'd') ? false : true
+      };
+
+      // whoo-ey, was THAT a mess.
+      return processedResult;
+    }
+    // promise wrapped in a promise ¯\_(ツ)_/¯
+    return new Promise(function(resolve, reject) {
+      console.log('City ID: ' + cityId);
+      Vue.resource('weather?id={cityId}&units=metric&APPID={apiKey}')
+      .get({
+        cityId: cityId,
+        apiKey: API_KEY
+      })
+      .then((response) => {
+        // process result
+        resolve(processResult(response.data));
+      }, (errorResponse) => {
+        console.log('weather API responded with:', errorResponse.status);
+        reject(null);
+      });
+    });
+  },
+  // return a list of cities based on queryString
   getCities(queryString, maxLen) {
     // discard values we don't need
     function processResult(result) {
@@ -43,9 +122,7 @@ var weather = {
         console.log('weather API responded with:', errorResponse.status);
         reject(null);
       });
-
     });
-
   }
 };
 

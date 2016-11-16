@@ -22,7 +22,13 @@ export default Vue.extend({
     };
   },
   created: function(){
-
+    // add some cards
+    // 3054643 is Budapest
+    this.alerts.push(new Alert(3054643));
+    // 665000 is Budaors
+    this.alerts.push(new Alert(665000));
+    // 3449741 is Santiago
+    this.alerts.push(new Alert(3449741));
   },
   methods: {
     gotResultID: function(resultID) {
