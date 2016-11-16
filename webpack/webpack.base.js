@@ -72,6 +72,10 @@ module.exports = {
     ]
   },
 
+  sassLoader: {
+    includePaths: [path.resolve(__dirname, "../src/styles")]
+  },
+
   babel: {
     presets: ['es2015'],
     plugins: ['transform-runtime']

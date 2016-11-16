@@ -1,6 +1,6 @@
-<nav class="navbar navbar-fixed-top navbar-dark bg-inverse">
+<nav class="Navigation navbar navbar-fixed-top navbar-light">
     <router-link class="navbar-brand" to="/">
-      <img alt="Brand" src="~assets/images/logo.png" height="20">
+      <i class="home-icon fa fa-2x fa-home" ></i>
     </router-link>
     <router-link v-if="auth.loggedIn" class="navbar-brand float-xs-right" to="/user">
       {{ auth.user.displayName }}
