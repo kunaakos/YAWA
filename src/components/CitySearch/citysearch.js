@@ -51,8 +51,6 @@ export default Vue.extend({
       weather.getCities(this.query, this.limit).then(
         (data) => {
           // success yay
-          console.log(data);
-
           if (this.query) {
             this.items = data;
             this.current = -1;
@@ -112,6 +110,7 @@ export default Vue.extend({
 
     onHit() {
       // util.warn('You need to implement the `onHit` method', this)
+      this.reset();
     }
   }
 });
