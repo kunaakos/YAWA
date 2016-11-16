@@ -86,7 +86,8 @@ export default Vue.extend({
 
     hit() {
       if (this.current !== -1) {
-        this.onHit(this.items[this.current]);
+        this.$emit('gotResultID', this.items[this.current].id);
+        this.reset();
       }
     },
 
@@ -106,11 +107,6 @@ export default Vue.extend({
       } else {
         this.current = -1;
       }
-    },
-
-    onHit() {
-      // util.warn('You need to implement the `onHit` method', this)
-      this.reset();
     }
   }
 });

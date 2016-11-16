@@ -1,25 +1,25 @@
 // do proper sass later, these are hacks
-$gray-dark:                 #373a3c !default;
-$gray:                      #55595c !default;
-$gray-light:                #818a91 !default;
-$gray-lighter:              #eceeef !default;
-$gray-lightest:             #f7f7f9 !default;
-
-$brand-primary:             #41b883;
+$gray-dark: #373a3c !default;
+$gray: #55595c !default;
+$gray-light: #818a91 !default;
+$gray-lighter: #eceeef !default;
+$gray-lightest: #f7f7f9 !default;
+$brand-primary: #41b883;
 // $brand-success:             #5cb85c !default;
 // $brand-info:                #5bc0de !default;
 // $brand-warning:             #f0ad4e !default;
 // $brand-danger:              #d9534f !default;
-$brand-inverse:             $gray-dark !default;
+$brand-inverse: $gray-dark !default;
 
 .CitySearch {
   position: relative;
+  padding-bottom: 50px;
 
   .CitySearch__input {
     box-sizing: border-box;
     width: 100%;
     font-size: 16px;
-    padding: 14px 25px;
+    padding: 14px 0;
     line-height: 1.42857143;
     font-weight: 300;
     letter-spacing: 1px;
@@ -27,7 +27,9 @@ $brand-inverse:             $gray-dark !default;
     background: #fff;
     border: none;
     transition: all 0.15s;
+
     &:focus {
+      padding: 14px 25px;
       background: $gray-lightest;
       outline: 0;
     }

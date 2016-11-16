@@ -1,12 +1,7 @@
-<div>
-  <CitySearch><CitySearch>
+<div class="Home">
 
-  <button v-on:click="search">search</button>
+  <CitySearch v-on:gotResultID="gotResultID"></CitySearch>
 
-  <hr>
-
-  <p>
-    Cards.
-  </p>
+  <CityCards v-bind:alerts="alerts"></CityCards>
 
 </div>

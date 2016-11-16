@@ -1,0 +1,9 @@
+<div class="CityCards">
+
+  <h3 v-if="!hasItems">Add some cities!</h3>
+
+  <div v-else>
+    <CityCard v-for="alert in alerts" v-bind:alert="alert"></CityCard>
+  </div>
+
+</div>

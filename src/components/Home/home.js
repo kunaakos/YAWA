@@ -2,33 +2,33 @@ import Vue from 'vue';
 import template from './home.html';
 
 import CitySearch from 'components/CitySearch/citysearch';
+import CityCards from 'components/CityCards/citycards';
 
-// import weather from 'helpers/weather';
-
-// console.log(weather);
+class Alert {
+  constructor(cityId) {
+    this.cityId = cityId;
+  }
+}
 
 export default Vue.extend({
   template,
   components: {
-    CitySearch
+    CitySearch,
+    CityCards
   },
   data: function() {
     return {
-      // weather: weather
+      alerts: []
     };
   },
+  created: function(){
+
+  },
   methods: {
-    search: function() {
-      // weather.getCities('Buda', 4).then(
-      //   (data) => {
-      //     // success yay
-      //     console.log(data);
-      //   },
-      //   (data) => {
-      //     // fail nooo
-      //     console.log(data);
-      //   }
-      // );
+    gotResultID: function(resultID) {
+      if (this.alerts.filter(function(alert) { return alert.cityId === resultID; }).length === 0 && resultID !== 0) {
+        this.alerts.push(new Alert(resultID));
+      }
     }
   }
 });
