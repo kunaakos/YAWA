@@ -1,18 +1,18 @@
 import Vue from 'vue';
 import template from './login.html';
 
-import auth from 'helpers/auth';
+import backend from 'helpers/backend';
 
 export default Vue.extend({
   template,
   data: function() {
     return {
-      auth: auth.state
+      auth: backend.auth
     };
   },
   methods: {
     login: function() {
-      auth.login();
+      backend.login();
     }
   }
 });

@@ -17,29 +17,29 @@ if (firebaseApp) {
 
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
-    auth.state.user = user;
-    auth.state.loggedIn = true;
+    backend.auth.user = user;
+    backend.auth.loggedIn = true;
   } else {
-    auth.state.user = null;
-    auth.state.loggedIn = false;
+    backend.auth.user = null;
+    backend.auth.loggedIn = false;
   }
-  console.log('auth state: ' + auth.state.loggedIn);
-  auth.state.initialized = true;
-  PubSub.$emit('authStateChanged', auth.state.loggedIn);
+  console.log('auth state: ' + backend.auth.loggedIn);
+  backend.auth.initialized = true;
+  PubSub.$emit('authStateChanged', backend.auth.loggedIn);
 });
 
-var auth = {
-  state: {
+var backend = {
+  auth: {
     initialized: false,
     loggedIn: false,
     user: null
   },
 
   check() {
-    return this.state.loggedIn;
+    return this.auth.loggedIn;
   },
 
-  checkRedirect(cbSuccess, cbFail) {
+  checkFacebookRedirect(cbSuccess, cbFail) {
     firebase.auth().getRedirectResult().then(function(result) {
       if (result.user) {
         if (cbSuccess) {
@@ -63,8 +63,8 @@ var auth = {
   logout(cbSuccess, cbFail) {
     var self = this;
     firebase.auth().signOut().then(function() {
-      self.state.loggedIn = false;
-      self.state.user = null;
+      self.auth.loggedIn = false;
+      self.auth.user = null;
       if (cbSuccess) {
         cbSuccess();
       }
@@ -80,4 +80,4 @@ var auth = {
 
 };
 
-export default auth;
+export default backend;
