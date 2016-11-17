@@ -43,9 +43,9 @@ function handleAuth(to, from, next) {
   if (!auth.state.loggedIn) {
     auth.checkRedirect(next, next);
   } else {
-    // if already logged in go to user page instead
+    // if already logged in go to home page instead
     next({
-      path: '/user'
+      path: '/'
     });
   }
 }

@@ -1,8 +1,9 @@
 <div>
   <div v-if="auth.loggedIn">
+    <h1>Settings</h1>
     <p>
-      Hi {{ auth.user.displayName }}! You are in.
+      There aren't many things to fiddle with. ...yet.
     </p>
-    <button v-on:click="logout">LOG OUT</button>
+    <button class="btn btn-primary" v-on:click="logout"><i class="fa fa-sign-out"></i>&nbsp;LOG OUT</button>
   </div>
 </div>
