@@ -4,6 +4,7 @@ import template from './user.html';
 import backend from 'helpers/backend';
 
 export default Vue.extend({
+  name: 'User',
   template,
   data: function() {
     return {

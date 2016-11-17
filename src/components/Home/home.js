@@ -11,6 +11,7 @@ class Alert {
 }
 
 export default Vue.extend({
+  name: 'Home',
   template,
   components: {
     LocationSearch,
