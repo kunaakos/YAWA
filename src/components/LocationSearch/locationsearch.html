@@ -1,6 +1,6 @@
-<div class="CitySearch">
+<div class="LocationSearch">
 
-  <input type="text" class="" placeholder="Search city" autocomplete="off" v-model="query" v-focus="focused" @keydown.down="down" @keydown.up="up" @keydown.enter="hit" @keydown.esc="reset" @focus="focused = true" @blur="reset" @input="update" />
+  <input type="text" class="" placeholder="Add a new location" autocomplete="off" v-model="query" v-focus="focused" @keydown.down="down" @keydown.up="up" @keydown.enter="hit" @keydown.esc="reset" @focus="focused = true" @blur="reset" @input="update" />
 
   <i class="fa fa-spinner fa-spin" v-if="loading" v-bind:class="{ focused : focused }"></i>
 

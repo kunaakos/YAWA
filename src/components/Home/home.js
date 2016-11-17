@@ -1,20 +1,20 @@
 import Vue from 'vue';
 import template from './home.html';
 
-import CitySearch from 'components/CitySearch/citysearch';
-import CityCards from 'components/CityCards/citycards';
+import LocationSearch from 'components/LocationSearch/locationsearch';
+import LocationCards from 'components/LocationCards/locationcards';
 
 class Alert {
-  constructor(cityId) {
-    this.cityId = cityId;
+  constructor(owmCityId) {
+    this.owmCityId = owmCityId;
   }
 }
 
 export default Vue.extend({
   template,
   components: {
-    CitySearch,
-    CityCards
+    LocationSearch,
+    LocationCards
   },
   data: function() {
     return {
@@ -22,7 +22,7 @@ export default Vue.extend({
     };
   },
   created: function(){
-    // add some cards
+    // add some locations
     // 3054643 is Budapest
     this.alerts.push(new Alert(3054643));
     // 665000 is Budaors
@@ -32,7 +32,7 @@ export default Vue.extend({
   },
   methods: {
     gotResultID: function(resultID) {
-      if (this.alerts.filter(function(alert) { return alert.cityId === resultID; }).length === 0 && resultID !== 0) {
+      if (this.alerts.filter(function(alert) { return alert.owmCityId === resultID; }).length === 0 && resultID !== 0) {
         this.alerts.push(new Alert(resultID));
       }
     }

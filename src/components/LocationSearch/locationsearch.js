@@ -2,9 +2,9 @@
 // https://github.com/pespantelis/vue-typeahead
 
 import Vue from 'vue';
-import template from './citysearch.html';
+import template from './locationsearch.html';
 
-import './citysearch.scss';
+import './locationsearch.scss';
 
 import weather from 'helpers/weather';
 
@@ -76,6 +76,7 @@ export default Vue.extend({
 
     reset() {
       this.items = [];
+      this.current = -1;
       this.query = '';
       this.loading = false;
       this.focused = false;

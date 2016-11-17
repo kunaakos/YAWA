@@ -17,8 +17,8 @@ var weather = {
   state: {
     result: null
   },
-  // get weather data for a specific cityId
-  getCityById(cityId) {
+  // get weather data based on OpenWeatherMapCityId
+  getWeatherDataById(owmCityId) {
     // discard values we don't need
     function processResult(result) {
       // OpenWeatherMap icon codes:
@@ -79,10 +79,9 @@ var weather = {
     }
     // promise wrapped in a promise ¯\_(ツ)_/¯
     return new Promise(function(resolve, reject) {
-      console.log('City ID: ' + cityId);
       Vue.resource('weather?id={cityId}&units=metric&APPID={apiKey}')
       .get({
-        cityId: cityId,
+        cityId: owmCityId,
         apiKey: API_KEY
       })
       .then((response) => {

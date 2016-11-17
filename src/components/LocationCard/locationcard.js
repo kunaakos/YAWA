@@ -2,9 +2,9 @@
 // https://github.com/pespantelis/vue-typeahead
 
 import Vue from 'vue';
-import template from './citycard.html';
+import template from './locationcard.html';
 
-import './citycard.scss';
+import './locationcard.scss';
 
 import weather from 'helpers/weather';
 
@@ -52,7 +52,7 @@ export default Vue.extend({
 
   created: function(){
     var self = this;
-    weather.getCityById(this.alert.cityId).then(
+    weather.getWeatherDataById(this.alert.owmCityId).then(
       (data) => {
         // success yay
         self.name = data.name;

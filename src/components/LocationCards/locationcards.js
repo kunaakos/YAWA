@@ -2,17 +2,17 @@
 // https://github.com/pespantelis/vue-typeahead
 
 import Vue from 'vue';
-import template from './citycards.html';
+import template from './locationcards.html';
 
-import './citycards.scss';
+import './locationcards.scss';
 
-import CityCard from 'components/CityCard/citycard';
+import LocationCard from 'components/LocationCard/locationcard';
 // import weather from 'helpers/weather';
 
 export default Vue.extend({
   template,
   components: {
-    CityCard
+    LocationCard
   },
   props: [ 'alerts' ],
   data() {
