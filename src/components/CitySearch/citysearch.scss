@@ -4,7 +4,7 @@
   position: relative;
   padding-bottom: 50px;
 
-  .CitySearch__input {
+  input {
     box-sizing: border-box;
     width: 100%;
     font-size: 16px;
@@ -15,17 +15,31 @@
     color: $gray-dark;
     background: #fff;
     border: none;
-    transition: all 0.15s;
+    transition: all 0.25s;
 
     &:focus {
       padding: 14px 25px;
-      background: $gray-lightest;
+      background: $gray-light;
+      color: #fff;
       outline: 0;
+    }
+  }
+
+  .fa-spinner {
+    color: #fff;
+  }
+
+  .fa-search {
+    right: 5px;
+    &.focused {
+      right: 20px;
+      color: #fff;
     }
   }
 
   .fa-times {
     cursor: pointer;
+    color: #fff !important;
   }
 
   i {
@@ -33,7 +47,8 @@
     position: absolute;
     top: 17px;
     right: 20px;
-    opacity: 0.4;
+    transition: all 0.25s;
+    opacity: 0.9;
   }
 
   ul {
@@ -43,7 +58,8 @@
     background-color: $gray-lightest;
     list-style: none;
     z-index: 1000;
-    border: 1px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
 
     li {
       padding: 14px 25px;
@@ -51,9 +67,9 @@
       transition: all 0.15s;
 
       &:last-child {
-        border-bottom-left-radius: 6px;
-        border-bottom-right-radius: 6px;
-        border-bottom: 0;
+        border-bottom: 5px solid $brand-primary;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
       }
 
       &.active {

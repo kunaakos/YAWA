@@ -30,9 +30,9 @@ export default Vue.extend({
       switch (this.description) {
         case 'clear':
           if (this.night) {
-            return 'fa-sun-o';
-          } else {
             return 'fa-moon-o';
+          } else {
+            return 'fa-sun-o';
           }
         case 'cloudy':
           return 'fa-cloud';

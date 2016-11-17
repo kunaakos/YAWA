@@ -8,16 +8,22 @@ import './citysearch.scss';
 
 import weather from 'helpers/weather';
 
+import { focus } from 'vue-focus';
+
 export default Vue.extend({
   template,
+  directives: {
+    focus: focus
+  },
   data() {
     return {
       items: [],
       query: '',
       current: -1,
       loading: false,
+      focused: false,
       selectFirst: false,
-      limit: 5,
+      limit: 10,
       minChars: 3
     };
   },
@@ -72,6 +78,7 @@ export default Vue.extend({
       this.items = [];
       this.query = '';
       this.loading = false;
+      this.focused = false;
     },
 
     setActive(index) {

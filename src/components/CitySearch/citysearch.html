@@ -1,10 +1,11 @@
 <div class="CitySearch">
 
-  <input type="text" class="CitySearch__input" placeholder="Search city" autocomplete="off" v-model="query" @keydown.down="down" @keydown.up="up" @keydown.enter="hit" @keydown.esc="reset" @blur="reset" @input="update" />
+  <input type="text" class="" placeholder="Search city" autocomplete="off" v-model="query" v-focus="focused" @keydown.down="down" @keydown.up="up" @keydown.enter="hit" @keydown.esc="reset" @focus="focused = true" @blur="reset" @input="update" />
 
-  <i class="fa fa-spinner fa-spin" v-if="loading"></i>
+  <i class="fa fa-spinner fa-spin" v-if="loading" v-bind:class="{ focused : focused }"></i>
+
   <div v-else>
-    <i class="fa fa-search" v-show="isEmpty"></i>
+    <i class="fa fa-search" v-show="isEmpty" v-bind:class="{ focused : focused }"></i>
     <i class="fa fa-times" v-show="isDirty" @click="reset"></i>
   </div>
 

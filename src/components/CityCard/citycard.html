@@ -1,8 +1,8 @@
 <div class="CityCard" v-bind:class="{ night: night }">
   <i class="loader-icon fa fa-spinner fa-spin" v-if="state.loading"></i>
   <div v-else>
-    <h3>{{ name }}</h3>
-    <h5>{{ currentTemp }} °C</h5>
+    <h4>{{ name }}</h4>
+    <h6>{{ currentTemp }} °C</h6>
     <i class="weather-icon fa fa-4x" v-bind:class="weatherConditionsFAIcon" ></i>
   </div>
 </div>
