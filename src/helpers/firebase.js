@@ -32,11 +32,14 @@ class FirebaseHelper {
     firebase.auth().signInWithRedirect(this.fbAuthProvider);
   }
 
-  logout(success, fail) {
-    firebase.auth().signOut().then(function() {
-      success();
-    }, function(error) {
-      fail(error);
+  logout() {
+    // return a standard Promise to make life easier
+    return new Promise((resolve, reject) => {
+      firebase.auth().signOut().then(function() {
+        resolve();
+      }, function(error) {
+        reject(error);
+      });
     });
   }
 

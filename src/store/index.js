@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import FirebaseHelper from 'helpers/firebase';
+import firebaseHelper from 'helpers/firebase';
 
 Vue.use(Vuex);
 
@@ -27,23 +27,12 @@ const authModule = {
 
     auth_initiateLogin() {
       // redirects to facebook, kills app, no need to handle anything
-      FirebaseHelper.login();
+      firebaseHelper.login();
     },
 
     auth_initiateLogout() {
-      return new Promise((resolve, reject) => {
-        FirebaseHelper.logout(
-          () => {
-            // successful logout
-            resolve();
-          },
-          (error) => {
-            // logout error
-            console.log(error);
-            reject();
-          }
-        );
-      });
+      // it's a Promise!
+      return firebaseHelper.logout();
     }
 
   },
