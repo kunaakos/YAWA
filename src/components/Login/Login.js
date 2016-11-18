@@ -6,11 +6,6 @@ import backend from 'helpers/backend';
 export default Vue.extend({
   ame: 'Login',
   template,
-  data: function() {
-    return {
-      auth: backend.auth
-    };
-  },
   methods: {
     login: function() {
       backend.login();

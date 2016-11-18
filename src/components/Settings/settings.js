@@ -3,14 +3,15 @@ import template from './settings.html';
 
 import backend from 'helpers/backend';
 
+import { mapGetters } from 'vuex';
+
 export default Vue.extend({
   name: 'Settings',
   template,
-  data: function() {
-    return {
-      auth: backend.auth
-    };
-  },
+  computed: mapGetters({
+    user: 'auth_getUser',
+    authenticated: 'auth_isAuthenticated'
+  }),
   methods: {
     logout: function() {
       backend.logout(()=>{

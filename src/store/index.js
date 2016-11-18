@@ -29,6 +29,9 @@ const authModule = {
     // we need this for the router
     auth_isInitialized: state => {
       return state.initialized;
+    },
+    auth_getUser: state => {
+      return state.user;
     }
   }
 };

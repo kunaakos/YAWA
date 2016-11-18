@@ -1,8 +1,8 @@
 <nav class="Navigation navbar navbar-fixed-top navbar-light">
     <router-link class="navbar-brand" to="/">
-      <i class="home-icon fa fa-2x fa-home" v-if="auth.loggedIn"></i>
+      <i class="home-icon fa fa-2x fa-home" v-if="authenticated"></i>
     </router-link>
-    <router-link v-if="auth.loggedIn" class="navbar-brand float-xs-right" to="/settings">
-      {{ auth.user.displayName }}
+    <router-link v-if="authenticated" class="navbar-brand float-xs-right" to="/settings">
+      {{ user.displayName }}
     </router-link>
 </nav>
