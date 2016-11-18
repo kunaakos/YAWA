@@ -1,9 +1,9 @@
-@import "styles/default-variables";
-@import "styles/variables";
+@import "default-variables";
+@import "variables";
 
 // npm depencies
 @import "~bootstrap/scss/bootstrap-flex";
 @import "~font-awesome/scss/font-awesome";
 
 // Project specific
-@import "styles/global";
+@import "global";

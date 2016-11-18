@@ -6,7 +6,7 @@ import Loader from 'components/Loader/loader';
 import router from 'src/router';
 import store from 'src/store';
 
-import 'src/style.scss';
+import 'src/styles/main.scss';
 
 export const PubSub = new Vue();
 
