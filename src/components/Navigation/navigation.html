@@ -2,7 +2,7 @@
     <router-link class="navbar-brand" to="/">
       <i class="home-icon fa fa-2x fa-home" v-if="auth.loggedIn"></i>
     </router-link>
-    <router-link v-if="auth.loggedIn" class="navbar-brand float-xs-right" to="/user">
+    <router-link v-if="auth.loggedIn" class="navbar-brand float-xs-right" to="/settings">
       {{ auth.user.displayName }}
     </router-link>
 </nav>

@@ -1,11 +1,15 @@
-import Home from 'components/Home/home';
-import User from 'components/User/user';
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+
+import Main from 'components/Main/main';
+import Settings from 'components/Settings/settings';
 import Login from 'components/Login/login';
-import NotFound from 'components/NotFound/notFound';
 
 import backend from 'helpers/backend';
 
-import { PubSub } from 'src/main';
+import { PubSub } from 'src/app';
+
+Vue.use(VueRouter);
 
 // wait until auth is up and running
 function authGate(to, from, next){
@@ -53,7 +57,7 @@ function handleAuth(to, from, next) {
 const routes = [
   {
     path: '/',
-    component: Home,
+    component: Main,
     meta: { requiresAuth: true }
   },
   {
@@ -62,14 +66,24 @@ const routes = [
     beforeEnter: handleAuth,
   },
   {
-    path: '/user',
-    component: User,
+    path: '/settings',
+    component: Settings,
     meta: { requiresAuth: true }
   },
   {
     path: '*',
-    component: NotFound
+    component: Main
   }
 ];
 
-export { routes, authGate };
+const router = new VueRouter({
+  routes,
+  mode: 'history',
+  linkActiveClass: 'active'
+});
+
+router.beforeEach((to, from, next) => {
+  authGate(to, from, next);
+});
+
+export default router;

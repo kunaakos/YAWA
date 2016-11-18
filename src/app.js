@@ -1,33 +1,18 @@
 import Vue from 'vue';
-import VueResource from 'vue-resource';
-import VueRouter from 'vue-router';
-import VueFire from 'vuefire';
 
 import Navigation from 'components/Navigation/navigation';
 import Loader from 'components/Loader/loader';
 
-Vue.use(VueFire);
-Vue.use(VueRouter);
-Vue.use(VueResource);
+import router from 'src/router';
+import store from 'src/store';
 
-import { routes, authGate } from 'src/routes';
 import 'src/style.scss';
 
 export const PubSub = new Vue();
 
-export const router = new VueRouter({
-  routes,
-  mode: 'history',
-  linkActiveClass: 'active'
-});
-
-router.beforeEach((to, from, next) => {
-  authGate(to, from, next);
-});
-
 export const App = new Vue({
   router,
-
+  store,
   el: '#app',
 
   components: {

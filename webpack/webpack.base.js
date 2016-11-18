@@ -4,7 +4,7 @@ var autoprefixer = require('autoprefixer');
 module.exports = {
 
   entry: {
-    app: [path.resolve(__dirname, '../src/main.js')]
+    app: [path.resolve(__dirname, '../src/app.js')]
   },
 
   output: {

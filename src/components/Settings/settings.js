@@ -1,10 +1,10 @@
 import Vue from 'vue';
-import template from './user.html';
+import template from './settings.html';
 
 import backend from 'helpers/backend';
 
 export default Vue.extend({
-  name: 'User',
+  name: 'Settings',
   template,
   data: function() {
     return {

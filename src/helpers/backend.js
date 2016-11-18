@@ -1,6 +1,6 @@
 import * as firebase from 'firebase';
 
-import { PubSub } from 'src/main';
+import { PubSub } from 'src/app';
 
 var firebaseConfig = {
   apiKey: 'AIzaSyCfPzIUom73nGO6DlD1oIV6g_M-RKBJb2g',

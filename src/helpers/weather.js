@@ -1,8 +1,6 @@
 import Vue from 'vue';
 import VueResource from 'vue-resource';
 
-// import { router } from 'src/main';
-
 const API_BASE = 'http://api.openweathermap.org/data/2.5';
 const API_KEY = 'f37343549ea4135c63a784ad005a08e9';
 // const API_KEY = 'c1f017e502a92e9deba979867fc29de6';

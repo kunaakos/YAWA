@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import template from './home.html';
+import template from './main.html';
 
 import LocationSearch from 'components/LocationSearch/locationsearch';
 import LocationCards from 'components/LocationCards/locationcards';
@@ -11,7 +11,7 @@ class Alert {
 }
 
 export default Vue.extend({
-  name: 'Home',
+  name: 'Main',
   template,
   components: {
     LocationSearch,
