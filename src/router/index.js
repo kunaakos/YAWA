@@ -15,6 +15,7 @@ Vue.use(VueRouter);
 function authGate(to, from, next){
   // start by showing ye olde loader
   PubSub.$emit('toggleLoader', true);
+
   // check auth module state
   if (backend.auth.initialized) {
     routeGuard(to, from, next);

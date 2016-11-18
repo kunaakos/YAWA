@@ -8,7 +8,8 @@ import store from 'src/store';
 
 import 'src/styles/main.scss';
 
-export const PubSub = new Vue();
+export const PubSub = new Vue({
+});
 
 export const App = new Vue({
   router,
