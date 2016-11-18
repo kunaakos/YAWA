@@ -28,23 +28,6 @@ class FirebaseHelper {
 
   }
 
-  checkFacebookRedirect(gotDataCb, noDataCb) {
-    console.log('redir check');
-    firebase.auth().getRedirectResult().then(function(result) {
-      if (result.user) {
-        // successfully authenticated with a fb redirect
-        gotDataCb(result.user);
-      } else {
-        // no fb redirect data
-        noDataCb();
-      }
-    }).catch(function(error) {
-      if (error) {
-        console.log(error);
-      }
-    });
-  }
-
   login() {
     firebase.auth().signInWithRedirect(this.fbAuthProvider);
   }

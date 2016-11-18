@@ -14,9 +14,11 @@ export default Vue.extend({
 
   methods: {
     logout() {
-      console.log('logout');
+      var self = this;
       this.$store.dispatch('auth_initiateLogout').then(
-        () => { this.$router.go('/'); },
+        () => {
+          self.$router.push('/login');
+        },
         null // no error handling
       );
     }
