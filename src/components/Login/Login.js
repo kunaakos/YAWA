@@ -1,14 +1,12 @@
 import Vue from 'vue';
 import template from './login.html';
 
-import backend from 'helpers/backend';
+import { mapActions } from 'vuex';
 
 export default Vue.extend({
   ame: 'Login',
   template,
-  methods: {
-    login: function() {
-      backend.login();
-    }
-  }
+  methods: mapActions({
+    login: 'auth_initiateLogin'
+  }),
 });

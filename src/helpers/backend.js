@@ -15,41 +15,28 @@ class FirebaseHelper {
   constructor(config) {
 
     this.firebaseApp = firebase.initializeApp(config);
-
-    this.state = {
-      initialized: false,
-      loggedIn: false,
-      user: null
-    };
-
-    this.auth = this.state;
-
-    var self = this;
+    this.fbAuthProvider = new firebase.auth.FacebookAuthProvider();
 
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
-        self.state.user = user;
-        self.state.loggedIn = true;
         store.commit('auth_setUser', user); // should map data!
       } else {
-        self.state.user = null;
-        self.state.loggedIn = false;
         store.commit('auth_setUser', null);
       }
-      self.state.initialized = true;
       store.commit('auth_setInitState', true);
     });
 
   }
 
-  checkFacebookRedirect(cbSuccess, cbFail) {
+  checkFacebookRedirect(gotDataCb, noDataCb) {
+    console.log('redir check');
     firebase.auth().getRedirectResult().then(function(result) {
       if (result.user) {
-        if (cbSuccess) {
-          cbSuccess();
-        }
-      } else if (cbFail) {
-        cbFail();
+        // successfully authenticated with a fb redirect
+        gotDataCb(result.user);
+      } else {
+        // no fb redirect data
+        noDataCb();
       }
     }).catch(function(error) {
       if (error) {
@@ -59,26 +46,14 @@ class FirebaseHelper {
   }
 
   login() {
-    var provider = new firebase.auth.FacebookAuthProvider();
-    firebase.auth().signInWithRedirect(provider);
+    firebase.auth().signInWithRedirect(this.fbAuthProvider);
   }
 
-  logout(cbSuccess, cbFail) {
-    var self = this;
+  logout(success, fail) {
     firebase.auth().signOut().then(function() {
-      self.auth.loggedIn = false;
-      self.auth.user = null;
-      store.commit('auth_setUser', null);
-      if (cbSuccess) {
-        cbSuccess();
-      }
+      success();
     }, function(error) {
-      if (error) {
-        console.log(error);
-        if (cbSuccess) {
-          cbFail(error);
-        }
-      }
+      fail(error);
     });
   }
 

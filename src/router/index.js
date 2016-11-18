@@ -5,41 +5,16 @@ import Main from 'components/Main/main';
 import Settings from 'components/Settings/settings';
 import Login from 'components/Login/login';
 
-import backend from 'helpers/backend';
-
 import store from 'src/store';
 
 Vue.use(VueRouter);
-
-// wait until auth is up and running
-function authGate(to, from, next){
-  // start by showing ye olde loader
-  // PubSub.$emit('toggleLoader', true);
-  store.commit('app_setLoadingState', true);
-
-  // check auth module state
-  if (store.getters.auth_isInitialized) {
-    // we can move on it it's initialized
-    routeGuard(to, from, next);
-  } else {
-    // we have to wait until it initiliazes if it isn't
-    var stopWatching = store.watch((value) => {
-      if (value.auth.initialized) {
-        routeGuard(to, from, next);
-        stopWatching();
-      }
-    });
-  }
-}
 
 // restricts access for unauthd users
 function routeGuard(to, from, next) {
   // check if route requires authorization, and if user is authd
   if (to.matched.some(record => record.meta.requiresAuth) && !store.getters.auth_isAuthenticated) {
-    // yep and nope, redirect to login
-    next({
-      path: '/login'
-    });
+    // not authenticated, redirect to login
+    next({ path: '/login' });
     store.commit('app_setLoadingState', false);
   } else {
     // can proceed
@@ -48,15 +23,16 @@ function routeGuard(to, from, next) {
   }
 }
 
-// handles /login stuff
-function handleAuth(to, from, next) {
-  if (!store.getters.auth_isAuthenticated) {
-    backend.checkFacebookRedirect(next, next);
-  } else {
+// handles fb login redirects, keeps authenticated users away from login page
+function doLogin(to, from, next) {
+  if (store.getters.auth_isAuthenticated) {
     // if already logged in go to home page instead
-    next({
-      path: '/'
-    });
+    next({ path: '/' });
+  } else {
+    store.dispatch('auth_checkFacebookRedirect').then(
+      () => { next({ path: '/' }); }, // successful login, redirect to Main
+      () => { next(); }               // no redirect data, stay at login page
+    );
   }
 }
 
@@ -69,7 +45,7 @@ const routes = [
   {
     path: '/login',
     component: Login,
-    beforeEnter: handleAuth,
+    beforeEnter: doLogin,
   },
   {
     path: '/settings',
@@ -89,7 +65,23 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  authGate(to, from, next);
+  // start by showing ye olde loader
+  store.commit('app_setLoadingState', true);
+
+  // check auth module state
+  if (store.getters.auth_isInitialized) {
+    // we can move on it it's initialized
+    routeGuard(to, from, next);
+  } else {
+    // we have to wait until it initiliazes if it isn't
+    var stopWatching = store.watch((value) => {
+      if (value.auth.initialized) {
+        stopWatching();
+        console.log('what');
+        routeGuard(to, from, next);
+      }
+    });
+  }
 });
 
 export default router;

@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-// import backend from 'helpers/backend';
+import backend from 'helpers/backend';
 
 Vue.use(Vuex);
 
@@ -18,6 +18,47 @@ const authModule = {
       state.user = user;
     }
   },
+  actions: {
+
+    auth_initiateLogin() {
+      // redirects to facebook, kills app, no need to handle anything
+      backend.login();
+    },
+
+    auth_initiateLogout() {
+    // auth_initiateLogout({ commit }) {
+      return new Promise((resolve, reject) => {
+        backend.logout(
+          () => {
+            // successful logout
+            // commit('auth_setUser', null); // double commit?
+            resolve();
+          },
+          (error) => {
+            // logout error
+            console.log(error);
+            reject();
+          }
+        );
+      });
+    },
+
+    auth_checkFacebookRedirect() {
+    // auth_checkFacebookRedirect({ commit }) {
+      return new Promise((resolve, reject) => {
+        backend.checkFacebookRedirect(
+          () => {
+          // (userData) => {
+            // commit('auth_setUser', userData); // double commit?
+            resolve();
+          },
+          reject
+        );
+      });
+    }
+
+  },
+
   getters: {
     auth_isAuthenticated: state => {
       if (state.user) {
