@@ -8,9 +8,6 @@ import store from 'src/store';
 
 import 'src/styles/main.scss';
 
-export const PubSub = new Vue({
-});
-
 export const App = new Vue({
   router,
   store,
@@ -21,14 +18,13 @@ export const App = new Vue({
     Loader
   },
 
-  data: {
-    loaderState: true
+  computed: {
+    isLoading() {
+      return store.state.app.loading;
+    }
   },
 
   created: function(){
-    PubSub.$on('toggleLoader', (loaderState) => {
-      this.loaderState = loaderState;
-    });
   }
 
 });

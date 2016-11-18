@@ -1,7 +1,5 @@
 import * as firebase from 'firebase';
 
-import { PubSub } from 'src/app';
-
 import store from 'src/store';
 
 // move elsewhere?
@@ -40,7 +38,6 @@ class FirebaseHelper {
       }
       self.state.initialized = true;
       store.commit('auth_setInitState', true);
-      PubSub.$emit('authStateChanged', true);
     });
 
   }

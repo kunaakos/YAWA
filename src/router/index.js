@@ -9,22 +9,25 @@ import backend from 'helpers/backend';
 
 import store from 'src/store';
 
-import { PubSub } from 'src/app';
-
 Vue.use(VueRouter);
 
 // wait until auth is up and running
 function authGate(to, from, next){
   // start by showing ye olde loader
-  PubSub.$emit('toggleLoader', true);
+  // PubSub.$emit('toggleLoader', true);
+  store.commit('app_setLoadingState', true);
 
   // check auth module state
-  if (store.state.auth.initialized) {
+  if (store.getters.auth_isInitialized) {
+    // we can move on it it's initialized
     routeGuard(to, from, next);
   } else {
-    // we need to wait until it gets its act together before we move on
-    PubSub.$once('authStateChanged', function(){
-      routeGuard(to, from, next);
+    // we have to wait until it initiliazes if it isn't
+    var stopWatching = store.watch((value) => {
+      if (value.auth.initialized) {
+        routeGuard(to, from, next);
+        stopWatching();
+      }
     });
   }
 }
@@ -32,22 +35,22 @@ function authGate(to, from, next){
 // restricts access for unauthd users
 function routeGuard(to, from, next) {
   // check if route requires authorization, and if user is authd
-  if (to.matched.some(record => record.meta.requiresAuth) && !store.getters.auth_userLoggedIn) {
+  if (to.matched.some(record => record.meta.requiresAuth) && !store.getters.auth_isAuthenticated) {
     // yep and nope, redirect to login
     next({
       path: '/login'
     });
-    PubSub.$emit('toggleLoader', false);
+    store.commit('app_setLoadingState', false);
   } else {
     // can proceed
     next();
-    PubSub.$emit('toggleLoader', false);
+    store.commit('app_setLoadingState', false);
   }
 }
 
 // handles /login stuff
 function handleAuth(to, from, next) {
-  if (!store.getters.auth_userLoggedIn) {
+  if (!store.getters.auth_isAuthenticated) {
     backend.checkFacebookRedirect(next, next);
   } else {
     // if already logged in go to home page instead

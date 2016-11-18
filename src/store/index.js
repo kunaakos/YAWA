@@ -19,18 +19,34 @@ const authModule = {
     }
   },
   getters: {
-    auth_userLoggedIn: state => {
+    auth_isAuthenticated: state => {
       if (state.user) {
         return true;
       } else {
         return false;
       }
+    },
+    // we need this for the router
+    auth_isInitialized: state => {
+      return state.initialized;
+    }
+  }
+};
+
+const appModule = {
+  state: {
+    loading: false
+  },
+  mutations: {
+    app_setLoadingState(state, loadingState) {
+      state.loading = loadingState;
     }
   }
 };
 
 const store = new Vuex.Store({
   modules: {
+    app: appModule,
     auth: authModule
   }
 });
