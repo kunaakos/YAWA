@@ -17,6 +17,15 @@ const authModule = {
     auth_setUser(state, user) {
       state.user = user;
     }
+  },
+  getters: {
+    auth_userLoggedIn: state => {
+      if (state.user) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   }
 };
 

@@ -7,6 +7,8 @@ import Login from 'components/Login/login';
 
 import backend from 'helpers/backend';
 
+import store from 'src/store';
+
 import { PubSub } from 'src/app';
 
 Vue.use(VueRouter);
@@ -17,7 +19,7 @@ function authGate(to, from, next){
   PubSub.$emit('toggleLoader', true);
 
   // check auth module state
-  if (backend.auth.initialized) {
+  if (store.state.auth.initialized) {
     routeGuard(to, from, next);
   } else {
     // we need to wait until it gets its act together before we move on
@@ -30,7 +32,7 @@ function authGate(to, from, next){
 // restricts access for unauthd users
 function routeGuard(to, from, next) {
   // check if route requires authorization, and if user is authd
-  if (to.matched.some(record => record.meta.requiresAuth) && !backend.auth.loggedIn) {
+  if (to.matched.some(record => record.meta.requiresAuth) && !store.getters.auth_userLoggedIn) {
     // yep and nope, redirect to login
     next({
       path: '/login'
@@ -45,7 +47,7 @@ function routeGuard(to, from, next) {
 
 // handles /login stuff
 function handleAuth(to, from, next) {
-  if (!backend.auth.loggedIn) {
+  if (!store.getters.auth_userLoggedIn) {
     backend.checkFacebookRedirect(next, next);
   } else {
     // if already logged in go to home page instead

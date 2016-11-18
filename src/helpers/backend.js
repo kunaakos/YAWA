@@ -34,7 +34,6 @@ class FirebaseHelper {
         self.state.loggedIn = true;
         store.commit('auth_setUser', user); // should map data!
       } else {
-        console.log('unauthd');
         self.state.user = null;
         self.state.loggedIn = false;
         store.commit('auth_setUser', null);
@@ -72,6 +71,7 @@ class FirebaseHelper {
     firebase.auth().signOut().then(function() {
       self.auth.loggedIn = false;
       self.auth.user = null;
+      store.commit('auth_setUser', null);
       if (cbSuccess) {
         cbSuccess();
       }
