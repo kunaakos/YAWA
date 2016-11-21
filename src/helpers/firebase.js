@@ -16,10 +16,12 @@ class FirebaseHelper {
 
     this.firebaseApp = firebase.initializeApp(config);
     this.fbAuthProvider = new firebase.auth.FacebookAuthProvider();
+    this.db = firebase.database();
 
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
         store.commit('auth_setUser', user); // should map data!
+        store.dispatch('db_doFirebaseBindings');
       } else {
         store.commit('auth_setUser', null);
       }

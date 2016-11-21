@@ -26,5 +26,5 @@ export const App = new Vue({
 
   created: function(){
   }
-  
+
 });

@@ -95,6 +95,7 @@ export default Vue.extend({
     hit() {
       if (this.current !== -1) {
         this.$emit('gotResultID', this.items[this.current].id);
+        this.$store.dispatch('db_addAlertByOwmId', this.items[this.current].id);
         this.reset();
       }
     },
