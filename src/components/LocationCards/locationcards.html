@@ -1,9 +1,7 @@
-<div class="LocationCards">
+<div class="LocationCards row flex-items-xs-left">
 
   <h3 v-if="!hasItems">Add some cities!</h3>
 
-  <div v-else>
-    <location-card v-for="alert in alerts" v-bind:alert="alert" v-bind:key="alert['.key']"></location-card>
-  </div>
+  <location-card v-else v-for="alert in alerts" v-bind:alert="alert" v-bind:key="alert['.key']"></location-card>
 
 </div>

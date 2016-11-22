@@ -1,18 +1,21 @@
-<div class="LocationSearch">
+<div class="LocationSearch row flex-items-xs-center">
 
-  <input type="text" class="" placeholder="Add a new location" autocomplete="off" v-model="query" v-focus="focused" @keydown.down="down" @keydown.up="up" @keydown.enter="hit" @keydown.esc="reset" @focus="focused = true" @blur="reset" @input="update" />
+  <div class="col-xs-12 col-md-8 col-xl-6">
+    <input type="text" class="" placeholder="Add a new location" autocomplete="off" v-model="query" v-focus="focused" @keydown.down="down" @keydown.up="up" @keydown.enter="hit" @keydown.esc="reset" @focus="focused = true" @blur="reset" @input="update" />
 
-  <i class="fa fa-spinner fa-spin" v-if="loading" v-bind:class="{ focused : focused }"></i>
+    <i class="fa fa-spinner fa-spin" v-if="loading" v-bind:class="{ focused : focused }"></i>
 
-  <div v-else>
-    <i class="fa fa-search" v-show="isEmpty" v-bind:class="{ focused : focused }"></i>
-    <i class="fa fa-times" v-show="isDirty" @click="reset"></i>
+    <div v-else>
+      <i class="fa fa-search" v-show="isEmpty" v-bind:class="{ focused : focused }"></i>
+      <i class="fa fa-times" v-show="isDirty" @click="reset"></i>
+    </div>
+
+    <ul v-show="hasItems">
+      <li v-for="(item, index) in items" :class="activeClass(index)" @mousedown="hit" @mousemove="setActive(index)">
+        <span class="name" v-text="item.name"></span>
+      </li>
+    </ul>
+
   </div>
-
-  <ul v-show="hasItems">
-    <li v-for="(item, index) in items" :class="activeClass(index)" @mousedown="hit" @mousemove="setActive(index)">
-      <span class="name" v-text="item.name"></span>
-    </li>
-  </ul>
 
 </div>
