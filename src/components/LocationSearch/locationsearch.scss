@@ -12,6 +12,7 @@ $ls-input-padding-focused: ($spacer-x / 1.5) ($spacer-y * 1.5);
 $ls-results-fontsize: $font-size-h6;
 $ls-results-padding: ($spacer-x / 1.5) ($spacer-y * 1.5);
 $ls-results-border-bottom: $ls-results-fontsize / 2.5;
+$ls-results-countrycode-width: ($spacer-x * 2.5);
 
 $ls-transition: all 0.25s;
 
@@ -72,6 +73,13 @@ $ls-color-highlight: $brand-primary;
     padding: $ls-input-padding-focused;
     color: $ls-color-bg;
   }
+
+  .indicators>i {
+    opacity: 0;
+    &.visible {
+      opacity: 1;
+    }
+  }
   // SEARCH BAR ANIMATIONS END
 
   // SEARCH RESULTS STYLES START
@@ -93,6 +101,12 @@ $ls-color-highlight: $brand-primary;
       transition: $ls-transition;
       cursor: pointer; // clickables!
 
+      .country-code {
+        display: inline-block;
+        color: $ls-color-light;
+        width: $ls-results-countrycode-width;
+      }
+
       &:last-child {
         border-bottom: $ls-results-border-bottom solid $ls-color-highlight;
         border-bottom-left-radius: $ls-results-border-bottom * 3;
@@ -100,7 +114,7 @@ $ls-color-highlight: $brand-primary;
       }
 
       &.active {
-        background-color: $ls-color-highlight !important;
+        background: $ls-color-highlight;
         color: $ls-color-bg;
       }
 

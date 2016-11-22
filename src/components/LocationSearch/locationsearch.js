@@ -17,100 +17,114 @@ export default Vue.extend({
   },
   data() {
     return {
-      items: [],
-      query: '',
-      current: -1,
-      loading: false,
-      focused: false,
-      selectFirst: false,
-      limit: 10,
-      minChars: 3
+      state: {
+        loading: false,
+        focused: false,
+      },
+      options: {
+        selectFirst: false,
+        limit: 10,
+        minChars: 3
+      },
+      searchQuery: '',
+      searchResults: [],
+      currentSelection: -1,
+      lastSearchToken: null
     };
   },
 
   computed: {
     hasItems() {
-      return this.items.length > 0;
+      return this.searchResults.length > 0;
     },
 
     isEmpty() {
-      return !this.query;
+      return !this.searchQuery;
+    },
+
+    isLoading() {
+      return this.state.loading;
     }
   },
 
   methods: {
     update() {
-      if (!this.query) {
+      if (!this.searchQuery) {
         return this.reset();
       }
 
-      if (this.minChars && this.query.length < this.minChars) {
+      if (this.options.minChars && this.searchQuery.length < this.options.minChars) {
         return null;
       }
 
-      this.loading = true;
+      this.state.loading = true;
 
-      weather.getCities(this.query, this.limit).then(
+      var search = weather.getCities(this.searchQuery, this.options.limit);
+
+      this.lastSearchToken = search.resultToken;
+
+      search.resultPromise.then(
         (data) => {
           // success yay
-          if (this.query) {
-            this.items = data;
-            this.current = -1;
-            this.loading = false;
-            if (this.selectFirst) {
+          if (this.searchQuery && this.lastSearchToken === data.resultToken) {
+            this.searchResults = data.result;
+            this.currentSelection = -1;
+            this.state.loading = false;
+            if (this.options.selectFirst) {
               this.down();
             }
           }
         },
-        (data) => {
+        (data, resultToken) => {
           // fail nooo
           console.log(data);
+          console.log(resultToken);
         }
       );
       return null;
     },
 
     reset() {
-      this.items = [];
-      this.current = -1;
-      this.query = '';
-      this.loading = false;
-      this.focused = false;
+      this.searchResults = [];
+      this.currentSelection = -1;
+      this.searchQuery = '';
+      this.state.loading = false;
+      this.state.focused = false;
     },
 
     setActive(index) {
-      this.current = index;
+      this.currentSelection = index;
     },
 
     activeClass(index) {
       return {
-        active: this.current === index
+        active: this.currentSelection === index
       };
     },
 
     hit() {
-      if (this.current !== -1) {
-        this.$emit('gotResultID', this.items[this.current].id);
-        this.$store.dispatch('db_addAlertByOwmId', this.items[this.current].id);
+      if (this.currentSelection !== -1) {
+        this.$emit('gotResultID', this.searchResults[this.currentSelection].id);
+        this.$store.dispatch('db_addAlertByOwmId', this.searchResults[this.currentSelection].id);
         this.reset();
       }
     },
 
     up() {
-      if (this.current > 0) {
-        this.current--;
-      } else if (this.current === -1) {
-        this.current = this.items.length - 1;
+      if (this.currentSelection > 0) {
+        this.currentSelection--;
+      } else if (this.currentSelection === -1) {
+        this.currentSelection = this.searchResults.length - 1;
       } else {
-        this.current = -1;
+        this.currentSelection = -1;
       }
     },
 
     down() {
-      if (this.current < this.items.length - 1) {
-        this.current++;
+      if (this.currentSelection < this.searchResults.length - 1) {
+        this.currentSelection++;
       } else {
-        this.current = -1;
+        this.currentSelection = -1;
       }
     }
   }

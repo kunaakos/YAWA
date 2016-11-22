@@ -1,3 +1,5 @@
+// may the flying spaghetti monster in his holy noodliness bless you in your present endeavour...
+
 import Vue from 'vue';
 import VueResource from 'vue-resource';
 
@@ -99,10 +101,16 @@ var weather = {
       // return name and id
       processedResult.name = result.name;
       processedResult.id = result.id;
+      // not all locations have two letter country codes...
+      processedResult.countryCode = (result.sys.country.length > 2)
+        ? result.sys.country.toUpperCase().substr(0, 3) + '.'
+        : result.sys.country;
       return processedResult;
     }
+    // assign a token to each search, so we can identify the results of the last one
+    var resultToken = Date.now();
     // promise wrapped in a promise ¯\_(ツ)_/¯
-    return new Promise(function(resolve, reject) {
+    var resultPromise = new Promise(function(resolve, reject) {
       Vue.resource('find?q={queryString}&mode=json&type=like&APPID={apiKey}')
       .get({
         queryString: queryString,
@@ -114,13 +122,19 @@ var weather = {
           response.data.list = response.data.list.slice(0, maxLen);
         }
         // process result
-        resolve(response.data.list.map(processResult));
+        resolve({
+          result: response.data.list.map(processResult),
+          resultToken: resultToken
+        });
       }, (errorResponse) => {
         console.log('weather API responded with:', errorResponse.status);
-        reject(null);
+        reject(null, resultToken);
       });
     });
+    return { resultPromise, resultToken };
   }
 };
 
 export default weather;
+
+// R'Amen.
