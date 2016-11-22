@@ -8,6 +8,8 @@ import './locationcard.scss';
 
 import weather from 'helpers/weather';
 
+import store from 'src/store';
+
 export default Vue.extend({
   template,
   props: [ 'alert' ],
@@ -50,7 +52,7 @@ export default Vue.extend({
     }
   },
 
-  created: function(){
+  created: function() {
     var self = this;
     weather.getWeatherDataById(this.alert.owmCityId).then(
       (data) => {
@@ -69,7 +71,16 @@ export default Vue.extend({
     );
   },
 
+  destroyed: function() {
+    console.log('destroyed');
+  },
+
   methods: {
+    deleteCard() {
+      console.log('deleting card with firebaseKey: ' + this.alert['.key']);
+      store.dispatch('db_deleteAlertByFirebaseKey', this.alert['.key']);
+    },
+
     update() {
 
     },

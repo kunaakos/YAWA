@@ -18,7 +18,21 @@ const db = {
 
   actions: {
     db_addAlertByOwmId(context, owmCityId) {
-      App.$firebaseRefs['db.alerts'].push(new Alert(owmCityId));
+      App.$firebaseRefs['db.alerts'].orderByChild('owmCityId').equalTo(owmCityId).once('value', (snapshot) => {
+        if (!snapshot.val()) {
+          // new owmCityId, add to list of alerts
+          App.$firebaseRefs['db.alerts'].push(new Alert(owmCityId));
+        } else {
+          // already added
+        }
+      });
+    },
+
+    db_deleteAlertByFirebaseKey(context, firebaseKey) {
+      if (context) {
+        console.log('store deleting ' + firebaseKey);
+        App.$firebaseRefs['db.alerts'].child(firebaseKey).remove();
+      }
     },
 
     db_doFirebaseBindings(context) {
