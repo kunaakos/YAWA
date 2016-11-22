@@ -1,7 +1,7 @@
 <div class="LocationSearch row flex-items-xs-center">
 
   <div class="col-xs-12 col-md-8 col-xl-6">
-    <input type="text" class="" placeholder="Add a new location" autocomplete="off" v-model="searchQuery" v-focus="state.focused" @keydown.down="down" @keydown.up="up" @keydown.enter="hit" @keydown.esc="reset" @focus="state.focused = true"  @input="update" />
+    <input type="text" class="" placeholder="Add a new location" autocomplete="off" v-model="searchQuery" v-focus="state.focused" @keydown.down="down" @keydown.up="up" @keydown.enter="hit" @keydown.esc="reset" @focus="state.focused = true" @blur="reset" @input="update" />
 
     <div class="indicators" v-bind:class="{ focused : state.focused }">
       <i class="status-empty fa fa-search" v-bind:class="{ visible : isEmpty }"></i>
