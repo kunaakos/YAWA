@@ -1,94 +1,111 @@
 @import "variables";
 
+$ls-margin-bottom: ($spacer-y * 3);
+
+$ls-input-fontsize: $font-size-h5;
+$ls-input-fontweight: 300;
+$ls-input-lineheight: $line-height-base;
+
+$ls-input-padding-blurred: ($spacer-x / 1.5) 0;
+$ls-input-padding-focused: ($spacer-x / 1.5) ($spacer-y * 1.5);
+
+$ls-results-fontsize: $font-size-h6;
+$ls-results-padding: ($spacer-x / 1.5) ($spacer-y * 1.5);
+$ls-results-border-bottom: $ls-results-fontsize / 2.5;
+
+$ls-transition: all 0.25s;
+
+$ls-color-dark: $gray-dark;
+$ls-color-light: $gray-light;
+$ls-color-lighter: $gray-lightest;
+$ls-color-bg: #fff;
+$ls-color-highlight: $brand-primary;
+
 .LocationSearch {
-  position: relative;
-  padding-bottom: 50px;
+
+  // SEARCH BAR STYLES START
+  padding-bottom: $ls-margin-bottom;
 
   input {
-    box-sizing: border-box;
     width: 100%;
-    font-size: 16px;
-    padding: 14px 0;
-    line-height: 1.42857143;
-    font-weight: 300;
-    letter-spacing: 1px;
-    color: $gray-dark;
-    background: #fff;
     border: none;
-    transition: all 0.25s;
+    outline: 0;
+  }
 
+  input, .indicators>i {
+    font-weight: $ls-input-fontweight;
+    font-size: $ls-input-fontsize;
+    line-height: $ls-input-lineheight;
+  }
+
+  .indicators {
+    position: absolute; // relative parent: nearest col-...
+    right: ($grid-gutter-width-base / 2); // need to add "gutter" padding, since this this is not a col-... element
+    top: 0;
+    i {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+
+    .status-dirty { // this one is clickable!
+      cursor: pointer;
+    }
+  }
+  // SEARCH BAR STYLES END
+
+  // SEARCH BAR ANIMATIONS START
+  input {
+    background: $ls-color-bg;
     &:focus {
-      padding: 14px 25px;
-      background: $gray-light;
-      color: #fff;
-      outline: 0;
+      background: $ls-color-light;
     }
   }
 
-  .fa-spinner {
-    color: #fff;
+  input, .indicators>i {
+    padding: $ls-input-padding-blurred;
+    color: $ls-color-light;
+    transition: $ls-transition;
   }
 
-  .fa-search {
-    right: 5px;
-    &.focused {
-      right: 20px;
-      color: #fff;
-    }
+  .indicators.focused>i, input:focus {
+    padding: $ls-input-padding-focused;
+    color: $ls-color-bg;
   }
+  // SEARCH BAR ANIMATIONS END
 
-  .fa-times {
-    cursor: pointer;
-    color: #fff !important;
-  }
-
-  i {
-    float: right;
-    position: absolute;
-    top: 17px;
-    right: 20px;
-    transition: all 0.25s;
-    opacity: 0.9;
-  }
-
+  // SEARCH RESULTS STYLES START
   ul {
     position: absolute;
-    padding: 0;
-    min-width: 100%;
-    background-color: $gray-lightest;
-    list-style: none;
     z-index: 1000;
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0 $grid-gutter-width-base 0 0; // remove ul padding and make this the same width as the search input box
+    list-style: none;
 
     li {
-      padding: 14px 25px;
-      cursor: pointer;
-      transition: all 0.15s;
+      width: 100%;
+      font-size: $ls-results-fontsize;
+      font-weight: $ls-input-fontweight;
+      padding: $ls-results-padding;
+      background: $ls-color-lighter;
+      color: $ls-color-dark;
+      transition: $ls-transition;
+      cursor: pointer; // clickables!
 
       &:last-child {
-        border-bottom: 5px solid $brand-primary;
-        border-bottom-left-radius: 15px;
-        border-bottom-right-radius: 15px;
+        border-bottom: $ls-results-border-bottom solid $ls-color-highlight;
+        border-bottom-left-radius: $ls-results-border-bottom * 3;
+        border-bottom-right-radius: $ls-results-border-bottom * 2;
       }
 
       &.active {
-        background-color: $brand-primary !important;
+        background-color: $ls-color-highlight !important;
+        color: $ls-color-bg;
       }
 
-      &.active span {
-        color: white;
-      }
-
-      span {
-        display: block;
-        color: $gray-dark;
-
-        &.name {
-          font-weight: 300;
-          font-size: 16px;
-        }
-      }
     }
   }
+  // SEARCH RESULTS STYLES END
+
 }

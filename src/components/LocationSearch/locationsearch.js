@@ -35,10 +35,6 @@ export default Vue.extend({
 
     isEmpty() {
       return !this.query;
-    },
-
-    isDirty() {
-      return !!this.query;
     }
   },
 
