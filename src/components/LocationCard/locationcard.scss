@@ -1,27 +1,65 @@
 @import "variables";
 
+.LocationCard, .flex-filler {
+  @media (min-width: #{map-get($grid-breakpoints, xs)}) {
+    padding-top: 20%;
+    flex-basis: 100%;
+    margin-bottom: 2%;
+  }
+  @media (min-width: #{map-get($grid-breakpoints, sm)}) {
+    padding-top: 32.66%;
+    flex-basis: 49%;
+  }
+  @media (min-width: #{map-get($grid-breakpoints, lg)}) {
+    padding-top: 21.33%;
+    flex-basis: 32%;
+  }
+  @media (min-width: #{map-get($grid-breakpoints, xl)}) {
+    padding-top: 16%;
+    flex-basis: 24%;
+    margin-bottom: 1.33%;
+  }
+}
+
+// http://stackoverflow.com/questions/18744164/flex-box-align-last-row-to-grid
+.flex-filler {
+  height: 0;
+  margin: 0;
+  padding: 0;
+}
+
 .LocationCard {
-  .card-container {
-    position: relative;
+  overflow: hidden;
+  position: relative;
+
+  .card-content {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     padding: 15px 25px;
-    margin-bottom: 20px;
+    // margin-bottom: 20px;
     transition: all 1s;
     background: $gray-lightest;
     color: $gray-light;
+
     &.night {
       background: $gray-light;
       color: $gray-lightest;
     }
+
     .loader-icon {
       width: 100%;
       text-align: center;
     }
+
     .weather-icon {
       position: absolute;
       text-align: center;
       width: 70px;
       right: 20px;
-      top: 13px;
+      bottom: 13px;
     }
   }
 }

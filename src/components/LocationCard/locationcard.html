@@ -1,6 +1,8 @@
-<div class="LocationCard col-xs-12 col-md-6 col-xl-4">
-  <i class="loader-icon fa fa-spinner fa-spin" v-if="state.loading"></i>
-  <div v-else class="card-container" v-bind:class="{ night: night }" v-on:click="deleteCard">
+<div class="LocationCard">
+  <div v-if="state.loading" class="card-content">
+    <loader></loader>
+  </div>
+  <div v-else class="card-content" v-bind:class="{ night: night }" v-on:click="deleteCard">
     <h4>{{ name }}</h4>
     <h6>{{ currentTemp }} °C</h6>
     <i class="weather-icon fa fa-4x" v-bind:class="weatherConditionsFAIcon" ></i>
