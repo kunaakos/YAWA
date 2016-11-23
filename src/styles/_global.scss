@@ -25,3 +25,7 @@ html {
 body {
   padding-top: 5em;
 }
+
+* {
+  user-select: none;
+}

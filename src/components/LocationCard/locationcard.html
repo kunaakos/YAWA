@@ -1,10 +1,30 @@
-<div class="LocationCard">
-  <div v-if="state.loading" class="card-content">
-    <loader></loader>
+<div class="LocationCard" v-bind:class="{ open: state.open, night: night }">
+
+  <!-- secondary content / bottom layer: settings -->
+  <div class="lc-sec" v-on:click="toggleOpen">
   </div>
-  <div v-else class="card-content" v-bind:class="{ night: night }" v-on:click="deleteCard">
-    <h4>{{ name }}</h4>
-    <h6>{{ currentTemp }} °C</h6>
-    <i class="weather-icon fa fa-4x" v-bind:class="weatherConditionsFAIcon" ></i>
+
+  <!-- primary content / top layer container: needed for animations -->
+  <div class="lc-prim-ct">
+
+    <!-- primary content / top layer: data -->
+    <div v-if="state.loading" class="lc-prim">
+      <loader></loader>
+    </div>
+
+    <!-- primary content / top layer: data -->
+    <div v-else class="lc-prim" v-on:click="toggleOpen">
+      <div class="lc-data">
+        <div class="lc-data-name">{{ name }}</div>
+        <div class="lc-data-currenttemp">{{ currentTemp }} °C</div>
+      </div>
+      <i class="lc-weathericon fa" v-bind:class="weatherConditionsFAIcon" ></i>
+    </div>
+
   </div>
+
+  <!-- delete button -->
+  <!-- visible with lc-sec on xs, with lc-prim on larger screens - can't be child of either -->
+  <i class="lc-ctrl-delete fa fa-trash-o" v-on:click="deleteCard"></i>
+
 </div>

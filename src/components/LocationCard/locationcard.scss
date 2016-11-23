@@ -1,18 +1,21 @@
 @import "variables";
 
-.LocationCard, .flex-filler {
+.LocationCard,
+.flex-filler {
   @media (min-width: #{map-get($grid-breakpoints, xs)}) {
-    padding-top: 20%;
+    height: 6rem;
     flex-basis: 100%;
-    margin-bottom: 2%;
+    margin-bottom: 0.5rem;
   }
   @media (min-width: #{map-get($grid-breakpoints, sm)}) {
     padding-top: 32.66%;
     flex-basis: 49%;
+    margin-bottom: 2%;
   }
   @media (min-width: #{map-get($grid-breakpoints, lg)}) {
     padding-top: 21.33%;
     flex-basis: 32%;
+    margin-bottom: 2%;
   }
   @media (min-width: #{map-get($grid-breakpoints, xl)}) {
     padding-top: 16%;
@@ -29,37 +32,270 @@
 }
 
 .LocationCard {
-  overflow: hidden;
   position: relative;
+  overflow: hidden;
 
-  .card-content {
+  .lc-prim,
+  .lc-prim-ct,
+  .lc-sec {
     position: absolute;
     top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 15px 25px;
-    // margin-bottom: 20px;
-    transition: all 1s;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// SHARED STYLES
+
+// DAY / NIGHT color inversion
+.LocationCard {
+  .lc-prim {
     background: $gray-lightest;
     color: $gray-light;
+  }
 
-    &.night {
+  .lc-ctrl-delete {
+    color: $gray-light;
+  }
+
+  &.night {
+    .lc-prim {
       background: $gray-light;
       color: $gray-lightest;
     }
 
-    .loader-icon {
-      width: 100%;
-      text-align: center;
+    .lc-ctrl-delete {
+      color: $gray-lightest;
+    }
+  }
+}
+
+.LocationCard {
+  .lc-prim-ct {
+    .lc-prim {
+      &,
+      * {
+        cursor: pointer; // clickable!
+      }
+
+      .lc-data-currenttemp,
+      .lc-data-name {}
+
+      .lc-data-name {
+        font-size: $font-size-h4;
+        font-weight: bold;
+        line-height: ($font-size-h4 * 1.1);
+      }
+
+      .lc-data-currenttemp {
+        font-size: $font-size-h5;
+      }
+
+      .lc-weathericon {
+        text-align: center;
+      }
+    }
+  }
+
+  .lc-sec {
+    background: $brand-primary;
+    color: $gray-lightest;
+  }
+
+  .lc-ctrl-delete {
+    cursor: pointer; // clickable!
+    text-align: center;
+  }
+}
+
+// XS ONLY STYLES
+
+@media (min-width: #{map-get($grid-breakpoints, xs)}) and (max-width: #{map-get($grid-breakpoints, sm)}) {
+  .LocationCard {
+    .lc-sec {}
+
+    .lc-prim-ct {
+      .lc-prim {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        align-content: center;
+        align-items: center;
+
+        .lc-data {
+          padding-left: ($spacer-x * 1.5);
+        }
+
+        .lc-weathericon {
+          padding-right: $spacer-x;
+          font-size: 4rem;
+          width: 6rem;
+        }
+      }
     }
 
-    .weather-icon {
+    .lc-ctrl-delete {
       position: absolute;
-      text-align: center;
-      width: 70px;
-      right: 20px;
-      bottom: 13px;
+      right: ($spacer-x / 2);
+      top: 1rem;
+      font-size: 4rem;
+      width: 6rem;
+    }
+  }
+}
+
+// LARGER ONLY STYLES
+
+@media (min-width: #{map-get($grid-breakpoints, sm)}) {
+  .LocationCard {
+
+    // PRIMARY CONTENT / TOP LAYER
+    .lc-prim {
+      padding: ($spacer-y ) ($spacer-x * 1.5);
+
+      .lc-weathericon {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        font-size: 6rem;
+        width: 9rem;
+        padding: 1.25rem;
+      }
+    }
+
+    // SECONDARY CONTENT / BOTTOM LAYER
+    .lc-sec {
+      padding: ($spacer-y / 1.5) ($spacer-x * 1.5);
+    }
+
+    // DELETE BUTTON
+    .lc-ctrl-delete {
+      position: absolute;
+      font-size: $font-size-h4;
+      width: $font-size-h4 * 1.5;
+      padding: $font-size-h4 / 4;
+      bottom: $spacer-y;
+      right: $spacer-x;
+    }
+  }
+}
+
+// ANIMATIONS
+
+// XS ONLY
+@media (min-width: #{map-get($grid-breakpoints, xs)}) and (max-width: #{map-get($grid-breakpoints, sm)}) {
+  .LocationCard {
+    .lc-ctrl-delete {
+      opacity: 0;
+      transition: opacity 200ms, transform 200ms, 100ms, color 200ms;
+      transform: translateY(-50%);
+
+      &:hover {
+        color: $brand-danger;
+      }
+    }
+
+    .lc-prim,
+    .lc-prim-ct {
+      transition: opacity 400ms 200ms, transform 400ms 200ms;
+    }
+
+    .lc-data {
+      opacity: 1;
+      transition: opacity 200ms 400ms, transform 200ms 400ms;
+    }
+
+    .lc-weathericon {
+      opacity: 1;
+      transition: opacity 1600ms 400ms, transform 200ms 400ms;
+    }
+  }
+
+  .LocationCard.open {
+    .lc-prim,
+    .lc-prim-ct {
+      transition: opacity 400ms, transform 400ms;
+    }
+
+    .lc-prim-ct {
+      transform: translateY(100%);
+
+      .lc-prim {
+        .lc-data,
+        .lc-weathericon {
+          opacity: 0;
+          transition: opacity 400ms, transform 200ms;
+        }
+
+        .lc-data {
+          transform: translateY(50%);
+        }
+      }
+    }
+
+    .lc-ctrl-delete {
+      opacity: 1;
+      transition: opacity 200ms 300ms, transform 200ms 300ms, color 200ms;
+      transform: none;
+    }
+  }
+}
+
+// LARGER ONLY
+@media (min-width: #{map-get($grid-breakpoints, sm)}) {
+  .LocationCard {
+    .lc-ctrl-delete {
+      opacity: 0;
+      transition: opacity 200ms, transform 200ms, 100ms, color 200ms;
+      transform: translateY(50%);
+
+      &:hover {
+        color: $brand-danger;
+      }
+    }
+
+    .lc-prim,
+    .lc-prim-ct {
+      transition: opacity 400ms 200ms, transform 400ms 200ms;
+    }
+
+    .lc-data-currenttemp {
+      opacity: 1;
+      transition: opacity 200ms 400ms, transform 200ms 400ms;
+    }
+
+    .lc-weathericon {
+      opacity: 1;
+      transition: opacity 1600ms 400ms, transform 200ms 400ms;
+    }
+  }
+
+  .LocationCard.open {
+    .lc-prim,
+    .lc-prim-ct {
+      transition: transform 400ms, opacity 400ms;
+    }
+
+    .lc-prim-ct {
+      transform: translateY(100%);
+
+      .lc-prim {
+        transform: translateY(-4rem);
+
+        .lc-data-currenttemp,
+        .lc-weathericon {
+          opacity: 0;
+          transition: opacity 400ms, transform 200ms;
+          transform: translateY(50%);
+        }
+      }
+    }
+
+    .lc-ctrl-delete {
+      opacity: 1;
+      transition: opacity 200ms 300ms, transform 200ms 300ms, color 200ms;
+      transform: none;
     }
   }
 }

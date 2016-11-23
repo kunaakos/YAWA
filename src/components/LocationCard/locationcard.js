@@ -21,7 +21,8 @@ export default Vue.extend({
     return {
       state: {
         gotWeatherData: false,
-        loading: true
+        loading: true,
+        open: false
       },
       name: null,
       currentTemp: null,
@@ -83,6 +84,10 @@ export default Vue.extend({
     deleteCard() {
       console.log('deleting card with firebaseKey: ' + this.alert['.key']);
       store.dispatch('db_deleteAlertByFirebaseKey', this.alert['.key']);
+    },
+
+    toggleOpen() {
+      this.state.open = !this.state.open;
     },
 
     update() {
