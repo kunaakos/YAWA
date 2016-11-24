@@ -71,13 +71,11 @@
 }
 
 .LocationCard {
+  * {
+    cursor: pointer; // teverything on LocationCard is clickable
+  }
   .lc-prim-ct {
     .lc-prim {
-      &,
-      * {
-        cursor: pointer; // clickable!
-      }
-
       .lc-data-currenttemp,
       .lc-data-name {}
 
@@ -141,6 +139,7 @@
       top: 1rem;
       font-size: 4rem;
       width: 6rem;
+      color: $gray-lightest;
     }
   }
 }
@@ -188,8 +187,10 @@
   .LocationCard {
     .lc-ctrl-delete {
       opacity: 0;
-      transition: opacity 200ms, transform 200ms, 100ms, color 200ms;
-      transform: translateY(-50%);
+      transition: opacity 200ms, transform 200ms ease-in, 100ms, color 200ms;
+      // not only an animation, but the trash icon hovers above the weather icon
+      // even when opaque, and remains clickable
+      transform: translateY(-150%);
 
       &:hover {
         color: $brand-danger;
@@ -236,7 +237,7 @@
 
     .lc-ctrl-delete {
       opacity: 1;
-      transition: opacity 200ms 300ms, transform 200ms 300ms, color 200ms;
+      transition: opacity 200ms 300ms, transform 200ms 300ms ease-out, color 200ms;
       transform: none;
     }
   }
