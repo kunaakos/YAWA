@@ -29,6 +29,7 @@
     "vue-clickaway": "^2.1.0",
     "vue-resource": "^1.0.3",
     "vue-router": "^2.0.1",
+    "vuedraggable": "^2.3.1",
     "vuex": "^2.0.0",
     "vuexfire": "^0.3.0"
   },

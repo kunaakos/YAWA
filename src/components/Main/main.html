@@ -2,6 +2,12 @@
 
   <location-search></location-search>
 
-  <location-cards v-bind:alerts="alerts"></location-cards>
+  <draggable class="LocationCards" :list="alerts">
+    <location-card v-for="alert in alerts" v-bind:alert="alert" v-bind:key="alert['.key']"></location-card>
+    <div class="flex-filler"></div>
+    <div class="flex-filler"></div>
+    <div class="flex-filler"></div>
+    <div class="flex-filler"></div>
+  </draggable>
 
 </div>
