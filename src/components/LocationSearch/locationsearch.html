@@ -1,9 +1,9 @@
-<div class="LocationSearch row flex-items-xs-center">
+<div class="LocationSearch row flex-items-xs-center" v-bind:class="{ focused : state.focused }">
 
   <div class="col-xs-12 col-sm-12 col-md-8 col-xl-6">
-    <input type="text" class="" placeholder="Add a new location" autocomplete="off" v-model="searchQuery" v-focus="state.focused" @keydown.down="down" @keydown.up="up" @keydown.enter="hit" @keydown.esc="reset" @focus="state.focused = true" @blur="reset" @input="update" />
+    <input type="text" class="" placeholder="Add a new location" autocomplete="off" v-model="searchQuery" @keydown.down="down" @keydown.up="up" @keydown.enter="hit" @keydown.esc="reset" @focus="state.focused = true" @input="update" v-on-clickaway="reset"/>
 
-    <div class="indicators" v-bind:class="{ focused : state.focused }">
+    <div class="indicators">
       <i class="status-empty fa fa-search" v-bind:class="{ visible : isEmpty }"></i>
       <i class="status-dirty fa fa-times" v-bind:class="{ visible: !isEmpty, 'fa-spin':isLoading }" @click="reset"></i>
     </div>

@@ -8,13 +8,11 @@ import './locationsearch.scss';
 
 import weather from 'helpers/weather';
 
-import { focus } from 'vue-focus';
+import { mixin as clickaway } from 'vue-clickaway';
 
 export default Vue.extend({
   template,
-  directives: {
-    focus: focus
-  },
+  mixins: [ clickaway ],
   data() {
     return {
       state: {
