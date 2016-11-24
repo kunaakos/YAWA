@@ -7,8 +7,7 @@ $ls-input-fontweight: 300;
 $ls-input-lineheight: $line-height-base;
 
 $ls-input-padding-blurred: ($spacer-y / 1.5) 0;
-$ls-input-padding-focused: ($spacer-y / 1.5) ($spacer-x) ($spacer-y / 1.5) ($spacer-x * 1.5);
-
+$ls-input-padding-focused: ($spacer-y / 1.5) ($spacer-x * 1.5);
 
 $ls-results-fontsize: $font-size-h6;
 $ls-results-padding: ($spacer-y / 1.5) ($spacer-x * 1.5);
