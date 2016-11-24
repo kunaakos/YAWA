@@ -11,11 +11,14 @@ import './locationcard.scss';
 import weather from 'helpers/weather';
 import store from 'src/store';
 
+import { mixin as clickaway } from 'vue-clickaway';
+
 export default Vue.extend({
   template,
   components: {
     Loader
   },
+  mixins: [ clickaway ],
   props: [ 'alert' ],
   data() {
     return {
@@ -88,6 +91,10 @@ export default Vue.extend({
 
     toggleOpen() {
       this.state.open = !this.state.open;
+    },
+
+    close() {
+      this.state.open = false;
     },
 
     update() {

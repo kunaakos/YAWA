@@ -1,4 +1,4 @@
-<div class="LocationCard" v-bind:class="{ open: state.open, night: night }">
+<div class="LocationCard" v-bind:class="{ open: state.open, night: night }" v-on-clickaway="close">
 
   <!-- secondary content / bottom layer: settings -->
   <div class="lc-sec" v-on:click="toggleOpen">
