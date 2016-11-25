@@ -17,7 +17,7 @@ export default Vue.extend({
     LocationCard
   },
   computed: mapGetters({
-    alerts: 'db_getAlerts',
+    alertKeyArray: 'db_getAlertKeyArray',
     hasItems: 'db_hasItems'
   }),
   methods: {

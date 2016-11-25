@@ -19,7 +19,7 @@ export default Vue.extend({
     Loader
   },
   mixins: [ clickaway ],
-  props: [ 'alert' ],
+  props: [ 'alertKey' ],
   data() {
     return {
       state: {
@@ -36,6 +36,9 @@ export default Vue.extend({
   },
 
   computed: {
+    alert() {
+      return this.$store.getters.db_getAlerts[this.alertKey];
+    },
     weatherConditionsFAIcon: function() {
       switch (this.description) {
         case 'clear':
