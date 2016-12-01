@@ -18,22 +18,22 @@ export default Vue.extend({
   },
   data() {
     return {
-      newAlertKeyArray: []
+      newCardKeys: []
     };
   },
   computed: mapGetters({
-    alertKeyArray: 'db_getAlertKeyArray',
-    hasItems: 'db_hasItems'
+    cardKeys: 'db_getCardKeys',
+    hasCards: 'db_hasCards'
   }),
   methods: {
-    updateKeyArray() {
-      this.$store.dispatch('db_setAlertKeyArray', this.newAlertKeyArray);
+    updateSortKeys() {
+      this.$store.dispatch('db_updateSortKeys', this.newCardKeys);
     }
   },
   created() {
     var self = this;
-    this.$watch('alertKeyArray', function(newVal) {
-      self.newAlertKeyArray = newVal.slice();
+    this.$watch('cardKeys', function(newVal) {
+      self.newCardKeys = newVal.slice();
     });
   }
 });

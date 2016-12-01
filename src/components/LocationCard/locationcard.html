@@ -1,4 +1,4 @@
-<div class="LocationCard" v-bind:class="{ open: state.open, night: night }" v-on-clickaway="close">
+<div class="LocationCard" v-bind:class="{ open: state.open, night: data.night }" v-on-clickaway="close">
 
   <!-- secondary content / bottom layer: settings -->
   <div class="lc-sec" v-on:click="toggleOpen">
@@ -15,8 +15,8 @@
     <!-- primary content / top layer: data -->
     <div v-else class="lc-prim" v-on:click="toggleOpen">
       <div class="lc-data">
-        <div class="lc-data-name">{{ name }}</div>
-        <div class="lc-data-currenttemp">{{ currentTemp }} °C</div>
+        <div class="lc-data-name">{{ data.name }}</div>
+        <div class="lc-data-currenttemp">{{ data.currentTemp }} °C</div>
       </div>
       <i class="lc-weathericon fa" v-bind:class="weatherConditionsFAIcon" ></i>
     </div>

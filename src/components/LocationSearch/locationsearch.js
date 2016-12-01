@@ -103,7 +103,7 @@ export default Vue.extend({
     hit() {
       if (this.currentSelection !== -1) {
         this.$emit('gotResultID', this.searchResults[this.currentSelection].id);
-        this.$store.dispatch('db_addAlertByOwmId', this.searchResults[this.currentSelection].id);
+        this.$store.dispatch('db_createCard', this.searchResults[this.currentSelection].id);
         this.reset();
       }
     },

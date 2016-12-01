@@ -19,7 +19,7 @@ export default Vue.extend({
     Loader
   },
   mixins: [ clickaway ],
-  props: [ 'alertKey' ],
+  props: [ 'cardKey' ],
   data() {
     return {
       state: {
@@ -27,22 +27,24 @@ export default Vue.extend({
         loading: true,
         open: false
       },
-      name: null,
-      currentTemp: null,
-      description: null,
-      conditions: null,
-      night: null
+      data: {
+        name: null,
+        currentTemp: null,
+        description: null,
+        conditions: null,
+        night: null
+      }
     };
   },
 
   computed: {
-    alert() {
-      return this.$store.getters.db_getAlerts[this.alertKey];
+    remoteData() {
+      return this.$store.getters.db_getCards[this.cardKey];
     },
-    weatherConditionsFAIcon: function() {
-      switch (this.description) {
+    weatherConditionsFAIcon() {
+      switch (this.data.description) {
         case 'clear':
-          if (this.night) {
+          if (this.data.night) {
             return 'fa-moon-o';
           } else {
             return 'fa-sun-o';
@@ -65,13 +67,13 @@ export default Vue.extend({
 
   created: function() {
     var self = this;
-    weather.getWeatherDataById(this.alert.owmCityId).then(
+    weather.getWeatherDataById(this.remoteData.owmCityId).then(
       (data) => {
         // success yay
-        self.name = data.name;
-        self.currentTemp = data.currentTemp;
-        self.description = data.description;
-        self.night = data.night;
+        self.data.name = data.name;
+        self.data.currentTemp = data.currentTemp;
+        self.data.description = data.description;
+        self.data.night = data.night;
         self.state.gotWeatherData = true;
         self.state.loading = false;
       },
@@ -82,14 +84,9 @@ export default Vue.extend({
     );
   },
 
-  destroyed: function() {
-    console.log('destroyed');
-  },
-
   methods: {
     deleteCard() {
-      console.log('deleting card with firebaseKey: ' + this.alertKey);
-      store.dispatch('db_deleteAlertByFirebaseKey', this.alertKey);
+      store.dispatch('db_deleteCard', this.cardKey);
     },
 
     toggleOpen() {
@@ -101,11 +98,7 @@ export default Vue.extend({
     },
 
     update() {
-
-    },
-
-    reset() {
-
+      // NOT IMPLEMENTED
     }
   }
 });
