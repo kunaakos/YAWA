@@ -88,8 +88,8 @@ export default Vue.extend({
 
   methods: {
     deleteCard() {
-      console.log('deleting card with firebaseKey: ' + this.alert['.key']);
-      store.dispatch('db_deleteAlertByFirebaseKey', this.alert['.key']);
+      console.log('deleting card with firebaseKey: ' + this.alertKey);
+      store.dispatch('db_deleteAlertByFirebaseKey', this.alertKey);
     },
 
     toggleOpen() {

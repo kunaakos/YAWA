@@ -53,6 +53,11 @@
   // SHARED STYLES
   // DAY / NIGHT color inversion
   .LocationCard {
+    transition: opacity 50ms 50ms;;
+    opacity: 1;
+    &.sortable-chosen {
+      opacity: 0.6;
+    }
     &.sortable-ghost {
       opacity: 0;
     }

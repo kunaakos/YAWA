@@ -16,10 +16,24 @@ export default Vue.extend({
     LocationSearch,
     LocationCard
   },
+  data() {
+    return {
+      newAlertKeyArray: []
+    };
+  },
   computed: mapGetters({
     alertKeyArray: 'db_getAlertKeyArray',
     hasItems: 'db_hasItems'
   }),
   methods: {
+    updateKeyArray() {
+      this.$store.dispatch('db_setAlertKeyArray', this.newAlertKeyArray);
+    }
+  },
+  created() {
+    var self = this;
+    this.$watch('alertKeyArray', function(newVal) {
+      self.newAlertKeyArray = newVal.slice();
+    });
   }
 });

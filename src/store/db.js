@@ -6,8 +6,9 @@ import VuexFire from 'vuexfire';
 import firebaseHelper from 'helpers/firebase';
 
 class Alert {
-  constructor(owmCityId) {
+  constructor(owmCityId, sortKey) {
     this.owmCityId = owmCityId;
+    this.sortKey = sortKey;
     this.tempThresholds = {
       maxC: false,
       minC: false
@@ -19,14 +20,11 @@ class Alert {
 // write first, structure later!
 const alerts = {
   alertsRef: null,
-  alertKeyArrayRef: null,
-  userRef: null,
 
+  // check for existing alerts for the given owmCityId
   check(owmCityId) {
-    // check for existing alerts for the given owmCityId
     var self = this;
     return new Promise(function(resolve, reject) {
-      console.log('alertsRef: ' + self.alertsRef);
       self.alertsRef.orderByChild('owmCityId').equalTo(owmCityId).once('value', (snapshot) => {
         if (!snapshot.val()) {
           // no existing alert for this owmCityId
@@ -37,26 +35,19 @@ const alerts = {
         }
       });
     });
-    // return a Promise
   },
 
+  // add a new alert
   add(owmCityId) {
     var self = this;
-
-    var alertObj = new Alert(owmCityId);
-    console.log('new owmCityId! adding ' + alertObj);
-
-    // cadd new alert and add the alert key to alertKeyArray AT ONCE
     return new Promise(function(resolve, reject) {
-      // as seen on https://firebase.googleblog.com/2015/09/introducing-multi-location-updates-and_86.html
-      var newAlertKey = self.userRef.child('alerts').push().key;
-      // var newAlertKey = newAlertRef.key();
+      // get unique key - we need this for sorting
+      var newAlertKey = self.alertsRef.push().key;
       // Create the data we want to update
-      var updatedUserData = {};
-      updatedUserData['alerts/' + newAlertKey] = alertObj;
-      updatedUserData['alertKeyArray/' + newAlertKey] = newAlertKey;
+      var alertData = {};
+      alertData[newAlertKey] = new Alert(owmCityId, newAlertKey);
       // Do a deep-path update
-      self.userRef.update(updatedUserData, function(error) {
+      self.alertsRef.update(alertData, function(error) {
         if (error) {
           console.log('Error updating data:', error);
           reject();
@@ -65,23 +56,13 @@ const alerts = {
         }
       });
     });
-    // MAGIC!!!
   },
 
-  delete() {
-    // delete the alert with the given firebaseKey
-    // remove from alertKeyArray
+  delete(firebaseKey) {
+    this.alertsRef.child(firebaseKey).remove();
     // what to return?
-  },
-
-  updateKeyArray() {
-    // this should be done automatically by vuexfire, but in case it can't be...
-    // what to return?
-  },
-
-  checkKeyArray() {
-    // check the integrity of alertKeyArray
   }
+
 };
 
 if (alerts) {
@@ -90,8 +71,7 @@ if (alerts) {
 
 const db = {
   state: {
-    alerts: null,
-    alertKeyArray: null
+    alerts: null
   },
 
   actions: {
@@ -108,23 +88,29 @@ const db = {
     },
 
     db_deleteAlertByFirebaseKey(context, firebaseKey) {
-      if (context) {
-        console.log('store deleting ' + firebaseKey);
-        App.$firebaseRefs['db.alerts'].child(firebaseKey).remove();
-        // remove from sortOrder
-        // ...
-      }
+      alerts.delete(firebaseKey);
+    },
+
+    // update sortKey values of cards
+    db_setAlertKeyArray(context, keyArray) {
+      var data = keyArray.reduce((alertsData, key, index) => {
+        alertsData[key + '/sortKey'] = index;
+        return alertsData;
+      }, {});
+
+      alerts.alertsRef.update(data, function(error) {
+        if (error) {
+          console.log('Error updating data:', error);
+        } else {
+          console.log('keyArray updated');
+        }
+      });
     },
 
     db_doFirebaseBindings(context) {
       var userId = context.rootState.auth.user.uid;
       App.$bindAsObject('db.alerts', firebaseHelper.db.ref('users/' + userId + '/alerts'));
-      App.$bindAsArray('db.alertKeyArray', firebaseHelper.db.ref('users/' + userId + '/alertKeyArray'));
       alerts.alertsRef = App.$firebaseRefs['db.alerts'];
-      alerts.alertKeyArrayRef = App.$firebaseRefs['db.alertKeyArray'];
-      alerts.userRef = firebaseHelper.db.ref('users/' + userId); // not bound to vuex!
-
-      // TODO check sortOrder integrity, add missing intems
     }
   },
 
@@ -134,11 +120,28 @@ const db = {
     db_getAlerts: state => {
       return state.alerts;
     },
+    // returns an array containing the unique IDs of cards in the order they
+    // should appear on screen
     db_getAlertKeyArray: state => {
-      return state.alertKeyArray;
+      var sortable = [];
+      for (var alertKey in state.alerts) {
+        var alert = state.alerts[alertKey];
+        if (alert && alert.hasOwnProperty('sortKey')) {
+          sortable.push({
+            'sortKey': alert.sortKey,
+            'alertKey': alertKey
+          });
+        }
+      }
+      sortable.sort((a, b) => {
+        return (a.sortKey > b.sortKey) ? true : false;
+      });
+      return sortable.map((value) => {
+        return value.alertKey;
+      });
     },
     db_hasItems: state => {
-      return !!state.alertKeyArray.length();
+      return !!state.alerts.length;
     }
   }
 };
