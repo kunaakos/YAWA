@@ -22,7 +22,8 @@ export default Vue.extend({
     };
   },
   computed: mapGetters({
-    _order: 'card_g__order'
+    _order: 'card_g__order',
+    cards: 'card_g__cards'
   }),
   methods: {
     setOrder() {

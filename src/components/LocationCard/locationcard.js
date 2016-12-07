@@ -15,7 +15,13 @@ export default Vue.extend({
   components: {
     Loader
   },
-  props: [ 'cardKey' ],
+
+  // make sure props aren't camelCase unless you want a bite in the ass when
+  // building a production version
+  // see: https://vuejs.org/v2/guide/components.html#camelCase-vs-kebab-case
+  // note that v-bind:key is reserved for list rendering, so we have to go
+  // with the second best option
+  props: [ 'fuckey', 'data' ],
 
   computed: {
     weatherConditionsFAIcon() {
@@ -50,32 +56,29 @@ export default Vue.extend({
     },
 
     isLit() {
-      return this.data.isDark;
+      return this.data.isLit;
     },
 
     isDark() {
       return this.data.isDark;
-    },
-
-    data() {
-      return store.getters.card_g__cards[this.cardKey];
     }
+
   },
 
-  created: function() {
+  mounted: function() {
     this.update();
   },
 
   methods: {
     deleteCard() {
-      store.dispatch('card__cards_delete', this.cardKey);
+      store.dispatch('card__cards_delete', this.fuckey);
     },
 
     toggleOpen() {
       if (this.isOpen) {
         store.dispatch('card__cards_open', null);
       } else {
-        store.dispatch('card__cards_open', this.cardKey);
+        store.dispatch('card__cards_open', this.fuckey);
       }
     },
 
@@ -84,7 +87,7 @@ export default Vue.extend({
     },
 
     update() {
-      store.dispatch('card__cards_weatherUpdate', this.cardKey);
+      store.dispatch('card__cards_weatherUpdate', this.fuckey);
     }
   }
 });
