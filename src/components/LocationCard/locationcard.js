@@ -8,43 +8,20 @@ import Loader from 'components/Loader/loader';
 import template from './locationcard.html';
 import './locationcard.scss';
 
-import weather from 'helpers/weather';
 import store from 'src/store';
-
-import { mixin as clickaway } from 'vue-clickaway';
 
 export default Vue.extend({
   template,
   components: {
     Loader
   },
-  mixins: [ clickaway ],
   props: [ 'cardKey' ],
-  data() {
-    return {
-      state: {
-        gotWeatherData: false,
-        loading: true,
-        open: false
-      },
-      data: {
-        name: null,
-        currentTemp: null,
-        description: null,
-        conditions: null,
-        night: null
-      }
-    };
-  },
 
   computed: {
-    remoteData() {
-      return this.$store.getters.db_getCards[this.cardKey];
-    },
     weatherConditionsFAIcon() {
-      switch (this.data.description) {
+      switch (this.data.currentConditions) {
         case 'clear':
-          if (this.data.night) {
+          if (this.data.isDark) {
             return 'fa-moon-o';
           } else {
             return 'fa-sun-o';
@@ -62,43 +39,52 @@ export default Vue.extend({
         default:
           return 'fa-question';
       }
+    },
+
+    isLoading() {
+      return !this.data.lastUpdate;
+    },
+
+    isOpen() {
+      return this.data.isOpen;
+    },
+
+    isLit() {
+      return this.data.isDark;
+    },
+
+    isDark() {
+      return this.data.isDark;
+    },
+
+    data() {
+      return store.getters.card_g__cards[this.cardKey];
     }
   },
 
   created: function() {
-    var self = this;
-    weather.getWeatherDataById(this.remoteData.owmCityId).then(
-      (data) => {
-        // success yay
-        self.data.name = data.name;
-        self.data.currentTemp = data.currentTemp;
-        self.data.description = data.description;
-        self.data.night = data.night;
-        self.state.gotWeatherData = true;
-        self.state.loading = false;
-      },
-      (data) => {
-        // fail nooo
-        console.log(data);
-      }
-    );
+    this.update();
   },
 
   methods: {
     deleteCard() {
-      store.dispatch('db_deleteCard', this.cardKey);
+      store.dispatch('card__cards_delete', this.cardKey);
     },
 
     toggleOpen() {
-      this.state.open = !this.state.open;
+      if (this.isOpen) {
+        store.dispatch('card__cards_open', null);
+      } else {
+        store.dispatch('card__cards_open', this.cardKey);
+      }
     },
 
     close() {
-      this.state.open = false;
+
     },
 
     update() {
-      // NOT IMPLEMENTED
+      store.dispatch('card__cards_weatherUpdate', this.cardKey);
     }
   }
 });

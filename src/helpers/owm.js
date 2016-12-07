@@ -13,7 +13,7 @@ Vue.http.options = {
   root: API_BASE
 };
 
-var weather = {
+var owmHelper = {
   state: {
     result: null
   },
@@ -135,6 +135,6 @@ var weather = {
   }
 };
 
-export default weather;
+export default owmHelper;
 
 // R'Amen.

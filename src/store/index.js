@@ -1,12 +1,10 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import VuexFire from 'vuexfire';
 
 Vue.use(Vuex);
-Vue.use(VuexFire);
 
 import auth from './auth';
-import db from './db';
+import card from './card';
 
 const app = {
   state: {
@@ -23,7 +21,7 @@ const store = new Vuex.Store({
   modules: {
     app,
     auth,
-    db
+    card
   }
 });
 

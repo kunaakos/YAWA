@@ -6,7 +6,7 @@ import template from './locationsearch.html';
 
 import './locationsearch.scss';
 
-import weather from 'helpers/weather';
+import owmHelper from 'helpers/owm';
 
 import { mixin as clickaway } from 'vue-clickaway';
 
@@ -57,7 +57,7 @@ export default Vue.extend({
 
       this.state.loading = true;
 
-      var search = weather.getCities(this.searchQuery, this.options.limit);
+      var search = owmHelper.getCities(this.searchQuery, this.options.limit);
 
       this.lastSearchToken = search.resultToken;
 
@@ -103,7 +103,7 @@ export default Vue.extend({
     hit() {
       if (this.currentSelection !== -1) {
         this.$emit('gotResultID', this.searchResults[this.currentSelection].id);
-        this.$store.dispatch('db_createCard', this.searchResults[this.currentSelection].id);
+        this.$store.dispatch('card__cards_add', this.searchResults[this.currentSelection].id);
         this.reset();
       }
     },

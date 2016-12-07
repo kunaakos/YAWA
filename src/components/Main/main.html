@@ -2,8 +2,8 @@
 
   <location-search></location-search>
 
-  <draggable class="LocationCards" :options="{delay: 50, animation: 100}" :list="newCardKeys" @end="updateSortKeys">
-    <location-card v-for="key in cardKeys" v-bind:cardKey="key" v-bind:key="key"></location-card>
+  <draggable class="LocationCards" :options="{delay: 100, animation: 100}" :list="order" @end="setOrder">
+    <location-card v-for="key in order" v-bind:cardKey="key" v-bind:key="key"></location-card>
     <div class="flex-filler"></div>
     <div class="flex-filler"></div>
     <div class="flex-filler"></div>

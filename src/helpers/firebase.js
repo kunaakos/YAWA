@@ -10,8 +10,7 @@ var firebaseConfig = {
   storageBucket: 'project-3546681884328698666.appspot.com',
 };
 
-class Card {
-
+class FirebaseCard {
   constructor(owmCityId, sortKey) {
     this.owmCityId = owmCityId;
     this.sortKey = sortKey;
@@ -20,31 +19,111 @@ class Card {
       minC: false
     };
   }
-
 }
 
 class FirebaseHelper {
 
   constructor(config) {
+    // firebase init
     this.firebaseApp = firebase.initializeApp(config);
     this.fbAuthProvider = new firebase.auth.FacebookAuthProvider();
     this.db = firebase.database();
-    this.cardsRef = null;
 
+    // set up firebase refs
+    this.cardsRef = null;
+    this.CardOrderRef = null;
+
+    // <3 JS
+    var self = this;
+
+    // handle firebase auth state changes
     firebase.auth().onAuthStateChanged(function(user) {
+      // check auth state
       if (user) {
-        store.commit('auth_setUser', user); // should map data!
-        store.dispatch('db_doFirebaseBindings');
+        // user is authenticated
+        self.__authenticated(user);
       } else {
-        store.commit('auth_setUser', null);
+        // user not authenticated, or just logged out
+        self.__unauthenticated();
       }
+      // ... either way, this means the firebase auth module is up and running.
       store.commit('auth_setInitState', true);
     });
 
   }
 
+  __authenticated(user) {
+    store.commit('auth_setUser', user); // should map data!
+    this.userRef = this.db.ref('users/' + user.uid);
+    this.cardsRef = this.db.ref('users/' + user.uid + '/cards');
+    this.cardOrderRef = this.db.ref('users/' + user.uid + '/cardOrder');
+    this.__setupMutations();
+  }
+
+  __unauthenticated() {
+    this.userRef = null;
+    this.cardsRef = null;
+    this.cardOrderRef = null;
+    store.commit('auth_setUser', null);
+    store.commit('card_m_fb__nuke', null);
+  }
+
+  __setupMutations() {
+
+    // card added
+    this.cardsRef.on('child_added', function(childSnapshot) {
+      var data = {
+        'key': childSnapshot.key,
+        'value': childSnapshot.val()
+      };
+      // add a new card to store
+      store.commit('card_m_fb__cards_add', childSnapshot.key);
+      // and update with firebase data
+      store.commit('card_m_fb__cards_update', data);
+    });
+
+    // card changed
+    this.cardsRef.on('child_changed', function(childSnapshot) {
+      var data = {
+        'key': childSnapshot.key,
+        'value': childSnapshot.val()
+      };
+      store.commit('card_m_fb__updateCard', data);
+    });
+
+    // card removed
+    this.cardsRef.on('child_removed', function(childSnapshot) {
+      store.commit('card_m_fb__cards_remove', childSnapshot.key);
+    });
+
+    // card order changed
+    this.cardOrderRef.on('value', function(snapshot) {
+
+      var cardOrderObj = snapshot.val();
+      var sortable = [];
+
+      for (var cardKey in cardOrderObj) {
+        sortable.push({
+          'sortKey': cardOrderObj[cardKey],
+          'cardKey': cardKey
+        });
+      }
+
+      sortable.sort((a, b) => {
+        return (a.sortKey > b.sortKey) ? true : false;
+      });
+
+      var keyArray = sortable.map((value) => {
+        return value.cardKey;
+      });
+
+      store.commit('card_m_fb__order_set', keyArray);
+    });
+
+  }
+
   // check for existing cards that have a given owmCityId
-  checkForExistingCard(owmCityId) {
+  _check(owmCityId) {
     var self = this;
     return new Promise(function(resolve, reject) {
       self.cardsRef.orderByChild('owmCityId').equalTo(owmCityId).once('value', (snapshot) => {
@@ -59,30 +138,21 @@ class FirebaseHelper {
     });
   }
 
-  createCard(owmCityId) {
+  _add(owmCityId) {
     // get unique key - we need this as an inital sortKey value
     var newCardKey = this.cardsRef.push().key;
     // create update data
     var data = {};
-    data[newCardKey] = new Card(owmCityId, newCardKey);
-    // do the update
-    return this.updateCards(data);
+    data['cards/' + newCardKey] = new FirebaseCard(owmCityId, newCardKey);
+    data['cardOrder/' + newCardKey] = newCardKey;
+    // do the update, return update Promise
+    return this._update(data);
   }
 
-  updateSortKeys(keyArray) {
-    // create update data
-    var data = keyArray.reduce((cardsData, key, index) => {
-      cardsData[key + '/sortKey'] = index;
-      return cardsData;
-    }, {});
-    // do the update
-    return this.updateCards(data);
-  }
-
-  updateCards(data) {
+  _update(data) {
     var self = this;
     return new Promise(function(resolve, reject) {
-      self.cardsRef.update(data, function(error) {
+      self.userRef.update(data, function(error) {
         if (error) {
           reject('Error updating cards.');
         } else {
@@ -92,8 +162,25 @@ class FirebaseHelper {
     });
   }
 
-  deleteCard(firebaseKey) {
-    this.cardsRef.child(firebaseKey).remove();
+  _delete(key) {
+    // create update data - null value deletes
+    var data = {};
+    data['cards/' + key] = null;
+    data['cardOrder/' + key] = null;
+
+    // do the update, return update Promise
+    return this._update(data);
+  }
+
+  _setOrder(keyArray) {
+    // create update data
+    var data = keyArray.reduce((acc, currValue, index) => {
+      acc['cardOrder/' + currValue] = index;
+      return acc;
+    }, {});
+
+    // do the update, return update Promise
+    return this._update(data);
   }
 
   login() {

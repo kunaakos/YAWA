@@ -18,22 +18,21 @@ export default Vue.extend({
   },
   data() {
     return {
-      newCardKeys: []
+      order: []
     };
   },
   computed: mapGetters({
-    cardKeys: 'db_getCardKeys',
-    hasCards: 'db_hasCards'
+    _order: 'card_g__order'
   }),
   methods: {
-    updateSortKeys() {
-      this.$store.dispatch('db_updateSortKeys', this.newCardKeys);
+    setOrder() {
+      this.$store.dispatch('card__order_set', this.order);
     }
   },
   created() {
     var self = this;
-    this.$watch('cardKeys', function(newVal) {
-      self.newCardKeys = newVal.slice();
+    this.$watch('_order', function(newVal) {
+      self.order = newVal.slice();
     });
   }
 });
