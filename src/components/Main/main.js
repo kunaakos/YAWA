@@ -16,24 +16,34 @@ export default Vue.extend({
     LocationSearch,
     LocationCard
   },
+
   data() {
     return {
-      order: []
+      localOrder: []
     };
   },
+
   computed: mapGetters({
-    _order: 'card_g__order',
+    order: 'card_g__order',
     cards: 'card_g__cards'
   }),
+
   methods: {
     setOrder() {
-      this.$store.dispatch('card__order_set', this.order);
+      // commit the modified card order array
+      this.$store.dispatch('card__order_set', this.localOrder);
     }
   },
-  created() {
+
+  mounted: function() {
+    // vuedraggable needs a local copy of the card order array beause it
+    // can't deal with vuex
+    this.localOrder = this.order;
+    // we set up a watcher to update this local array if the card order
+    // changes in the store
     var self = this;
-    this.$watch('_order', function(newVal) {
-      self.order = newVal.slice();
+    this.$watch('order', function(newVal) {
+      self.localOrder = newVal.slice();
     });
   }
 });
