@@ -54,18 +54,6 @@ const card = {
       // mutations will be commited by firebaseHelper
     },
 
-    // 'open' a card - only one card can be open at a time!
-    // if no key is given, all cards are set to 'closed'
-    card__cards_open(context, key) {
-      for (var cardKey in context.state.cards) {
-        if (cardKey !== key) {
-          context.state.cards[cardKey].isOpen = false;
-        } else {
-          context.state.cards[cardKey].isOpen = true;
-        }
-      }
-    },
-
     // update the weather data of the card
     card__cards_weatherUpdate(context, key) {
       owmHelper.getWeatherDataById(context.state.cards[key].owmCityId).then((owmData) => {
@@ -81,6 +69,18 @@ const card = {
 
   // mutation name pattern: card_m_[helper]__[property]_[action]
   mutations: {
+
+    card_m__cards_open(state, key) {
+      state.cards[key].isOpen = true;
+    },
+
+    card_m__cards_close(state, key) {
+      state.cards[key].isOpen = false;
+    },
+
+    card_m__cards_toggle(state, key) {
+      state.cards[key].isOpen = !state.cards[key].isOpen;
+    },
 
     card_m_fb__cards_add: (state, key) => {
       // create a card!

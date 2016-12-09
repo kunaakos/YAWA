@@ -10,6 +10,8 @@ import './locationcard.scss';
 
 import store from 'src/store';
 
+import { mixin as clickaway } from 'vue-clickaway';
+
 export default Vue.extend({
   template,
   components: {
@@ -22,6 +24,8 @@ export default Vue.extend({
   // note that v-bind:key is reserved for list rendering, so we have to go
   // with the second best option
   props: [ 'fuckey', 'data' ],
+
+  mixins: [ clickaway ],
 
   computed: {
     weatherConditionsFAIcon() {
@@ -74,16 +78,14 @@ export default Vue.extend({
       store.dispatch('card__cards_delete', this.fuckey);
     },
 
-    toggleOpen() {
-      if (this.isOpen) {
-        store.dispatch('card__cards_open', null);
-      } else {
-        store.dispatch('card__cards_open', this.fuckey);
-      }
+    toggle() {
+      store.commit('card_m__cards_toggle', this.fuckey);
     },
 
     close() {
-
+      if (this.data.isOpen) {
+        store.commit('card_m__cards_close', this.fuckey);
+      }
     },
 
     update() {
