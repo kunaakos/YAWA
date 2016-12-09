@@ -8,8 +8,6 @@ import Loader from 'components/Loader/loader';
 import template from './locationcard.html';
 import './locationcard.scss';
 
-import store from 'src/store';
-
 import { mixin as clickaway } from 'vue-clickaway';
 
 export default Vue.extend({
@@ -75,21 +73,21 @@ export default Vue.extend({
 
   methods: {
     deleteCard() {
-      store.dispatch('card__cards_delete', this.fuckey);
+      this.$store.dispatch('card__cards_delete', this.fuckey);
     },
 
     toggle() {
-      store.commit('card_m__cards_toggle', this.fuckey);
+      this.$store.commit('card_m__cards_toggle', this.fuckey);
     },
 
     close() {
       if (this.data.isOpen) {
-        store.commit('card_m__cards_close', this.fuckey);
+        this.$store.commit('card_m__cards_close', this.fuckey);
       }
     },
 
     update() {
-      store.dispatch('card__cards_weatherUpdate', this.fuckey);
+      this.$store.dispatch('card__cards_weatherUpdate', this.fuckey);
     }
   }
 });
