@@ -99,23 +99,26 @@ class FirebaseHelper {
     // card order changed
     this.cardOrderRef.on('value', function(snapshot) {
 
-      var cardOrderObj = snapshot.val();
-      var sortable = [];
-
-      for (var cardKey in cardOrderObj) {
-        sortable.push({
-          'sortKey': cardOrderObj[cardKey],
-          'cardKey': cardKey
-        });
+      // comparator
+      function bySortKey(a, b) {
+        return (a.sortKey > b.sortKey) ? true : false;
+      }
+      // mapping: an array of keys to a sortable aray of objects
+      function toSortable(key) {
+        return {
+          'sortKey': values[key], // not pure, needs values from upper scope
+          'cardKey': key
+        };
+      }
+      // mapping: an array of objects to an array of their 'cardKey' values
+      function toKeyArray(value) {
+        return value.cardKey;
       }
 
-      sortable.sort((a, b) => {
-        return (a.sortKey > b.sortKey) ? true : false;
-      });
+      var values = snapshot.val();
+      var keys = Object.keys(values);
 
-      var keyArray = sortable.map((value) => {
-        return value.cardKey;
-      });
+      var keyArray = keys.map(toSortable).sort(bySortKey).map(toKeyArray);
 
       store.commit('card_m_fb__order_set', keyArray);
     });
