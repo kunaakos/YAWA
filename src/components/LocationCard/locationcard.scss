@@ -51,16 +51,38 @@
     }
   }
   // SHARED STYLES
-  // DAY / NIGHT color inversion
   .LocationCard {
-    transition: opacity 50ms 50ms;;
+    transition: opacity 50ms 50ms;
     opacity: 1;
+
     &.sortable-chosen {
       opacity: 0.6;
     }
     &.sortable-ghost {
       opacity: 0;
     }
+
+    .lc-alert {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 0%;
+      height: 100%;
+      background: transparent;
+      transition: background 400ms, width 400ms;
+
+      &.low {
+        background: #2879c5;
+        width: 2%;
+      }
+
+      &.high {
+        background: #dc5936;
+        width: 2%;
+      }
+    }
+
+    // DAY / NIGHT color inversion
     .lc-prim {
       background: $gray-lightest;
       color: $gray-light;

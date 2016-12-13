@@ -16,6 +16,7 @@
 
     <!-- primary content / top layer: data -->
     <div v-else class="lc-prim" v-on:click="toggle">
+      <div class="lc-alert" v-bind:class="{low: isLow, high: isHigh }"></div>
       <div class="lc-data">
         <div class="lc-data-name">{{ data.locationName }}</div>
         <div class="lc-data-currenttemp">{{ data.currentTemp }} °C</div>

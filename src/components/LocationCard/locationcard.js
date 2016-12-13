@@ -65,8 +65,15 @@ export default Vue.extend({
 
     isDark() {
       return this.data.isDark;
-    }
+    },
 
+    isLow() {
+      return this.data.tempThresholds.minC !== false && (this.data.currentTemp < this.data.tempThresholds.minC);
+    },
+
+    isHigh() {
+      return this.data.tempThresholds.maxC !== false && (this.data.currentTemp > this.data.tempThresholds.maxC);
+    },
   },
 
   mounted: function() {
