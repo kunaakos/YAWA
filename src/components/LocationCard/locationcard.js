@@ -78,6 +78,22 @@ export default Vue.extend({
       this.$store.dispatch('card__cards_delete', this.fuckey);
     },
 
+    setMaxThresh(val) {
+      this.$store.dispatch('card__cards_thresh_set', {
+        'key': this.fuckey,
+        'type': 'maxC',
+        'val': val
+      });
+    },
+
+    setMinThresh(val) {
+      this.$store.dispatch('card__cards_thresh_set', {
+        'key': this.fuckey,
+        'type': 'minC',
+        'val': val
+      });
+    },
+
     toggle() {
       this.$store.commit('card_m__cards_toggle', this.fuckey);
     },

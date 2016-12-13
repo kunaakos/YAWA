@@ -8,7 +8,7 @@ export default Vue.extend({
   template,
 
   // make sure props aren't camelCase
-  props: [ 'val' ],
+  props: [ 'val', 'settings' ],
 
   data() {
     return {
@@ -18,6 +18,11 @@ export default Vue.extend({
 
   mounted: function() {
     this.localVal = this.val;
+
+    var self = this;
+    this.$watch('val', function(newVal) {
+      self.localVal = newVal;
+    });
   },
 
   computed: {
@@ -35,14 +40,19 @@ export default Vue.extend({
 
   methods: {
     onPan(event) {
-      console.log(event.deltaX);
-      // console.log(event);
-      this.setVal(Math.round(this.val + event.deltaX / 10));
+      var initial = this.val;
+      if (initial === false) {
+        initial = this.settings.initial;
+      }
+      this.setVal(Math.round(initial + event.deltaX / 10), event.isFinal);
     },
 
-    setVal(val) {
-      if (val >= -40 && val <= 40) {
+    setVal(val, isFinal) {
+      if ((val >= this.settings.min || this.settings.min === false) && (val <= this.settings.max || this.settings.max === false)) {
         this.localVal = val;
+        if (isFinal) {
+          this.$emit('newVal', this.localVal);
+        }
       }
     }
   }

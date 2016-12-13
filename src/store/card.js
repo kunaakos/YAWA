@@ -46,6 +46,11 @@ const card = {
       // mutations will be commited by firebaseHelper
     },
 
+    card__cards_thresh_set(context, data) {
+      firebaseHelper._setThresh(data.key, data.type, data.val);
+      // mutations will be commited by firebaseHelper
+    },
+
     // set the sort order of the cards
     // keyArray is a simple array with firebase keys of cards in the order they
     // should appear on screen

@@ -88,7 +88,7 @@ class FirebaseHelper {
         'key': childSnapshot.key,
         'value': childSnapshot.val()
       };
-      store.commit('card_m_fb__updateCard', data);
+      store.commit('card_m_fb__cards_update', data);
     });
 
     // card removed
@@ -151,6 +151,12 @@ class FirebaseHelper {
     data['cards/' + newCardKey] = new FirebaseCard(owmCityId, newCardKey);
     data['cardOrder/' + newCardKey] = newCardKey;
     // do the update, return update Promise
+    return this._update(data);
+  }
+
+  _setThresh(key, type, val) {
+    var data = {};
+    data['cards/' + key + '/tempThresholds/' + type] = val;
     return this._update(data);
   }
 
