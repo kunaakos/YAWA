@@ -4,6 +4,7 @@
 import Vue from 'vue';
 
 import Loader from 'components/Loader/loader';
+import TempInput from 'components/TempInput/tempinput';
 
 import template from './locationcard.html';
 import './locationcard.scss';
@@ -13,7 +14,8 @@ import { mixin as clickaway } from 'vue-clickaway';
 export default Vue.extend({
   template,
   components: {
-    Loader
+    Loader,
+    TempInput
   },
 
   // make sure props aren't camelCase unless you want a bite in the ass when

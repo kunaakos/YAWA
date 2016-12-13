@@ -2,6 +2,8 @@
 
   <!-- secondary content / bottom layer: settings -->
   <div class="lc-sec" v-on:click="toggle">
+    <temp-input :val="data.tempThresholds.minC">MIN</temp-input>
+    <temp-input :val="data.tempThresholds.minC">MAX</temp-input>
   </div>
 
   <!-- primary content / top layer container: needed for animations -->

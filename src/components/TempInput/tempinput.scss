@@ -1,0 +1,10 @@
+@import "variables";
+
+.temp-input {
+ .unset {
+   color: $gray;
+   &:hover {
+     color: $gray-light;
+   }
+ }
+}

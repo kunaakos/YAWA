@@ -1,0 +1,5 @@
+<div class="temp-input">
+  <slot></slot>
+  <span class="unset" v-if="isUnset">unset</span>
+  <span v-else>{{ localVal }}</span> ˚C
+</div>
