@@ -116,11 +116,13 @@ class FirebaseHelper {
       }
 
       var values = snapshot.val();
-      var keys = Object.keys(values);
 
-      var keyArray = keys.map(toSortable).sort(bySortKey).map(toKeyArray);
+      if (values) {
+        var keys = Object.keys(values);
+        var keyArray = keys.map(toSortable).sort(bySortKey).map(toKeyArray);
 
-      store.commit('card_m_fb__order_set', keyArray);
+        store.commit('card_m_fb__order_set', keyArray);
+      }
     });
 
   }
