@@ -1,11 +1,32 @@
 @import "variables";
 
 .temp-input {
+  // border: 1px solid red;
   cursor: ew-resize;
- .unset {
-   color: $gray;
-   &:hover {
-     color: $gray-light;
-   }
- }
+  display: flex;
+  span {
+    font-size: $font-size-h5;
+    // border: 1px solid blue;
+    &.unset {
+      color: $gray;
+      // &:hover {
+      //   color: $gray-light;
+      // }
+    }
+    &.label {
+      flex-basis: 20%;
+      &.unset {
+        font-size: $font-size-h6;
+      }
+    }
+    &.val {
+      flex-basis: 65%;
+      text-align: right;
+    }
+    &.unset-btn {
+      text-align: right;
+      cursor: pointer;
+      flex-basis: 15%;
+    }
+  }
 }

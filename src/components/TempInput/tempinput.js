@@ -39,6 +39,11 @@ export default Vue.extend({
   },
 
   methods: {
+    unset() {
+      this.localVal = false;
+      this.$emit('newVal', false);
+    },
+
     onPan(event) {
       var initial = this.val;
       if (initial === false) {

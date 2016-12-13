@@ -119,7 +119,9 @@
   // XS ONLY STYLES
   @media (min-width: #{map-get($grid-breakpoints, xs)}) and (max-width: #{map-get($grid-breakpoints, sm)}) {
     .LocationCard {
-      .lc-sec {}
+      .lc-sec {
+        padding: ($spacer-y * 1.2) ($spacer-x * 1.5) ($spacer-y / 1.5) ($spacer-x * 2 + 4rem);
+      }
 
       .lc-prim-ct {
         .lc-prim {
@@ -144,10 +146,10 @@
 
       .lc-ctrl-delete {
         position: absolute;
-        right: ($spacer-x / 2);
-        top: 1rem;
+        left: ($spacer-x);
+        top: 0.8rem;
         font-size: 4rem;
-        width: 6rem;
+        width: 4rem;
         color: $gray-lightest;
       }
     }
@@ -199,6 +201,14 @@
         }
       }
 
+      .lc-sec {
+        .temp-input {
+          opacity: 0;
+          transform: translateY(-150%);
+          transition: opacity 200ms, transform 200ms ease-in, 100ms, color 200ms;
+        }
+      }
+
       .lc-prim,
       .lc-prim-ct {
         transition: opacity 400ms 200ms, transform 400ms 200ms;
@@ -216,6 +226,14 @@
     }
 
     .LocationCard.open {
+      .lc-sec {
+        .temp-input {
+          opacity: 1;
+          transition: opacity 200ms 300ms, transform 200ms 300ms ease-out, color 200ms;
+          transform: none;
+        }
+      }
+
       .lc-prim,
       .lc-prim-ct {
         transition: opacity 400ms, transform 400ms;
