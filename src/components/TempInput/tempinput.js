@@ -4,6 +4,7 @@ import template from './tempinput.html';
 import './tempinput.scss';
 
 export default Vue.extend({
+  name: 'TempInput',
   template,
 
   // make sure props aren't camelCase
@@ -33,6 +34,16 @@ export default Vue.extend({
   },
 
   methods: {
+    onPan(event) {
+      console.log(event.deltaX);
+      // console.log(event);
+      this.setVal(Math.round(this.val + event.deltaX / 10));
+    },
 
+    setVal(val) {
+      if (val >= -40 && val <= 40) {
+        this.localVal = val;
+      }
+    }
   }
 });

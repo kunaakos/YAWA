@@ -83,11 +83,9 @@
   }
 
   .LocationCard {
-    * {
-      cursor: pointer; // teverything on LocationCard is clickable
-    }
 
     .lc-prim-ct {
+      cursor: pointer;
       .lc-prim {
         .lc-data-currenttemp,
         .lc-data-name {}

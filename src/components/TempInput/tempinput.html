@@ -1,4 +1,4 @@
-<div class="temp-input">
+<div class="temp-input" v-touch:pan="onPan">
   <slot></slot>
   <span class="unset" v-if="isUnset">unset</span>
   <span v-else>{{ localVal }}</span> ˚C

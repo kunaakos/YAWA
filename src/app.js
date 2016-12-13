@@ -8,6 +8,14 @@ import store from 'src/store';
 
 import 'src/styles/main.scss';
 
+import VueTouch from 'vue-touch';
+Vue.use(VueTouch);
+
+VueTouch.config.pan = {
+  direction: 'horizontal',
+  threshold: 5
+};
+
 export const App = new Vue({
   router,
   store,

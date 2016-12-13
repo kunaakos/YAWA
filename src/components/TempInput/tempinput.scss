@@ -1,6 +1,7 @@
 @import "variables";
 
 .temp-input {
+  cursor: ew-resize;
  .unset {
    color: $gray;
    &:hover {

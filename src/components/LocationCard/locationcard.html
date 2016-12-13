@@ -1,13 +1,13 @@
 <div class="LocationCard" v-bind:class="{ open: isOpen, dark: isDark }" v-on-clickaway="close">
 
   <!-- secondary content / bottom layer: settings -->
-  <div class="lc-sec" v-on:click="toggle">
+  <div class="lc-sec">
     <temp-input :val="data.tempThresholds.minC">MIN</temp-input>
     <temp-input :val="data.tempThresholds.minC">MAX</temp-input>
   </div>
 
   <!-- primary content / top layer container: needed for animations -->
-  <div class="lc-prim-ct">
+  <div class="lc-prim-ct drag-handle">
 
     <!-- primary content / top layer: data -->
     <div v-if="isLoading" class="lc-prim" v-on:click="toggle">
