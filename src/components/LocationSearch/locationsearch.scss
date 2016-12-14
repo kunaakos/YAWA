@@ -14,7 +14,7 @@ $ls-results-padding: ($spacer-y / 1.5) ($spacer-x * 1.5);
 $ls-results-border-bottom: $ls-results-fontsize / 2.5;
 $ls-results-countrycode-width: ($spacer-x * 2.5);
 
-$ls-transition: all 0.25s;
+$ls-transition: opacity 0.2s, background 0.2s, padding 0.4s linear, max-height 0.4s linear;
 
 $ls-color-dark: $gray-dark;
 $ls-color-light: $gray-light;
@@ -24,103 +24,151 @@ $ls-color-highlight: $brand-primary;
 
 .location-search {
 
-  // SEARCH BAR STYLES START
   padding-bottom: $ls-margin-bottom;
 
-  input {
-    width: 100%;
-    border: none;
-    outline: 0;
-  }
+  // SEARCHBOX STYLES START
+  .searchbox {
+    position: relative;
 
-  input, .indicators>i {
-    font-weight: $ls-input-fontweight;
-    font-size: $ls-input-fontsize;
-    line-height: $ls-input-lineheight;
-  }
+    input {
+      width: 100%;
+      border: none;
+      outline: 0;
+    }
 
-  .indicators {
-    position: absolute; // relative parent: nearest col-...
-    right: ($grid-gutter-width-base / 2); // need to add "gutter" padding, since this this is not a col-... element
-    top: 0;
-    i {
-      position: absolute;
-      top: 0;
+    input, .indicators>i {
+      font-weight: $ls-input-fontweight;
+      font-size: $ls-input-fontsize;
+      line-height: $ls-input-lineheight;
+    }
+
+    .indicators {
+      position: absolute; // relative parent: nearest col-...
       right: 0;
+      top: 0;
+      i {
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+
+      .status-dirty { // this one is clickable!
+        cursor: pointer;
+      }
     }
 
-    .status-dirty { // this one is clickable!
-      cursor: pointer;
+  }
+  // SEARCHBOX STYLES END
+
+  // SEARHCBOX ANIMATIONS START
+  .searchbox{
+
+    input {
+      background: $ls-color-bg;
     }
-  }
-  // SEARCH BAR STYLES END
 
-  // SEARCH BAR ANIMATIONS START
-  input {
-    background: $ls-color-bg;
-  }
-  &.focused input {
-    background: $ls-color-light;
-  }
-
-  input, .indicators>i {
-    padding: $ls-input-padding-blurred;
-    color: $ls-color-light;
-    transition: $ls-transition;
-  }
-
-  &.focused .indicators i, &.focused input {
-    padding: $ls-input-padding-focused;
-    color: $ls-color-bg;
-  }
-
-  .indicators>i {
-    opacity: 0;
-    &.visible {
-      opacity: 1;
+    &.focused input {
+      background: $ls-color-light;
     }
+
+    input, .indicators>i {
+      padding: $ls-input-padding-blurred;
+      color: $ls-color-light;
+      transition: $ls-transition;
+    }
+
+    &.focused .indicators i, &.focused input {
+      padding: $ls-input-padding-focused;
+      color: $ls-color-bg;
+    }
+
+    .indicators>i {
+      opacity: 0;
+      &.visible {
+        opacity: 1;
+      }
+    }
+
   }
-  // SEARCH BAR ANIMATIONS END
+  // SEARHCBOX ANIMATIONS END
 
   // SEARCH RESULTS STYLES START
-  ul {
-    position: absolute;
-    z-index: 1000;
-    box-sizing: border-box;
-    width: 100%;
-    padding: 0 $grid-gutter-width-base 0 0; // remove ul padding and make this the same width as the search input box
-    list-style: none;
+  .results {
 
-    li {
+    position: relative;
+    ul {
+      position: absolute;
       width: 100%;
-      font-size: $ls-results-fontsize;
-      font-weight: $ls-input-fontweight;
-      padding: $ls-results-padding;
-      background: $ls-color-lighter;
-      color: $ls-color-dark;
-      transition: $ls-transition;
-      cursor: pointer; // clickables!
+      z-index: 1000;
+      //remove default styles
+      padding: 0;
+      list-style: none;
+      // bottom border - will be animated!
+      border-bottom: $ls-results-border-bottom solid $ls-color-highlight;
+      border-bottom-left-radius: $ls-results-border-bottom * 2;
+      border-bottom-right-radius: $ls-results-border-bottom * 2;
+      // round off the last result
+      overflow: hidden;
 
-      .country-code {
-        display: inline-block;
-        text-align: center;
-        color: $ls-color-light;
-        width: $ls-results-countrycode-width;
+      li {
+        box-sizing: border-box;
+        overflow: hidden;
+        width: 100%;
+        font-size: $ls-results-fontsize;
+        font-weight: $ls-input-fontweight;
+        padding: $ls-results-padding;
+        background: $ls-color-lighter;
+        color: $ls-color-dark;
+        cursor: pointer; // clickables!
+
+        .country-code {
+          display: inline-block;
+          text-align: center;
+          color: $ls-color-light;
+          width: $ls-results-countrycode-width;
+        }
+
+        &.active {
+          background: $ls-color-highlight;
+          color: $ls-color-bg;
+        }
+
       }
-
-      &:last-child {
-        border-bottom: $ls-results-border-bottom solid $ls-color-highlight;
-        border-bottom-left-radius: $ls-results-border-bottom * 3;
-        border-bottom-right-radius: $ls-results-border-bottom * 2;
-      }
-
-      &.active {
-        background: $ls-color-highlight;
-        color: $ls-color-bg;
-      }
-
     }
   }
   // SEARCH RESULTS STYLES END
+
+  // SEARCH RESULTS ANIMATIONS START
+  .results {
+
+    ul {
+      transition: $ls-transition;
+      li {
+        transition: $ls-transition;
+        max-height: 5rem;
+      }
+    }
+
+    .results_ul-enter {
+      border-bottom: 0 solid $ls-color-highlight !important;
+    }
+
+    .results_ul-leave-active {
+      border-bottom: 0 solid $ls-color-highlight !important;
+    }
+
+    .results_li-enter {
+      max-height: 0rem !important;
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+    }
+
+    .results_li-leave-active {
+      max-height: 0 !important;
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+    }
+  }
+  // SEARCH RESULTS ANIMATIONS END
 
 }

@@ -1,18 +1,31 @@
-<div class="location-search row flex-items-xs-center" v-bind:class="{ focused : state.focused }">
+<div class="location-search row flex-items-xs-center">
 
   <div class="col-xs-12 col-sm-12 col-md-8 col-xl-6">
-    <input type="text" class="" placeholder="Add a new location" autocomplete="off" v-model="searchQuery" @keydown.down="down" @keydown.up="up" @keydown.enter="hit" @keydown.esc="reset" @focus="state.focused = true" @input="update" v-on-clickaway="reset"/>
 
-    <div class="indicators">
-      <i class="status-empty fa fa-search" v-bind:class="{ visible : isEmpty }"></i>
-      <i class="status-dirty fa fa-times" v-bind:class="{ visible: !isEmpty, 'fa-spin':isLoading }" @click="reset"></i>
+    <div class="searchbox" v-bind:class="{ focused : state.focused }">
+      <input type="text" class="" placeholder="Add a new location" autocomplete="off" v-model="searchQuery" @keydown.down="down" @keydown.up="up" @keydown.enter="hit" @keydown.esc="reset" @focus="state.focused = true" @input="update" v-on-clickaway="reset"/>
+
+      <div class="indicators">
+        <i class="status-empty fa fa-search" v-bind:class="{ visible : isEmpty }"></i>
+        <i class="status-dirty fa fa-times" v-bind:class="{ visible: !isEmpty, 'fa-spin':isLoading }" @click="reset"></i>
+      </div>
     </div>
 
-    <ul v-show="hasItems">
-      <li v-for="(searchResult, index) in searchResults" :class="activeClass(index)" @mousedown="hit" @mousemove="setActive(index)">
-        <span class="country-code">{{ searchResult.countryCode }}</span> {{ searchResult.name }}
-      </li>
-    </ul>
+  </div>
+
+  <div class="col-xs-12 col-sm-12 col-md-8 col-xl-6">
+
+    <div class="results">
+      <transition name="results_ul">
+        <ul v-show="hasItems">
+          <transition-group name="results_li">
+            <li v-for="(searchResult, index) in searchResults" :class="activeClass(index)" @mousedown="hit" @mousemove="setActive(index)" v-bind:key="searchResult.name">
+              <span class="country-code">{{ searchResult.countryCode }}</span> {{ searchResult.name }}
+            </li>
+        </transition-group>
+        </ul>
+      </transition>
+    </div>
 
   </div>
 

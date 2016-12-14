@@ -48,11 +48,9 @@ export default Vue.extend({
 
   methods: {
     update() {
-      if (!this.searchQuery) {
-        return this.reset();
-      }
 
       if (this.options.minChars && this.searchQuery.length < this.options.minChars) {
+        this.searchResults = [];
         return null;
       }
 
@@ -78,6 +76,11 @@ export default Vue.extend({
           // fail nooo
           console.log(data);
           console.log(resultToken);
+          this.searchResults = [{
+            countryCode: ':(',
+            name: 'Server Downtown'
+          }];
+          this.state.loading = false;
         }
       );
       return null;
