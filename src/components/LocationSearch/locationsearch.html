@@ -1,4 +1,4 @@
-<div class="LocationSearch row flex-items-xs-center" v-bind:class="{ focused : state.focused }">
+<div class="location-search row flex-items-xs-center" v-bind:class="{ focused : state.focused }">
 
   <div class="col-xs-12 col-sm-12 col-md-8 col-xl-6">
     <input type="text" class="" placeholder="Add a new location" autocomplete="off" v-model="searchQuery" @keydown.down="down" @keydown.up="up" @keydown.enter="hit" @keydown.esc="reset" @focus="state.focused = true" @input="update" v-on-clickaway="reset"/>

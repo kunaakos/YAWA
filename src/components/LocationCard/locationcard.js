@@ -12,6 +12,7 @@ import './locationcard.scss';
 import { mixin as clickaway } from 'vue-clickaway';
 
 export default Vue.extend({
+  name: 'LocationCard',
   template,
   components: {
     Loader,

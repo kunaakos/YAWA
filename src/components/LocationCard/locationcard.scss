@@ -1,13 +1,13 @@
 @import "variables";
 
-.LocationCards {
+.location-cards {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
   position: relative;
 
-  .LocationCard,
+  .location-card,
   .flex-filler {
     @media (min-width: #{map-get($grid-breakpoints, xs)}) {
       height: 6rem;
@@ -37,7 +37,7 @@
     padding: 0;
   }
 
-  .LocationCard {
+  .location-card {
     position: relative;
     overflow: hidden;
 
@@ -51,7 +51,7 @@
     }
   }
   // SHARED STYLES
-  .LocationCard {
+  .location-card {
     transition: opacity 50ms 50ms;
     opacity: 1;
 
@@ -104,7 +104,7 @@
     }
   }
 
-  .LocationCard {
+  .location-card {
 
     .lc-prim-ct {
       cursor: pointer;
@@ -140,7 +140,7 @@
   }
   // XS ONLY STYLES
   @media (min-width: #{map-get($grid-breakpoints, xs)}) and (max-width: #{map-get($grid-breakpoints, sm)}) {
-    .LocationCard {
+    .location-card {
       .lc-sec {
         padding: ($spacer-y * 1.2) ($spacer-x * 1.5) ($spacer-y / 1.5) ($spacer-x * 2 + 4rem);
       }
@@ -178,7 +178,7 @@
   }
   // LARGER ONLY STYLES
   @media (min-width: #{map-get($grid-breakpoints, sm)}) {
-    .LocationCard {
+    .location-card {
       // PRIMARY CONTENT / TOP LAYER
       .lc-prim {
         padding: ($spacer-y ) ($spacer-x * 1.5);
@@ -210,7 +210,7 @@
   // ANIMATIONS
   // XS ONLY
   @media (min-width: #{map-get($grid-breakpoints, xs)}) and (max-width: #{map-get($grid-breakpoints, sm)}) {
-    .LocationCard {
+    .location-card {
       .lc-ctrl-delete {
         opacity: 0;
         transition: opacity 200ms, transform 200ms ease-in, 100ms, color 200ms;
@@ -247,7 +247,7 @@
       }
     }
 
-    .LocationCard.open {
+    .location-card.open {
       .lc-sec {
         .temp-input {
           opacity: 1;
@@ -286,7 +286,7 @@
   }
   // LARGER ONLY
   @media (min-width: #{map-get($grid-breakpoints, sm)}) {
-    .LocationCard {
+    .location-card {
       .lc-ctrl-delete {
         opacity: 0;
         transition: opacity 200ms, transform 200ms, 100ms, color 200ms;
@@ -313,7 +313,7 @@
       }
     }
 
-    .LocationCard.open {
+    .location-card.open {
       .lc-prim,
       .lc-prim-ct {
         transition: transform 400ms, opacity 400ms;

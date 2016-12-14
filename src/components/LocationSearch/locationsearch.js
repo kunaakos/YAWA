@@ -11,6 +11,7 @@ import owmHelper from 'helpers/owm';
 import { mixin as clickaway } from 'vue-clickaway';
 
 export default Vue.extend({
+  name: 'LocationSearch',
   template,
   mixins: [ clickaway ],
   data() {
