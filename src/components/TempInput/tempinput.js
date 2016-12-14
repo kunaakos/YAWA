@@ -41,7 +41,7 @@ export default Vue.extend({
   methods: {
     unset() {
       this.localVal = false;
-      this.$emit('newVal', false);
+      this.$emit('newval', false);
     },
 
     onPan(event) {
@@ -56,7 +56,7 @@ export default Vue.extend({
       if ((val >= this.settings.min || this.settings.min === false) && (val <= this.settings.max || this.settings.max === false)) {
         this.localVal = val;
         if (isFinal) {
-          this.$emit('newVal', this.localVal);
+          this.$emit('newval', this.localVal);
         }
       }
     }
