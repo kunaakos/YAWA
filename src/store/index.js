@@ -8,11 +8,15 @@ import card from './card';
 
 const app = {
   state: {
-    loading: false
+    loading: false,
+    open: false
   },
   mutations: {
     app_setLoadingState(state, loadingState) {
       state.loading = loadingState;
+    },
+    app_toggleOpenState(state) {
+      state.open = !state.open;
     }
   }
 };

@@ -1,0 +1,158 @@
+#app, #offcanvas-wrap, #offcanvas-trigger, #offcanvas-trigger>i, #content-wrap, #content-overlay {
+  transition: opacity 0.5s, transform 0.5s, background 0.5s, color 0.5s;
+}
+
+
+#app {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+
+  #offcanvas-wrap {
+    // background: #fff;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+  }
+
+  #offcanvas-trigger {
+    background: transparentize($brand-primary, 0.5);
+    position: absolute;
+    bottom: 0;
+    height: 5rem;
+    overflow: hidden;
+    i {
+      position: absolute;
+      right: -0.5rem;
+      font-size: 5rem;
+      color: $gray-dark;
+      cursor: pointer;
+    }
+  }
+
+  #content-wrap {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+  }
+
+  #content-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.7;
+    background: #fff;
+  }
+
+  // VUE TRANSITION CLASSES
+
+  .content-overlay-enter, .content-overlay-leave-active{
+    opacity: 0 !important;
+  }
+
+  // TRANSFORMS, ANIMATIONS
+
+  #offcanvas-wrap {
+    transform: translateX(-100%);
+    // opacity: 0;
+  }
+
+  #offcanvas-trigger {
+    transform: translateX(6rem); // same on all sizes
+  }
+
+  &.open {
+    #offcanvas-wrap {
+      // opacity: 1;
+    }
+    #offcanvas-trigger {
+      background: mix($gray-light, #fff);
+      i {
+        color: #fff;
+      }
+    }
+  }
+
+
+  @media (min-width: #{map-get($grid-breakpoints, xs)}) and (max-width: #{map-get($grid-breakpoints, sm)}) {
+
+    #offcanvas-wrap {
+      width: 80%;
+    }
+
+    #offcanvas-trigger {
+      left: -80%;
+      width: 80%;
+    }
+
+    &.open {
+      #offcanvas-wrap {
+        transform: translateX(0);
+      }
+      #offcanvas-trigger {
+        transform: translateX(100%);
+      }
+      #content-wrap {
+        transform: translateX(90%);
+      }
+    }
+
+  }
+
+  @media (min-width: #{map-get($grid-breakpoints, sm)}) and (max-width: #{map-get($grid-breakpoints, xl)}) {
+
+    #offcanvas-wrap {
+      width: 40%;
+    }
+
+    #offcanvas-trigger {
+      left: -40%;
+      width: 40%;
+    }
+
+    &.open {
+      #offcanvas-wrap {
+        transform: translateX(0);
+      }
+      #offcanvas-trigger {
+        transform: translateX(100%);
+      }
+      #content-wrap {
+        transform: translateX(50%);
+      }
+    }
+
+  }
+
+  @media (min-width: #{map-get($grid-breakpoints, xl)}) {
+
+    #offcanvas-wrap {
+      width: 20%;
+    }
+
+    #offcanvas-trigger {
+      left: -20%;
+      width: 20%;
+    }
+
+    &.open {
+      #offcanvas-wrap {
+        transform: translateX(0);
+      }
+      #offcanvas-trigger {
+        transform: translateX(100%);
+      }
+      #content-wrap {
+        transform: translateX(25%);
+      }
+    }
+
+  }
+
+
+}

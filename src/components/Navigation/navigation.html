@@ -1,8 +1,14 @@
-<nav class="navigation navbar navbar-fixed-top navbar-light">
-    <router-link class="navbar-brand" to="/">
-      <i class="home-icon fa fa-2x fa-home" v-if="authenticated"></i>
-    </router-link>
-    <router-link v-if="authenticated" class="navbar-brand float-xs-right" to="/settings">
-      {{ user.displayName }}
-    </router-link>
-</nav>
+<div class="navigation">
+
+
+    <nav>
+      <div class="title">YAWA</div>
+      <router-link to="/">
+        Home
+      </router-link>
+      <router-link v-if="authenticated" to="/settings">
+        Settings
+      </router-link>
+    </nav>
+
+</div>

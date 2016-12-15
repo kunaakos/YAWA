@@ -29,6 +29,15 @@ export const App = new Vue({
   computed: {
     isLoading() {
       return store.state.app.loading;
+    },
+    isOpen() {
+      return store.state.app.open;
+    }
+  },
+
+  methods: {
+    toggle() {
+      store.commit('app_toggleOpenState');
     }
   },
 

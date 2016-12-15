@@ -1,9 +1,44 @@
 @import "variables";
 
 .navigation {
-  background: #fff;
-  .home-icon {
-    margin-top: -0.5rem;
-    margin-left: 0.5rem;
+  position: absolute;
+  bottom: 8rem;
+  right: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+
+
+  nav {
+    position: absolute;
+    bottom: 7rem;
+    right: 0;
+    width: 100%;
+    text-align: right;
+    .title {
+      cursor: default;
+      font-size: $font-size-h1;
+      font-weight: bold;
+      letter-spacing: 0;
+      color: $brand-primary;
+    }
+    a {
+      display: block;
+      text-transform: uppercase;
+      font-size: $font-size-h2;
+      font-weight: bold;
+      transition: all 0.5s;
+    }
+    a {
+      color: $gray-dark;
+      &:active, &:visited, &.active {
+        text-decoration: none;
+        color: $gray-dark;
+      }
+      &:hover {
+        text-decoration: none;
+        color: $gray-light;
+      }
+    }
   }
 }
