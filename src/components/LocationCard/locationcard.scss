@@ -77,19 +77,12 @@
     color: $gray-light;
   }
 
-  .lc-ctrl-delete {
-    color: $gray-light;
-  }
-
   &.dark {
     .lc-prim {
       background: $gray-light;
       color: $gray-lightest;
     }
 
-    .lc-ctrl-delete {
-      color: $gray-lightest;
-    }
   }
 }
 
@@ -122,16 +115,12 @@
     color: $gray-lightest;
   }
 
-  .lc-ctrl-delete {
-    cursor: pointer; // clickable!
-    text-align: center;
-  }
 }
 // XS ONLY STYLES
 @media (min-width: #{map-get($grid-breakpoints, xs)}) and (max-width: #{map-get($grid-breakpoints, sm)}) {
   .location-card {
     .lc-sec {
-      padding: ($spacer-y * 1.2) ($spacer-x * 1.5) ($spacer-y / 1.5) ($spacer-x * 2 + 4rem);
+      padding: ($spacer-y * 1.2) ($spacer-x * 1.5);
     }
 
     .lc-prim-ct {
@@ -155,14 +144,6 @@
       }
     }
 
-    .lc-ctrl-delete {
-      position: absolute;
-      left: ($spacer-x);
-      top: 0.8rem;
-      font-size: 4rem;
-      width: 4rem;
-      color: $gray-lightest;
-    }
   }
 }
 // LARGER ONLY STYLES
@@ -185,32 +166,13 @@
     .lc-sec {
       padding: ($spacer-y / 1.5) ($spacer-x * 1.5);
     }
-    // DELETE BUTTON
-    .lc-ctrl-delete {
-      position: absolute;
-      font-size: $font-size-h4;
-      width: $font-size-h4 * 1.5;
-      padding: $font-size-h4 / 4;
-      bottom: $spacer-y;
-      right: $spacer-x;
-    }
+
   }
 }
 // ANIMATIONS
 // XS ONLY
 @media (min-width: #{map-get($grid-breakpoints, xs)}) and (max-width: #{map-get($grid-breakpoints, sm)}) {
   .location-card {
-    .lc-ctrl-delete {
-      opacity: 0;
-      transition: opacity 200ms, transform 200ms ease-in, 100ms, color 200ms;
-      // not only an animation, but the trash icon hovers above the weather icon
-      // even when opaque, and remains clickable
-      transform: translateY(-150%);
-
-      &:hover {
-        color: $brand-danger;
-      }
-    }
 
     .lc-sec {
       .temp-input {
@@ -266,25 +228,11 @@
       }
     }
 
-    .lc-ctrl-delete {
-      opacity: 1;
-      transition: opacity 200ms 300ms, transform 200ms 300ms ease-out, color 200ms;
-      transform: none;
-    }
   }
 }
 // LARGER ONLY
 @media (min-width: #{map-get($grid-breakpoints, sm)}) {
   .location-card {
-    .lc-ctrl-delete {
-      opacity: 0;
-      transition: opacity 200ms, transform 200ms, 100ms, color 200ms;
-      transform: translateY(50%);
-
-      &:hover {
-        color: $brand-danger;
-      }
-    }
 
     .lc-prim,
     .lc-prim-ct {
@@ -323,10 +271,5 @@
       }
     }
 
-    .lc-ctrl-delete {
-      opacity: 1;
-      transition: opacity 200ms 300ms, transform 200ms 300ms, color 200ms;
-      transform: none;
-    }
   }
 }
