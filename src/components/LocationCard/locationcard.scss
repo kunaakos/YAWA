@@ -1,22 +1,23 @@
 @import "variables";
+@import "~bootstrap/scss/_mixins";
 
 .location-card {
-  @media (min-width: #{map-get($grid-breakpoints, xs)}) {
+  @include media-breakpoint-up(xs) {
     height: 6rem;
     flex-basis: 100%;
     margin-bottom: 0.5rem;
   }
-  @media (min-width: #{map-get($grid-breakpoints, sm)}) {
+  @include media-breakpoint-up(md) {
     padding-top: 32.66%;
     flex-basis: 49%;
     margin-bottom: 2%;
   }
-  @media (min-width: #{map-get($grid-breakpoints, lg)}) {
+  @include media-breakpoint-up(lg) {
     padding-top: 21.33%;
     flex-basis: 32%;
     margin-bottom: 2%;
   }
-  @media (min-width: #{map-get($grid-breakpoints, xl)}) {
+  @include media-breakpoint-up(xl) {
     padding-top: 16%;
     flex-basis: 24%;
     margin-bottom: 1.33%;
@@ -117,7 +118,7 @@
 
 }
 // XS ONLY STYLES
-@media (min-width: #{map-get($grid-breakpoints, xs)}) and (max-width: #{map-get($grid-breakpoints, sm)}) {
+@include media-breakpoint-down(sm) {
   .location-card {
     .lc-sec {
       padding: ($spacer-y * 1.2) ($spacer-x * 1.5);
@@ -147,7 +148,7 @@
   }
 }
 // LARGER ONLY STYLES
-@media (min-width: #{map-get($grid-breakpoints, sm)}) {
+@include media-breakpoint-up(md) {
   .location-card {
     // PRIMARY CONTENT / TOP LAYER
     .lc-prim {
@@ -171,7 +172,7 @@
 }
 // ANIMATIONS
 // XS ONLY
-@media (min-width: #{map-get($grid-breakpoints, xs)}) and (max-width: #{map-get($grid-breakpoints, sm)}) {
+@include media-breakpoint-down(sm) {
   .location-card {
 
     .lc-sec {
@@ -231,7 +232,7 @@
   }
 }
 // LARGER ONLY
-@media (min-width: #{map-get($grid-breakpoints, sm)}) {
+@include media-breakpoint-up(md) {
   .location-card {
 
     .lc-prim,
