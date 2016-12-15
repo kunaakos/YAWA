@@ -1,6 +1,6 @@
 @import "variables";
 
-$ls-margin-bottom: ($spacer-y * 3);
+// $ls-margin-bottom: ($spacer-y * 3);
 
 $ls-input-fontsize: $font-size-h5;
 $ls-input-fontweight: 300;
@@ -23,8 +23,6 @@ $ls-color-bg: #fff;
 $ls-color-highlight: $brand-primary;
 
 .location-search {
-
-  padding-bottom: $ls-margin-bottom;
 
   // SEARCHBOX STYLES START
   .searchbox {

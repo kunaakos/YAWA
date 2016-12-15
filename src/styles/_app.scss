@@ -1,5 +1,5 @@
 #app, #offcanvas-wrap, #offcanvas-trigger, #offcanvas-trigger>i, #content-wrap, #content-overlay {
-  transition: opacity 0.5s, transform 0.5s, background 0.5s, color 0.5s;
+  transition: opacity 0.5s, transform 0.5s, background 0.5s, color 0.5s, box-shadow 1s;
 }
 
 
@@ -14,29 +14,34 @@
     position: absolute;
     left: 0;
     top: 0;
-    height: 100%;
+    bottom: 7rem;
   }
 
   #offcanvas-trigger {
-    background: transparentize($brand-primary, 0.5);
+    background: $brand-primary;
     position: absolute;
-    bottom: 0;
+    bottom: 2rem;
+    left: 2rem;
     height: 5rem;
+    width: 5rem;
+    border-radius: 100%;
     overflow: hidden;
+    text-align: center;
     i {
-      position: absolute;
-      right: -0.5rem;
-      font-size: 5rem;
-      color: $gray-dark;
+      // position: absolute;
+      margin-top: 0.5rem;
+      font-size: 4rem;
+
+      color: $gray-light;
       cursor: pointer;
     }
+    box-shadow: $box-shadow-2;
   }
 
   #content-wrap {
     position: absolute;
     width: 100%;
     height: 100%;
-    overflow-y: auto;
   }
 
   #content-overlay {
@@ -59,19 +64,20 @@
 
   #offcanvas-wrap {
     transform: translateX(-100%);
-    // opacity: 0;
   }
 
   #offcanvas-trigger {
-    transform: translateX(6rem); // same on all sizes
+    i {
+      color: transparent;
+    }
   }
 
   &.open {
     #offcanvas-wrap {
-      // opacity: 1;
     }
     #offcanvas-trigger {
-      background: mix($gray-light, #fff);
+      transform: translateX(2.2rem);
+      box-shadow: none;
       i {
         color: #fff;
       }
@@ -86,8 +92,6 @@
     }
 
     #offcanvas-trigger {
-      left: -80%;
-      width: 80%;
     }
 
     &.open {
@@ -95,7 +99,6 @@
         transform: translateX(0);
       }
       #offcanvas-trigger {
-        transform: translateX(100%);
       }
       #content-wrap {
         transform: translateX(90%);
@@ -111,8 +114,6 @@
     }
 
     #offcanvas-trigger {
-      left: -40%;
-      width: 40%;
     }
 
     &.open {
@@ -120,7 +121,6 @@
         transform: translateX(0);
       }
       #offcanvas-trigger {
-        transform: translateX(100%);
       }
       #content-wrap {
         transform: translateX(50%);
@@ -136,8 +136,6 @@
     }
 
     #offcanvas-trigger {
-      left: -20%;
-      width: 20%;
     }
 
     &.open {
@@ -145,7 +143,6 @@
         transform: translateX(0);
       }
       #offcanvas-trigger {
-        transform: translateX(100%);
       }
       #content-wrap {
         transform: translateX(25%);

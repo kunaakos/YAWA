@@ -1,13 +1,27 @@
-<div class="locations container">
+<div class="locations">
 
-  <location-search></location-search>
+  <div class="scrollable" v-on:scroll="checkScroll">
+    <div class="container">
 
-  <draggable class="location-cards" :options="{delay: 100, animation: 100, handle: '.drag-handle'}" :list="localOrder" @end="setOrder">
-    <location-card v-for="key in localOrder" v-bind:data="cards[key]" v-bind:fuckey="key" v-bind:key="key"></location-card>
-    <div class="flex-filler"></div>
-    <div class="flex-filler"></div>
-    <div class="flex-filler"></div>
-    <div class="flex-filler"></div>
-  </draggable>
+      <draggable class="location-cards" :options="{delay: 100, animation: 100, handle: '.drag-handle', group:'locationCards' }" :list="localOrder" @start="dragStart" @end="dragEnd">
+        <location-card v-for="key in localOrder" v-bind:data="cards[key]" v-bind:fuckey="key" v-bind:key="key"></location-card>
+        <div class="flex-filler"></div>
+        <div class="flex-filler"></div>
+        <div class="flex-filler"></div>
+        <div class="flex-filler"></div>
+      </draggable>
+
+    </div>
+  </div>
+
+  <div class="sticky" v-bind:class="{ scrolled : hasScrolledEnough }">
+    <div class="container">
+
+      <location-search></location-search>
+
+      <draggable :options="{ group:'locationCards' }" class="danger-zone" :list="dangerZone" @add="dangerZoneAdd" v-show="dragging"></draggable>
+
+    </div>
+  </div>
 
 </div>

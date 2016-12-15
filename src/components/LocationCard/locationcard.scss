@@ -1,344 +1,332 @@
 @import "variables";
 
-.location-cards {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
+.location-card {
+  @media (min-width: #{map-get($grid-breakpoints, xs)}) {
+    height: 6rem;
+    flex-basis: 100%;
+    margin-bottom: 0.5rem;
+  }
+  @media (min-width: #{map-get($grid-breakpoints, sm)}) {
+    padding-top: 32.66%;
+    flex-basis: 49%;
+    margin-bottom: 2%;
+  }
+  @media (min-width: #{map-get($grid-breakpoints, lg)}) {
+    padding-top: 21.33%;
+    flex-basis: 32%;
+    margin-bottom: 2%;
+  }
+  @media (min-width: #{map-get($grid-breakpoints, xl)}) {
+    padding-top: 16%;
+    flex-basis: 24%;
+    margin-bottom: 1.33%;
+  }
+
+  box-shadow: $box-shadow-1;
+}
+
+.location-card {
   position: relative;
+  overflow: hidden;
 
-  .location-card,
-  .flex-filler {
-    @media (min-width: #{map-get($grid-breakpoints, xs)}) {
-      height: 6rem;
-      flex-basis: 100%;
-      margin-bottom: 0.5rem;
-    }
-    @media (min-width: #{map-get($grid-breakpoints, sm)}) {
-      padding-top: 32.66%;
-      flex-basis: 49%;
-      margin-bottom: 2%;
-    }
-    @media (min-width: #{map-get($grid-breakpoints, lg)}) {
-      padding-top: 21.33%;
-      flex-basis: 32%;
-      margin-bottom: 2%;
-    }
-    @media (min-width: #{map-get($grid-breakpoints, xl)}) {
-      padding-top: 16%;
-      flex-basis: 24%;
-      margin-bottom: 1.33%;
-    }
+  .lc-prim,
+  .lc-prim-ct,
+  .lc-sec {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
   }
-  // http://stackoverflow.com/questions/18744164/flex-box-align-last-row-to-grid
-  .flex-filler {
-    height: 0;
-    margin: 0;
-    padding: 0;
+}
+
+// SHARED STYLES
+.location-card {
+  transition: opacity 50ms 50ms;
+  opacity: 1;
+
+  &.sortable-chosen {
+    opacity: 0.6;
+  }
+  &.sortable-ghost {
+    opacity: 0;
   }
 
-  .location-card {
-    position: relative;
-    overflow: hidden;
+  .lc-alert {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0%;
+    height: 100%;
+    background: transparent;
+    transition: background 400ms, width 400ms;
 
-    .lc-prim,
-    .lc-prim-ct,
-    .lc-sec {
-      position: absolute;
-      top: 0;
-      width: 100%;
-      height: 100%;
+    &.low {
+      background: #2879c5;
+      width: 2%;
+    }
+
+    &.high {
+      background: #dc5936;
+      width: 2%;
     }
   }
-  // SHARED STYLES
-  .location-card {
-    transition: opacity 50ms 50ms;
-    opacity: 1;
 
-    &.sortable-chosen {
-      opacity: 0.6;
-    }
-    &.sortable-ghost {
-      opacity: 0;
-    }
+  // DAY / NIGHT color inversion
+  .lc-prim {
+    background: $gray-lightest;
+    color: $gray-light;
+  }
 
-    .lc-alert {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 0%;
-      height: 100%;
-      background: transparent;
-      transition: background 400ms, width 400ms;
+  .lc-ctrl-delete {
+    color: $gray-light;
+  }
 
-      &.low {
-        background: #2879c5;
-        width: 2%;
-      }
-
-      &.high {
-        background: #dc5936;
-        width: 2%;
-      }
-    }
-
-    // DAY / NIGHT color inversion
+  &.dark {
     .lc-prim {
-      background: $gray-lightest;
-      color: $gray-light;
-    }
-
-    .lc-ctrl-delete {
-      color: $gray-light;
-    }
-
-    &.dark {
-      .lc-prim {
-        background: $gray-light;
-        color: $gray-lightest;
-      }
-
-      .lc-ctrl-delete {
-        color: $gray-lightest;
-      }
-    }
-  }
-
-  .location-card {
-
-    .lc-prim-ct {
-      cursor: pointer;
-      .lc-prim {
-        .lc-data-currenttemp,
-        .lc-data-name {}
-
-        .lc-data-name {
-          font-size: $font-size-h4;
-          font-weight: bold;
-          line-height: ($font-size-h4 * 1.1);
-        }
-
-        .lc-data-currenttemp {
-          font-size: $font-size-h5;
-        }
-
-        .lc-weathericon {
-          text-align: center;
-        }
-      }
-    }
-
-    .lc-sec {
-      background: $brand-primary;
+      background: $gray-light;
       color: $gray-lightest;
     }
 
     .lc-ctrl-delete {
-      cursor: pointer; // clickable!
-      text-align: center;
+      color: $gray-lightest;
     }
   }
-  // XS ONLY STYLES
-  @media (min-width: #{map-get($grid-breakpoints, xs)}) and (max-width: #{map-get($grid-breakpoints, sm)}) {
-    .location-card {
-      .lc-sec {
-        padding: ($spacer-y * 1.2) ($spacer-x * 1.5) ($spacer-y / 1.5) ($spacer-x * 2 + 4rem);
-      }
+}
 
-      .lc-prim-ct {
-        .lc-prim {
-          display: flex;
-          flex-direction: row;
-          flex-wrap: nowrap;
-          justify-content: space-between;
-          align-content: center;
-          align-items: center;
+.location-card {
 
-          .lc-data {
-            padding-left: ($spacer-x * 1.5);
-          }
+  .lc-prim-ct {
+    cursor: pointer;
+    .lc-prim {
+      .lc-data-currenttemp,
+      .lc-data-name {}
 
-          .lc-weathericon {
-            padding-right: $spacer-x;
-            font-size: 4rem;
-            width: 6rem;
-          }
-        }
-      }
-
-      .lc-ctrl-delete {
-        position: absolute;
-        left: ($spacer-x);
-        top: 0.8rem;
-        font-size: 4rem;
-        width: 4rem;
-        color: $gray-lightest;
-      }
-    }
-  }
-  // LARGER ONLY STYLES
-  @media (min-width: #{map-get($grid-breakpoints, sm)}) {
-    .location-card {
-      // PRIMARY CONTENT / TOP LAYER
-      .lc-prim {
-        padding: ($spacer-y ) ($spacer-x * 1.5);
-
-        .lc-weathericon {
-          position: absolute;
-          right: 0;
-          bottom: 0;
-          font-size: 6rem;
-          width: 9rem;
-          padding: 1.25rem;
-        }
-      }
-      // SECONDARY CONTENT / BOTTOM LAYER
-      .lc-sec {
-        padding: ($spacer-y / 1.5) ($spacer-x * 1.5);
-      }
-      // DELETE BUTTON
-      .lc-ctrl-delete {
-        position: absolute;
+      .lc-data-name {
         font-size: $font-size-h4;
-        width: $font-size-h4 * 1.5;
-        padding: $font-size-h4 / 4;
-        bottom: $spacer-y;
-        right: $spacer-x;
-      }
-    }
-  }
-  // ANIMATIONS
-  // XS ONLY
-  @media (min-width: #{map-get($grid-breakpoints, xs)}) and (max-width: #{map-get($grid-breakpoints, sm)}) {
-    .location-card {
-      .lc-ctrl-delete {
-        opacity: 0;
-        transition: opacity 200ms, transform 200ms ease-in, 100ms, color 200ms;
-        // not only an animation, but the trash icon hovers above the weather icon
-        // even when opaque, and remains clickable
-        transform: translateY(-150%);
-
-        &:hover {
-          color: $brand-danger;
-        }
+        font-weight: bold;
+        line-height: ($font-size-h4 * 1.1);
       }
 
-      .lc-sec {
-        .temp-input {
-          opacity: 0;
-          transform: translateY(-150%);
-          transition: opacity 200ms, transform 200ms ease-in, 100ms, color 200ms;
-        }
-      }
-
-      .lc-prim,
-      .lc-prim-ct {
-        transition: opacity 400ms 200ms, transform 400ms 200ms;
-      }
-
-      .lc-data {
-        opacity: 1;
-        transition: opacity 200ms 400ms, transform 200ms 400ms;
+      .lc-data-currenttemp {
+        font-size: $font-size-h5;
       }
 
       .lc-weathericon {
-        opacity: 1;
-        transition: opacity 1600ms 400ms, transform 200ms 400ms;
+        text-align: center;
+      }
+    }
+  }
+
+  .lc-sec {
+    background: $brand-primary;
+    color: $gray-lightest;
+  }
+
+  .lc-ctrl-delete {
+    cursor: pointer; // clickable!
+    text-align: center;
+  }
+}
+// XS ONLY STYLES
+@media (min-width: #{map-get($grid-breakpoints, xs)}) and (max-width: #{map-get($grid-breakpoints, sm)}) {
+  .location-card {
+    .lc-sec {
+      padding: ($spacer-y * 1.2) ($spacer-x * 1.5) ($spacer-y / 1.5) ($spacer-x * 2 + 4rem);
+    }
+
+    .lc-prim-ct {
+      .lc-prim {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        align-content: center;
+        align-items: center;
+
+        .lc-data {
+          padding-left: ($spacer-x * 1.5);
+        }
+
+        .lc-weathericon {
+          padding-right: $spacer-x;
+          font-size: 4rem;
+          width: 6rem;
+        }
       }
     }
 
-    .location-card.open {
-      .lc-sec {
-        .temp-input {
-          opacity: 1;
-          transition: opacity 200ms 300ms, transform 200ms 300ms ease-out, color 200ms;
-          transform: none;
-        }
+    .lc-ctrl-delete {
+      position: absolute;
+      left: ($spacer-x);
+      top: 0.8rem;
+      font-size: 4rem;
+      width: 4rem;
+      color: $gray-lightest;
+    }
+  }
+}
+// LARGER ONLY STYLES
+@media (min-width: #{map-get($grid-breakpoints, sm)}) {
+  .location-card {
+    // PRIMARY CONTENT / TOP LAYER
+    .lc-prim {
+      padding: ($spacer-y ) ($spacer-x * 1.5);
+
+      .lc-weathericon {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        font-size: 6rem;
+        width: 9rem;
+        padding: 1.25rem;
       }
+    }
+    // SECONDARY CONTENT / BOTTOM LAYER
+    .lc-sec {
+      padding: ($spacer-y / 1.5) ($spacer-x * 1.5);
+    }
+    // DELETE BUTTON
+    .lc-ctrl-delete {
+      position: absolute;
+      font-size: $font-size-h4;
+      width: $font-size-h4 * 1.5;
+      padding: $font-size-h4 / 4;
+      bottom: $spacer-y;
+      right: $spacer-x;
+    }
+  }
+}
+// ANIMATIONS
+// XS ONLY
+@media (min-width: #{map-get($grid-breakpoints, xs)}) and (max-width: #{map-get($grid-breakpoints, sm)}) {
+  .location-card {
+    .lc-ctrl-delete {
+      opacity: 0;
+      transition: opacity 200ms, transform 200ms ease-in, 100ms, color 200ms;
+      // not only an animation, but the trash icon hovers above the weather icon
+      // even when opaque, and remains clickable
+      transform: translateY(-150%);
 
-      .lc-prim,
-      .lc-prim-ct {
-        transition: opacity 400ms, transform 400ms;
+      &:hover {
+        color: $brand-danger;
       }
+    }
 
-      .lc-prim-ct {
-        transform: translateY(100%);
-
-        .lc-prim {
-          .lc-data,
-          .lc-weathericon {
-            opacity: 0;
-            transition: opacity 400ms, transform 200ms;
-          }
-
-          .lc-data {
-            transform: translateY(50%);
-          }
-        }
+    .lc-sec {
+      .temp-input {
+        opacity: 0;
+        transform: translateY(-150%);
+        transition: opacity 200ms, transform 200ms ease-in, 100ms, color 200ms;
       }
+    }
 
-      .lc-ctrl-delete {
+    .lc-prim,
+    .lc-prim-ct {
+      transition: opacity 400ms 200ms, transform 400ms 200ms;
+    }
+
+    .lc-data {
+      opacity: 1;
+      transition: opacity 200ms 400ms, transform 200ms 400ms;
+    }
+
+    .lc-weathericon {
+      opacity: 1;
+      transition: opacity 1600ms 400ms, transform 200ms 400ms;
+    }
+  }
+
+  .location-card.open {
+    .lc-sec {
+      .temp-input {
         opacity: 1;
         transition: opacity 200ms 300ms, transform 200ms 300ms ease-out, color 200ms;
         transform: none;
       }
     }
-  }
-  // LARGER ONLY
-  @media (min-width: #{map-get($grid-breakpoints, sm)}) {
-    .location-card {
-      .lc-ctrl-delete {
-        opacity: 0;
-        transition: opacity 200ms, transform 200ms, 100ms, color 200ms;
-        transform: translateY(50%);
 
-        &:hover {
-          color: $brand-danger;
+    .lc-prim,
+    .lc-prim-ct {
+      transition: opacity 400ms, transform 400ms;
+    }
+
+    .lc-prim-ct {
+      transform: translateY(100%);
+
+      .lc-prim {
+        .lc-data,
+        .lc-weathericon {
+          opacity: 0;
+          transition: opacity 400ms, transform 200ms;
         }
-      }
 
-      .lc-prim,
-      .lc-prim-ct {
-        transition: opacity 400ms 200ms, transform 400ms 200ms;
-      }
-
-      .lc-data-currenttemp {
-        opacity: 1;
-        transition: opacity 200ms 400ms, transform 200ms 400ms;
-      }
-
-      .lc-weathericon {
-        opacity: 1;
-        transition: opacity 1600ms 400ms, transform 200ms 400ms;
+        .lc-data {
+          transform: translateY(50%);
+        }
       }
     }
 
-    .location-card.open {
-      .lc-prim,
-      .lc-prim-ct {
-        transition: transform 400ms, opacity 400ms;
+    .lc-ctrl-delete {
+      opacity: 1;
+      transition: opacity 200ms 300ms, transform 200ms 300ms ease-out, color 200ms;
+      transform: none;
+    }
+  }
+}
+// LARGER ONLY
+@media (min-width: #{map-get($grid-breakpoints, sm)}) {
+  .location-card {
+    .lc-ctrl-delete {
+      opacity: 0;
+      transition: opacity 200ms, transform 200ms, 100ms, color 200ms;
+      transform: translateY(50%);
+
+      &:hover {
+        color: $brand-danger;
       }
+    }
 
-      .lc-prim-ct {
-        transform: translateY(100%);
+    .lc-prim,
+    .lc-prim-ct {
+      transition: opacity 400ms 200ms, transform 400ms 200ms;
+    }
 
-        .lc-prim {
-          transform: translateY(-4rem);
+    .lc-data-currenttemp {
+      opacity: 1;
+      transition: opacity 200ms 400ms, transform 200ms 400ms;
+    }
 
-          .lc-data-currenttemp,
-          .lc-weathericon {
-            opacity: 0;
-            transition: opacity 400ms, transform 200ms;
-            transform: translateY(50%);
-          }
+    .lc-weathericon {
+      opacity: 1;
+      transition: opacity 1600ms 400ms, transform 200ms 400ms;
+    }
+  }
+
+  .location-card.open {
+    .lc-prim,
+    .lc-prim-ct {
+      transition: transform 400ms, opacity 400ms;
+    }
+
+    .lc-prim-ct {
+      transform: translateY(100%);
+
+      .lc-prim {
+        transform: translateY(-4rem);
+
+        .lc-data-currenttemp,
+        .lc-weathericon {
+          opacity: 0;
+          transition: opacity 400ms, transform 200ms;
+          transform: translateY(50%);
         }
       }
+    }
 
-      .lc-ctrl-delete {
-        opacity: 1;
-        transition: opacity 200ms 300ms, transform 200ms 300ms, color 200ms;
-        transform: none;
-      }
+    .lc-ctrl-delete {
+      opacity: 1;
+      transition: opacity 200ms 300ms, transform 200ms 300ms, color 200ms;
+      transform: none;
     }
   }
 }

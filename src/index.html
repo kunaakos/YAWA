@@ -15,14 +15,14 @@
     <div id="content-wrap">
       <router-view></router-view>
       <loader v-show="isLoading"></loader>
+      <transition name="content-overlay">
+        <div v-show="isOpen" id="content-overlay"></div>
+      </transition>
     </div>
 
-    <transition name="content-overlay">
-      <div v-show="isOpen" id="content-overlay"></div>
-    </transition>
 
-    <div id="offcanvas-trigger">
-      <i class="fa fa-bars" @click="toggle"></i>
+    <div id="offcanvas-trigger" @click="toggle">
+      <i class="fa fa-thermometer-full"></i>
     </div>
 
     <div id="offcanvas-wrap" @click="toggle">
