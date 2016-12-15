@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import template from './main.html';
+import template from './locations.html';
 
 import LocationSearch from 'components/LocationSearch/locationsearch';
 import LocationCard from 'components/LocationCard/locationcard';
@@ -9,7 +9,7 @@ import draggable from 'vuedraggable';
 import { mapGetters } from 'vuex';
 
 export default Vue.extend({
-  name: 'Main',
+  name: 'Locations',
   template,
   components: {
     draggable,

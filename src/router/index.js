@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import Main from 'components/Main/main';
+import Locations from 'components/Locations/locations';
 import Settings from 'components/Settings/settings';
 import Login from 'components/Login/login';
 
@@ -12,7 +12,7 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: '/',
-    component: Main,
+    component: Locations,
     meta: { requiresAuth: true }
   },
   {
