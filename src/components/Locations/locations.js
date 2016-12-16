@@ -21,9 +21,15 @@ export default Vue.extend({
 
   data() {
     return {
+      draggableOptions: {
+        delay: 100,
+        animation: 200,
+        handle: '.drag-handle',
+        group: 'locationCards'
+      },
       dragging: false,
-      scrolledEnough: false,
-      stickySize: 0,
+      cardsHitSticky: false,
+      pixelsTillSticky: 0,
       localOrder: [],
       dangerZone: []
     };
@@ -31,7 +37,7 @@ export default Vue.extend({
 
   computed: {
     hasScrolledEnough() {
-      return this.scrolledEnough;
+      return this.cardsHitSticky;
     },
 
     ...mapGetters({
@@ -57,11 +63,15 @@ export default Vue.extend({
     },
 
     checkScroll(event) {
-      if (event.target.scrollTop >= 42) {
-        this.scrolledEnough = true;
-      } else if (this.scrolledEnough) {
-        this.scrolledEnough = false;
+      if (event.target.scrollTop >= this.pixelsTillSticky) {
+        this.cardsHitSticky = true;
+      } else if (this.cardsHitSticky) {
+        this.cardsHitSticky = false;
       }
+    },
+
+    whatt() {
+      console.log('whatt');
     }
   },
 
@@ -76,7 +86,7 @@ export default Vue.extend({
       self.localOrder = newVal.slice();
     });
 
-    this.stickySize = this.$el.querySelector('.sticky').clientHeight;
-    // console.log(this.$el.querySelector('.sticky'));
+    // this is needed to hide/show the shadow under the sticky top bar
+    this.pixelsTillSticky = this.$el.querySelector('.location-cards').offsetTop - this.$el.querySelector('.sticky').offsetHeight;
   }
 });
