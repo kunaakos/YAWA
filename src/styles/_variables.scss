@@ -1,5 +1,11 @@
 @import "default-variables";
 
+$transition-base: 400ms; // Doherty!
+$tr1: $transition-base / 2;
+$tr2: $transition-base;
+$tr3: $transition-base * 1.5;
+$tr4: $transition-base * 2;
+
 $enable-flex: true;
 
 $gray-dark: #373a3c;

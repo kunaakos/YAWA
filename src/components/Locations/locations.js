@@ -68,11 +68,8 @@ export default Vue.extend({
       } else if (this.cardsHitSticky) {
         this.cardsHitSticky = false;
       }
-    },
-
-    whatt() {
-      console.log('whatt');
     }
+
   },
 
   mounted: function() {

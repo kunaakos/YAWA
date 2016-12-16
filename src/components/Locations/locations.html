@@ -16,11 +16,16 @@
 
   <div class="sticky" v-bind:class="{ 'show-shadows' : cardsHitSticky }">
     <div class="container">
-
-      <location-search></location-search>
-
-      <draggable :options="draggableOptions" class="danger-zone" :list="dangerZone" @add="dangerZoneAdd" v-show="dragging"></draggable>
-
+      <!-- only relative positioned element in .sticky, don't remove just fade -->
+      <location-search v-bind:class="{ fade : dragging }"></location-search>
+      <!-- hidden until card is dragged, same size as location-search, absolutely positioned above -->
+      <transition name="danger-zone">
+        <div class="danger-zone" v-show="dragging">
+          <h3 class="caption">drop to  <i class="fa fa-trash"></i></h3>
+          <draggable class="drop-zone" :options="draggableOptions" :list="dangerZone" @add="dangerZoneAdd">
+          </draggable>
+        </div>
+      </transition>
     </div>
   </div>
 
