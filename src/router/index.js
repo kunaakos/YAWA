@@ -39,7 +39,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
 
   // start by showing ye olde loader
-  store.commit('app_setLoadingState', true);
+  store.dispatch('app__setLoading', true);
 
   // just to keep things readable
   const destRequiresAuth = to.matched.some(record => record.meta.requiresAuth);
@@ -60,14 +60,14 @@ router.beforeEach((to, from, next) => {
     if (destRequiresAuth && !userAuthenticated()) {
       // not authenticated, redirect to login
       next({ path: '/login' });
-      store.commit('app_setLoadingState', false);
+      store.dispatch('app__setLoading', false);
     } else if (destIsLogin && userAuthenticated()) {
       // authenticated user heading for login page
       next({ path: '/' });
     } else {
       // can proceed
       next();
-      store.commit('app_setLoadingState', false);
+      store.dispatch('app__setLoading', false);
     }
   }
 

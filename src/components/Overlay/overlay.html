@@ -1,0 +1,5 @@
+<transition name="overlay">
+  <div class="overlay" v-show="isActive" v-bind:class="{ clickable : isClickable, loading : isLoading }" @click="clicked">
+    <loader v-show="isLoading"></loader>
+  </div>
+</transition>

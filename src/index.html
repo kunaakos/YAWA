@@ -10,16 +10,12 @@
 
 <body>
 
-  <div id="app" v-bind:class="{ open : isOpen }">
+  <div id="app" v-bind:class="{ open : menuOpen }">
 
     <div id="content-wrap">
       <router-view></router-view>
-      <loader v-show="isLoading"></loader>
-      <transition name="content-overlay">
-        <div v-show="isOpen" id="content-overlay"></div>
-      </transition>
+      <overlay><overlay>
     </div>
-
 
     <div id="offcanvas-trigger" @click="toggle">
       <i class="fa fa-thermometer-full"></i>
@@ -28,7 +24,6 @@
     <div id="offcanvas-wrap" @click="toggle">
       <navigation></navigation>
     </div>
-
 
   </div>
 

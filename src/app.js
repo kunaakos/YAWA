@@ -1,7 +1,7 @@
 import Vue from 'vue';
 
 import Navigation from 'components/Navigation/navigation';
-import Loader from 'components/Loader/loader';
+import Overlay from 'components/Overlay/overlay';
 
 import router from 'src/router';
 import store from 'src/store';
@@ -23,21 +23,19 @@ export const App = new Vue({
 
   components: {
     Navigation,
-    Loader
+    Overlay
   },
 
   computed: {
-    isLoading() {
-      return store.state.app.loading;
-    },
-    isOpen() {
-      return store.state.app.open;
+    menuOpen() {
+      return store.state.app.menu;
     }
   },
 
   methods: {
     toggle() {
-      store.commit('app_toggleOpenState');
+      store.dispatch('app__setMenu', !this.menuOpen);
+      store.dispatch('app__setOverlay', this.menuOpen);
     }
   },
 
