@@ -4,7 +4,10 @@ const app = {
     overlay: {
       active: false,
       loading: false,
-      callback: null
+      onClick: null,
+    },
+    trigger: {
+      hidden: false
     }
   },
 
@@ -25,8 +28,8 @@ const app = {
     // (de)activate overlay
     app__setOverlay(context, options) {
 
-      if (context.state.overlay.callback) {
-        context.state.overlay.callback().then(() => {
+      if (context.state.overlay.onClick) {
+        context.state.overlay.onClick().then(() => {
           context.commit('app_m__overlay_set', options);
         });
         // TODO: handle error
@@ -50,15 +53,17 @@ const app = {
     },
     app_m__overlay_set(state, options) {
       if (options) {
-        state.overlay.callback = options.onClick || null;
+        state.overlay.onClick = options.onClick || null;
         state.overlay.loading = options.loading || false;
+        state.trigger.hidden = options.hideTrigger || false;
         state.overlay.active = true;
       } else {
         state.overlay = {
           active: false,
           loading: false,
-          callback: null
+          onClick: null
         };
+        state.trigger.hidden = false;
       }
       // TODO: validate!
     }

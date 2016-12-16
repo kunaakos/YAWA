@@ -17,7 +17,7 @@
       <overlay><overlay>
     </div>
 
-    <div id="offcanvas-trigger" @click="toggle">
+    <div id="offcanvas-trigger" v-bind:class="{ hide : triggerHidden }" @click="toggle">
       <i class="fa fa-thermometer-full"></i>
     </div>
 

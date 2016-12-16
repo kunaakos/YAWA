@@ -29,6 +29,9 @@ export const App = new Vue({
   computed: {
     menuOpen() {
       return store.state.app.menu;
+    },
+    triggerHidden() {
+      return store.state.app.trigger.hidden;
     }
   },
 

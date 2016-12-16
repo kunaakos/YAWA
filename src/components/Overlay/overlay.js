@@ -18,7 +18,7 @@ export default Vue.extend({
       return this.$store.state.app.overlay.active;
     },
     isClickable() {
-      return !!this.$store.state.app.overlay.callback;
+      return !!this.$store.state.app.overlay.onClick;
     },
     isLoading() {
       return this.$store.state.app.overlay.loading;
@@ -28,7 +28,7 @@ export default Vue.extend({
   methods: {
     clicked() {
       if (this.isClickable) {
-        this.$store.state.app.overlay.callback().then(() => {
+        this.$store.state.app.overlay.onClick().then(() => {
           this.$store.commit('app_m__overlay_set', false);
         });
       }

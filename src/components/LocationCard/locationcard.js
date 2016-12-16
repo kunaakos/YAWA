@@ -127,7 +127,10 @@ export default Vue.extend({
     open() {
       if (!this.data.isOpen) {
         this.raised = true;
-        this.$store.dispatch('app__setOverlay', { 'onClick': this.remoteClose });
+        this.$store.dispatch('app__setOverlay', {
+          'onClick': this.remoteClose,
+          'hideTrigger': true
+        });
         this.$store.commit('card_m__cards_open', this.fuckey);
       }
     },
