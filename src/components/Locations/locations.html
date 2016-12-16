@@ -21,7 +21,7 @@
       <!-- hidden until card is dragged, same size as location-search, absolutely positioned above -->
       <transition name="danger-zone">
         <div class="danger-zone" v-show="dragging">
-          <h3 class="caption">drop to  <i class="fa fa-trash"></i></h3>
+          <h3 class="caption">drop here to  <i class="fa fa-trash"></i></h3>
           <draggable class="drop-zone" :options="draggableOptions" :list="dangerZone" @add="dangerZoneAdd">
           </draggable>
         </div>

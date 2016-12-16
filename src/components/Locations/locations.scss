@@ -57,12 +57,10 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background: mix($brand-danger, #fff, 80%);
-    color: #fff;
+    color: $brand-danger;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: $box-shadow-2;
 
     @include media-breakpoint-up(md) {
       // full width on mobile
