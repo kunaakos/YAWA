@@ -18,7 +18,7 @@ export default Vue.extend({
       return this.$store.state.app.overlay.active;
     },
     isClickable() {
-      return !!this.$store.state.app.overlay.clickCallback;
+      return !!this.$store.state.app.overlay.callback;
     },
     isLoading() {
       return this.$store.state.app.overlay.loading;
@@ -27,7 +27,11 @@ export default Vue.extend({
 
   methods: {
     clicked() {
-      console.log('clickety clack');
+      if (this.isClickable) {
+        this.$store.state.app.overlay.callback().then(() => {
+          this.$store.commit('app_m__overlay_set', false);
+        });
+      }
     }
   }
 });

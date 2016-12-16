@@ -24,6 +24,16 @@
   }
 
   box-shadow: $box-shadow-1;
+
+  &.content-raised {
+    // box-shadow: $box-shadow-2;
+    // transform: translateY(-2px);
+  }
+
+  &.open {
+    box-shadow: $box-shadow-3;
+    transform: translateY(-2px);
+  }
 }
 
 .location-card {
@@ -42,7 +52,7 @@
 
 // SHARED STYLES
 .location-card {
-  transition: opacity 50ms 50ms;
+  transition: opacity $tr1, box-shadow $tr1, transform $tr1;
   opacity: 1;
 
   &.sortable-chosen {
@@ -59,7 +69,7 @@
     width: 0%;
     height: 100%;
     background: transparent;
-    transition: background 400ms, width 400ms;
+    transition: background $tr2, width $tr2;
 
     &.low {
       background: #2879c5;
@@ -179,23 +189,23 @@
       .temp-input {
         opacity: 0;
         transform: translateY(-150%);
-        transition: opacity 200ms, transform 200ms ease-in, 100ms, color 200ms;
+        transition: opacity $tr1, transform $tr1 ease-in, 100ms, color $tr1;
       }
     }
 
     .lc-prim,
     .lc-prim-ct {
-      transition: opacity 400ms 200ms, transform 400ms 200ms;
+      transition: opacity $tr2 $tr1, transform $tr2 $tr1;
     }
 
     .lc-data {
       opacity: 1;
-      transition: opacity 200ms 400ms, transform 200ms 400ms;
+      transition: opacity $tr1 $tr2, transform $tr1 $tr2;
     }
 
     .lc-weathericon {
       opacity: 1;
-      transition: opacity 1600ms 400ms, transform 200ms 400ms;
+      transition: opacity $tr4 $tr2, transform $tr1 $tr2;
     }
   }
 
@@ -203,14 +213,14 @@
     .lc-sec {
       .temp-input {
         opacity: 1;
-        transition: opacity 200ms 300ms, transform 200ms 300ms ease-out, color 200ms;
+        transition: opacity $tr1 $tr2, transform $tr1 $tr2 ease-out, color $tr1;
         transform: none;
       }
     }
 
     .lc-prim,
     .lc-prim-ct {
-      transition: opacity 400ms, transform 400ms;
+      transition: opacity $tr2, transform $tr2;
     }
 
     .lc-prim-ct {
@@ -220,7 +230,7 @@
         .lc-data,
         .lc-weathericon {
           opacity: 0;
-          transition: opacity 400ms, transform 200ms;
+          transition: opacity $tr2, transform $tr1;
         }
 
         .lc-data {
@@ -237,24 +247,24 @@
 
     .lc-prim,
     .lc-prim-ct {
-      transition: opacity 400ms 200ms, transform 400ms 200ms;
+      transition: opacity $tr2, transform $tr2;
     }
 
     .lc-data-currenttemp {
       opacity: 1;
-      transition: opacity 200ms 400ms, transform 200ms 400ms;
+      transition: opacity $tr1 $tr2, transform $tr1 $tr2;
     }
 
     .lc-weathericon {
       opacity: 1;
-      transition: opacity 1600ms 400ms, transform 200ms 400ms;
+      transition: opacity $tr4 $tr2, transform $tr1 $tr2;
     }
   }
 
   .location-card.open {
     .lc-prim,
     .lc-prim-ct {
-      transition: transform 400ms, opacity 400ms;
+      transition: transform $tr2, opacity $tr2;
     }
 
     .lc-prim-ct {
@@ -266,7 +276,7 @@
         .lc-data-currenttemp,
         .lc-weathericon {
           opacity: 0;
-          transition: opacity 400ms, transform 200ms;
+          transition: opacity $tr2, transform $tr1;
           transform: translateY(50%);
         }
       }

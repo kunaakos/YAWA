@@ -25,24 +25,15 @@ const app = {
     // (de)activate overlay
     app__setOverlay(context, options) {
 
-      if (options === false) {
-        // triggered deactivation
-
-        if (!context.state.overlay.callback) {
-          // no callback, can deactivate
-          context.commit('app_m__overlay_set', false);
-        } else {
-          // need to finish sth. before deactivating
-          context.state.overlay.callback().then(() => {
-            context.commit('app_m__overlay_set', false);
-          });
-          // TODO: handle error
-        }
-
-      } else {
-        //triggered activation
-        context.commit('app_m__overlay_set', options);
+      if (context.state.overlay.callback) {
+        context.state.overlay.callback().then(() => {
+          context.commit('app_m__overlay_set', options);
+        });
+        // TODO: handle error
+        return;
       }
+
+      context.commit('app_m__overlay_set', options);
 
     },
 
@@ -59,7 +50,7 @@ const app = {
     },
     app_m__overlay_set(state, options) {
       if (options) {
-        state.overlay.callback = options.callback || null;
+        state.overlay.callback = options.onClick || null;
         state.overlay.loading = options.loading || false;
         state.overlay.active = true;
       } else {

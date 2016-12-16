@@ -28,6 +28,12 @@ export default Vue.extend({
 
   mixins: [ clickaway ],
 
+  data() {
+    return {
+      raised: false
+    };
+  },
+
   computed: {
     weatherConditionsFAIcon() {
       switch (this.data.currentConditions) {
@@ -75,6 +81,10 @@ export default Vue.extend({
     isHigh() {
       return this.data.tempThresholds.maxC !== false && (this.data.currentTemp > this.data.tempThresholds.maxC);
     },
+
+    isRaised() {
+      return this.raised;
+    }
   },
 
   mounted: function() {
@@ -102,18 +112,47 @@ export default Vue.extend({
       });
     },
 
+    update() {
+      this.$store.dispatch('card__cards_weatherUpdate', this.fuckey);
+    },
+
     toggle() {
-      this.$store.commit('card_m__cards_toggle', this.fuckey);
+      if (this.data.isOpen) {
+        this.close();
+      } else {
+        this.open();
+      }
+    },
+
+    open() {
+      if (!this.data.isOpen) {
+        this.raised = true;
+        this.$store.dispatch('app__setOverlay', { 'onClick': this.remoteClose });
+        this.$store.commit('card_m__cards_open', this.fuckey);
+      }
     },
 
     close() {
       if (this.data.isOpen) {
+        this.$store.dispatch('app__setOverlay', false);
         this.$store.commit('card_m__cards_close', this.fuckey);
+        var self = this;
+        setTimeout(() => {
+          self.raised = false;
+        }, 200);
       }
     },
 
-    update() {
-      this.$store.dispatch('card__cards_weatherUpdate', this.fuckey);
+    remoteClose() {
+      var self = this;
+      return new Promise(function(resolve) {
+        self.$store.commit('card_m__cards_close', self.fuckey);
+        setTimeout(() => {
+          self.raised = false;
+        }, 200);
+        resolve();
+      });
     }
+
   }
 });

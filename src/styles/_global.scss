@@ -43,7 +43,7 @@ input{
     // all the content
     z-index: 500;
   }
-  #content-overlay {
+  .overlay {
     // an opaque clickshield above the content, all components use this
     z-index: 1000;
   }

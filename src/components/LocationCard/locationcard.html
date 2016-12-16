@@ -1,4 +1,4 @@
-<div class="location-card" v-bind:class="{ open: isOpen, dark: isDark }" v-on-clickaway="close">
+<div class="location-card" v-bind:class="{ open: isOpen, 'content-raised': isRaised, dark: isDark }">
 
   <!-- secondary content / bottom layer: settings -->
   <div class="lc-sec">
@@ -10,7 +10,7 @@
   <div class="lc-prim-ct drag-handle">
 
     <!-- primary content / top layer: data -->
-    <div v-if="isLoading" class="lc-prim" v-on:click="toggle">
+    <div v-if="isLoading" class="lc-prim">
       <loader></loader>
     </div>
 
