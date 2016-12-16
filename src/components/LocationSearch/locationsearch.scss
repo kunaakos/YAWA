@@ -1,7 +1,5 @@
 @import "variables";
 
-// $ls-margin-bottom: ($spacer-y * 3);
-
 $ls-input-fontsize: $font-size-h5;
 $ls-input-fontweight: 300;
 $ls-input-lineheight: $line-height-base;
@@ -14,9 +12,9 @@ $ls-results-padding: ($spacer-y / 1.5) ($spacer-x * 1.5);
 $ls-results-border-bottom: $ls-results-fontsize / 2.5;
 $ls-results-countrycode-width: ($spacer-x * 2.5);
 
-$ls-transition: opacity 0.2s, background 0.2s, padding 0.4s linear, max-height 0.4s linear;
+$ls-transition: opacity 0.2s, background 0.2s, padding 0.4s, max-height 0.4s linear;
 
-$ls-color-dark: $brand-primary;
+$ls-color-dark: $gray;
 $ls-color-light: $gray-light;
 $ls-color-lighter: $gray-lightest;
 $ls-color-bg: #fff;
@@ -32,6 +30,7 @@ $ls-color-highlight: $brand-primary;
       width: 100%;
       border: none;
       outline: 0;
+      border-radius: 0;
     }
 
     input, .indicators>i {
@@ -41,7 +40,7 @@ $ls-color-highlight: $brand-primary;
     }
 
     .indicators {
-      position: absolute; // relative parent: nearest col-...
+      position: absolute;
       right: 0;
       top: 0;
       i {

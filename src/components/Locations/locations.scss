@@ -26,12 +26,14 @@
     top: 0;
     left: 0;
     width: 100%;
+    transition: box-shadow $tr1, transform $tr1;
     .container {
       background: #fff;
-      transition: box-shadow 0.2s;
+      transition: box-shadow $tr1, transform $tr1;
       position: relative;
     }
     &.show-shadows {
+      transform: translateY(-1px);
       .container {
         box-shadow: 0 11px 9px -9px rgba(0, 0, 0, 0.3);
       }
@@ -40,7 +42,7 @@
 
   .location-search {
     padding-top: 1rem;
-    padding-bottom: 1rem;
+    // padding-bottom: 1rem;
 
     transition: opacity $tr3 $tr2;
     &.fade {
