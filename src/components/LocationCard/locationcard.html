@@ -1,4 +1,4 @@
-<div class="location-card" v-bind:class="{ open: isOpen, 'content-raised': isRaised, dark: isDark }">
+<div class="location-card" v-bind:class="{ open: isOpen, dark: isDark, 'content-raised': isRaised }">
 
   <!-- secondary content / bottom layer: settings -->
   <div class="lc-sec">
@@ -15,7 +15,7 @@
     </div>
 
     <!-- primary content / top layer: data -->
-    <div v-else class="lc-prim" v-on:click="toggle">
+    <div v-else class="lc-prim" @click="toggle">
       <div class="lc-alert" v-bind:class="{low: isLow, high: isHigh }"></div>
       <div class="lc-data">
         <div class="lc-data-name">{{ data.locationName }}</div>

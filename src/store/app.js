@@ -1,13 +1,10 @@
 const app = {
   state: {
-    menu: false,
     overlay: {
       active: false,
-      loading: false,
-      onClick: null,
-    },
-    trigger: {
-      hidden: false
+      loader: false,
+      cb: null,
+      raisedEl: null
     }
   },
 
@@ -18,7 +15,7 @@ const app = {
     app__setLoading(context, val) {
       if (val === true) {
         context.commit('app_m__overlay_set', {
-          loading: true
+          loader: true
         });
       } else if (val === false) {
         context.commit('app_m__overlay_set', false);
@@ -27,43 +24,28 @@ const app = {
 
     // (de)activate overlay
     app__setOverlay(context, options) {
-
-      if (context.state.overlay.onClick) {
-        context.state.overlay.onClick().then(() => {
-          context.commit('app_m__overlay_set', options);
-        });
-        // TODO: handle error
-        return;
-      }
-
       context.commit('app_m__overlay_set', options);
-
-    },
-
-    // open/close menu
-    app__setMenu(context, option) {
-      context.commit('app_m__menu_set', option);
     }
+
   },
 
   // mutation name pattern: app_m__[property]_[action]
   mutations: {
-    app_m__menu_set(state, option) {
-      state.menu = !!option;
-    },
     app_m__overlay_set(state, options) {
       if (options) {
-        state.overlay.onClick = options.onClick || null;
-        state.overlay.loading = options.loading || false;
-        state.trigger.hidden = options.hideTrigger || false;
-        state.overlay.active = true;
+        state.overlay = {
+          cb: options.cb || null,
+          loader: options.loader || false,
+          raisedEl: options.raisedEl || null,
+          active: true
+        };
       } else {
         state.overlay = {
           active: false,
-          loading: false,
-          onClick: null
+          loader: false,
+          cb: null,
+          raisedEl: null
         };
-        state.trigger.hidden = false;
       }
       // TODO: validate!
     }
@@ -71,9 +53,9 @@ const app = {
 
   // getter name pattern: app_g__[property]
   getters: {
-    // app_g__loader: state => {
-    //
-    // }
+    app_g__overlay: state => {
+      return state.overlay;
+    }
   }
 };
 

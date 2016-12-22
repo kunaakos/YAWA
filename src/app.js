@@ -1,7 +1,7 @@
 import Vue from 'vue';
 
 import Navigation from 'components/Navigation/navigation';
-import Overlay from 'components/Overlay/overlay';
+import Offcanvas from 'components/Offcanvas/offcanvas';
 
 import router from 'src/router';
 import store from 'src/store';
@@ -23,23 +23,15 @@ export const App = new Vue({
 
   components: {
     Navigation,
-    Overlay
+    Offcanvas
   },
 
   computed: {
-    menuOpen() {
-      return store.state.app.menu;
-    },
-    triggerHidden() {
-      return store.state.app.trigger.hidden;
-    }
+
   },
 
   methods: {
-    toggle() {
-      store.dispatch('app__setMenu', !this.menuOpen);
-      store.dispatch('app__setOverlay', this.menuOpen);
-    }
+
   },
 
   created: function(){

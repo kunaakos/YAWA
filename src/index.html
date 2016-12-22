@@ -10,21 +10,11 @@
 
 <body>
 
-  <div id="app" v-bind:class="{ open : menuOpen }">
-
-    <div id="content-wrap">
-      <router-view></router-view>
-      <overlay><overlay>
-    </div>
-
-    <div id="offcanvas-trigger" v-bind:class="{ hide : triggerHidden }" @click="toggle">
-      <i class="fa fa-thermometer-full"></i>
-    </div>
-
-    <div id="offcanvas-wrap" @click="toggle">
-      <navigation></navigation>
-    </div>
-
+  <div id="app">
+    <offcanvas>
+      <router-view slot="content"></router-view>
+      <navigation slot="navigation"></navigation>
+    </offcanvas>
   </div>
 
 </body>

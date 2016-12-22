@@ -33,33 +33,3 @@ body {
 input{
   user-select: initial;
 }
-
-// usage of z-index in component CSS is not advised
-// layers be like:
-#app {
-  //base layer, below everything else
-  z-index: 0;
-  #content-wrap {
-    // all the content
-    z-index: 500;
-  }
-  .overlay {
-    // an opaque clickshield above the content, all components use this
-    z-index: 1000;
-  }
-  .content-raised {
-    // components should use this class whenever an item should be highlighted
-    // like: modals, active inputs etc.
-    // the .content-overlay is set to .visible and the active content is
-    // given the class .content-raised
-    z-index: 2000;
-  }
-  #offcanvas-wrap {
-    // the offcanvas menu is ABOVE ALL...
-    z-index: 1500;
-  }
-  #offcanvas-trigger {
-    // ... but the trigger is even higher - content is guaranteed to be below
-    z-index: 2500;
-  }
-}

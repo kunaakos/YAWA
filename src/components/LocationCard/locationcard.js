@@ -9,8 +9,6 @@ import TempInput from 'components/TempInput/tempinput';
 import template from './locationcard.html';
 import './locationcard.scss';
 
-import { mixin as clickaway } from 'vue-clickaway';
-
 export default Vue.extend({
   name: 'LocationCard',
   template,
@@ -26,11 +24,10 @@ export default Vue.extend({
   // with the second best option
   props: [ 'fuckey', 'data' ],
 
-  mixins: [ clickaway ],
-
   data() {
     return {
-      raised: false
+      isOpen: false,
+      isRaised: false
     };
   },
 
@@ -62,16 +59,12 @@ export default Vue.extend({
       return !this.data.lastUpdate;
     },
 
-    isOpen() {
-      return this.data.isOpen;
+    isDark() {
+      return this.data.isDark;
     },
 
     isLit() {
       return this.data.isLit;
-    },
-
-    isDark() {
-      return this.data.isDark;
     },
 
     isLow() {
@@ -80,10 +73,6 @@ export default Vue.extend({
 
     isHigh() {
       return this.data.tempThresholds.maxC !== false && (this.data.currentTemp > this.data.tempThresholds.maxC);
-    },
-
-    isRaised() {
-      return this.raised;
     }
   },
 
@@ -117,7 +106,7 @@ export default Vue.extend({
     },
 
     toggle() {
-      if (this.data.isOpen) {
+      if (this.isOpen) {
         this.close();
       } else {
         this.open();
@@ -125,36 +114,26 @@ export default Vue.extend({
     },
 
     open() {
-      if (!this.data.isOpen) {
-        this.raised = true;
+      if (!this.isOpen) {
+        this.isOpen = true;
+        this.isRaised = true;
         this.$store.dispatch('app__setOverlay', {
-          'onClick': this.remoteClose,
-          'hideTrigger': true
+          raisedEl: this.$el,
+          cb: this.extClose
         });
-        this.$store.commit('card_m__cards_open', this.fuckey);
       }
     },
 
     close() {
-      if (this.data.isOpen) {
+      if (this.isOpen) {
         this.$store.dispatch('app__setOverlay', false);
-        this.$store.commit('card_m__cards_close', this.fuckey);
-        var self = this;
-        setTimeout(() => {
-          self.raised = false;
-        }, 200);
+        this.extClose();
       }
     },
 
-    remoteClose() {
-      var self = this;
-      return new Promise(function(resolve) {
-        self.$store.commit('card_m__cards_close', self.fuckey);
-        setTimeout(() => {
-          self.raised = false;
-        }, 200);
-        resolve();
-      });
+    extClose() {
+      this.isOpen = false;
+      this.isRaised = false;
     }
 
   }

@@ -1,0 +1,183 @@
+@import "variables";
+
+.content-wrap,
+.navigation-wrap,
+.offcanvas,
+.trigger,
+.trigger > i {
+  transition: opacity 0.5s, transform 0.5s, background 0.5s, color 0.5s, box-shadow 1s;
+}
+// usage of z-index in component CSS is not advised
+// layers be like:
+
+.offcanvas {
+  //base layer, below everything else
+  z-index: 0;
+
+  .content-wrap {
+    // all the content
+    z-index: 500;
+  }
+
+  .overlay {
+    // an opaque clickshield above the content, all components use this
+    z-index: 1000;
+  }
+
+  .content-raised {
+    // components should use this class whenever an item should be highlighted
+    // like: modals, active inputs etc.
+    // the .content-overlay is set to .visible and the active content is
+    // given the class .content-raised
+    z-index: 2000;
+  }
+
+  .navigation-wrap {
+    // the offcanvas menu is ABOVE ALL...
+    z-index: 1500;
+  }
+
+  .trigger {
+    // ... but the trigger is even higher - content is guaranteed to be below
+    z-index: 2500;
+  }
+}
+
+.offcanvas {
+  .navigation-wrap {
+    // background: #fff;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 7rem;
+  }
+
+  .trigger {
+    background: $brand-primary;
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    height: 5rem;
+    width: 5rem;
+    border-radius: 100%;
+    overflow: hidden;
+    text-align: center;
+
+    i {
+      margin-top: 0.5rem;
+      font-size: 4rem;
+      color: $gray-light;
+      cursor: pointer;
+    }
+    box-shadow: $box-shadow-2;
+  }
+
+  .content-wrap {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+  // TRANSFORMS, ANIMATIONS
+  .navigation-wrap {
+    transform: translateX(-100%);
+  }
+
+  .trigger {
+    i {
+      color: transparent;
+    }
+
+    &.hide {
+      transform: translateX(-15rem);
+    }
+  }
+
+  &.open {
+    .navigation-wrap {}
+
+    .trigger {
+      transform: translateX(2.2rem);
+      box-shadow: none;
+
+      i {
+        color: #fff;
+      }
+    }
+  }
+  @media (min-width: #{map-get($grid-breakpoints, xs)}) and (max-width: #{map-get($grid-breakpoints, sm)}) {
+    .navigation-wrap {
+      width: 80%;
+    }
+
+    .trigger {}
+
+    &.open {
+      .navigation-wrap {
+        transform: translateX(0);
+      }
+
+      .trigger {}
+
+      .content-wrap {
+        transform: translateX(90%);
+      }
+    }
+  }
+  @media (min-width: #{map-get($grid-breakpoints, sm)}) and (max-width: #{map-get($grid-breakpoints, xl)}) {
+    .navigation-wrap {
+      width: 40%;
+    }
+
+    .trigger {}
+
+    &.open {
+      .navigation-wrap {
+        transform: translateX(0);
+      }
+
+      .trigger {}
+
+      .content-wrap {
+        transform: translateX(50%);
+      }
+    }
+  }
+  @media (min-width: #{map-get($grid-breakpoints, xl)}) {
+    .navigation-wrap {
+      width: 20%;
+    }
+
+    .trigger {}
+
+    &.open {
+      .navigation-wrap {
+        transform: translateX(0);
+      }
+
+      .trigger {}
+
+      .content-wrap {
+        transform: translateX(25%);
+      }
+    }
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.7);
+    transition: opacity $tr1;
+
+    &.clickable {
+      cursor: pointer;
+    }
+  }
+
+  .overlay-enter,
+  .overlay-leave-active {
+    opacity: 0 !important;
+  }
+}

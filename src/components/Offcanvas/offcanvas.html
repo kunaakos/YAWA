@@ -1,0 +1,20 @@
+<div class="offcanvas" v-bind:class="{ open : navigation.open }">
+
+  <div class="content-wrap">
+    <slot name="content"></slot>
+    <transition name="overlay">
+      <div class="overlay" v-show="overlay.active" v-bind:class="{ clickable : !!overlay.cb, loading : overlay.loader }" @click="overlayClick">
+        <loader v-show="overlay.loader"></loader>
+      </div>
+    </transition>
+  </div>
+
+  <div class="trigger" v-bind:class="{ hide : overlay.active }" @click="triggerClick">
+    <i class="fa fa-thermometer-full"></i>
+  </div>
+
+  <div class="navigation-wrap" @click="triggerClick">
+    <slot name="navigation"></slot>
+  </div>
+
+</div>

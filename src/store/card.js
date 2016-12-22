@@ -16,10 +16,9 @@ class Card {
     this.currentTemp = null;
     this.currentConditions = null;
     this.isDark = null;
-    // local data
-    this.lastUpdate = null;
     this.isLit = false;
-    this.isOpen = false;
+    // last OWM update timestamp
+    this.lastUpdate = null;
   }
 }
 
@@ -74,18 +73,6 @@ const card = {
 
   // mutation name pattern: card_m_[helper]__[property]_[action]
   mutations: {
-
-    card_m__cards_open(state, key) {
-      state.cards[key].isOpen = true;
-    },
-
-    card_m__cards_close(state, key) {
-      state.cards[key].isOpen = false;
-    },
-
-    card_m__cards_toggle(state, key) {
-      state.cards[key].isOpen = !state.cards[key].isOpen;
-    },
 
     card_m_fb__cards_add: (state, key) => {
       // create a card!
