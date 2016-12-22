@@ -8,12 +8,9 @@ import './locationsearch.scss';
 
 import owmHelper from 'helpers/owm';
 
-import { mixin as clickaway } from 'vue-clickaway';
-
 export default Vue.extend({
   name: 'LocationSearch',
   template,
-  mixins: [ clickaway ],
   data() {
     return {
       state: {
@@ -86,12 +83,20 @@ export default Vue.extend({
       return null;
     },
 
+    focus() {
+      this.state.focused = true;
+      this.$store.dispatch('app__setOverlay', {
+        cb: this.reset
+      });
+    },
+
     reset() {
       this.searchResults = [];
       this.currentSelection = -1;
       this.searchQuery = '';
       this.state.loading = false;
       this.state.focused = false;
+      this.$store.dispatch('app__setOverlay', false);
     },
 
     setActive(index) {

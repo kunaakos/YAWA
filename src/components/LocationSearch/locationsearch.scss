@@ -21,7 +21,13 @@ $ls-color-bg: #fff;
 $ls-color-highlight: $brand-primary;
 
 .location-search {
+  position: relative;
 
+  &.content-raised {
+    .searchbox, .results ul {
+      box-shadow: $box-shadow-3;
+    }
+  }
   // SEARCHBOX STYLES START
   .searchbox {
     position: relative;

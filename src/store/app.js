@@ -3,8 +3,7 @@ const app = {
     overlay: {
       active: false,
       loader: false,
-      cb: null,
-      raisedEl: null
+      cb: null
     }
   },
 
@@ -36,15 +35,13 @@ const app = {
         state.overlay = {
           cb: options.cb || null,
           loader: options.loader || false,
-          raisedEl: options.raisedEl || null,
           active: true
         };
       } else {
         state.overlay = {
           active: false,
           loader: false,
-          cb: null,
-          raisedEl: null
+          cb: null
         };
       }
       // TODO: validate!

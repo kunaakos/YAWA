@@ -118,7 +118,6 @@ export default Vue.extend({
         this.isOpen = true;
         this.isRaised = true;
         this.$store.dispatch('app__setOverlay', {
-          raisedEl: this.$el,
           cb: this.extClose
         });
       }

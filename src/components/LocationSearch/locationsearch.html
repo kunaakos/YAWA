@@ -1,7 +1,7 @@
-<div class="location-search">
+<div class="location-search" v-bind:class="{ 'content-raised' : state.focused }">
 
   <div class="searchbox" v-bind:class="{ focused : state.focused }">
-    <input type="text" class="" placeholder="Add a new location" autocomplete="off" v-model="searchQuery" @keydown.down="down" @keydown.up="up" @keydown.enter="hit" @keydown.esc="reset" @focus="state.focused = true" @input="update" v-on-clickaway="reset"/>
+    <input type="text" class="" placeholder="Add a new location" autocomplete="off" v-model="searchQuery" @keydown.down="down" @keydown.up="up" @keydown.enter="hit" @keydown.esc="reset" @focus="focus" @input="update"/>
 
     <div class="indicators">
       <i class="status-empty fa fa-search" v-bind:class="{ visible : isEmpty }"></i>

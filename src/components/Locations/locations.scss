@@ -33,7 +33,7 @@
       position: relative;
     }
     &.show-shadows {
-      transform: translateY(-1px);
+      margin-top: -1px; // using transform creates new stacking context
       .container {
         box-shadow: 0 11px 9px -9px rgba(0, 0, 0, 0.3);
       }
