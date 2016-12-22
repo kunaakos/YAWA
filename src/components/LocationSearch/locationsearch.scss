@@ -1,4 +1,5 @@
 @import "variables";
+@import "~bootstrap/scss/_mixins";
 
 $ls-input-fontsize: $font-size-h5;
 $ls-input-fontweight: 300;
@@ -22,6 +23,23 @@ $ls-color-highlight: $brand-primary;
 
 .location-search {
   position: relative;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+
+  @include media-breakpoint-up(xs) {
+    width: 100%;
+  }
+  @include media-breakpoint-up(md) {
+    width: 100%;
+  }
+  @include media-breakpoint-up(lg) {
+    width: 64%;
+  }
+  @include media-breakpoint-up(xl) {
+    width: 50%;
+  }
 
   &.content-raised {
     .searchbox, .results ul {
