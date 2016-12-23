@@ -5,10 +5,6 @@
 
       <draggable class="location-cards" :options="draggableOptions" :list="localOrder" @start="dragStart" @end="dragEnd">
         <location-card v-for="key in localOrder" v-bind:data="cards[key]" v-bind:fuckey="key" v-bind:key="key"></location-card>
-        <div class="flex-filler"></div>
-        <div class="flex-filler"></div>
-        <div class="flex-filler"></div>
-        <div class="flex-filler"></div>
       </draggable>
 
     </div>

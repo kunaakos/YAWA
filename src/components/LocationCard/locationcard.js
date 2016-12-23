@@ -131,8 +131,11 @@ export default Vue.extend({
     },
 
     extClose() {
-      this.isOpen = false;
-      this.isRaised = false;
+      var self = this;
+      setTimeout(() => {
+        self.isOpen = false;
+        self.isRaised = false;
+      }, 200);
     }
 
   }

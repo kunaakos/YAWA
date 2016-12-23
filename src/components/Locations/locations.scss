@@ -33,7 +33,8 @@
       position: relative;
     }
     &.show-shadows {
-      margin-top: -1px; // using transform creates new stacking context
+      // NOTE: using transform creates new stacking context
+      margin-top: -1px;
       .container {
         box-shadow: 0 11px 9px -9px rgba(0, 0, 0, 0.3);
       }
@@ -42,7 +43,6 @@
 
   .location-search {
     padding-top: 1rem;
-    // padding-bottom: 1rem;
 
     transition: opacity $tr3 $tr2;
     &.fade {
@@ -85,29 +85,11 @@
     }
   }
 
-  .location-cards {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    // http://stackoverflow.com/questions/18744164/flex-box-align-last-row-to-grid
-    .flex-filler {
-      height: 0;
-      margin: 0;
-      padding: 0;
-      @include media-breakpoint-up(xs) {
-        flex-basis: 100%;
-      }
-      @include media-breakpoint-up(md) {
-        flex-basis: 49%;
-      }
-      @include media-breakpoint-up(lg) {
-        flex-basis: 32.66%;
-      }
-      @include media-breakpoint-up(xl) {
-        flex-basis: 24%;
-      }
-    }
+  // opacity and visibility when dragging
+  .sortable-chosen {
+    opacity: 0.6;
   }
-
+  .sortable-ghost {
+    opacity: 0;
+  }
 }
