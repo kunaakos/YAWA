@@ -8,6 +8,14 @@
   width: 100%;
   height: 100%;
 
+  .no-cards {
+    // NOTE: same as LocationSearch input but a bit darker
+    font-size: $font-size-h5;
+    font-weight: 300;
+    color: $gray-light;
+    text-align: center;
+  }
+
   .scrollable {
     position: absolute;
     overflow-y: auto;

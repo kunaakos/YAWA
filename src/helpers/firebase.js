@@ -123,6 +123,11 @@ class FirebaseHelper {
 
         store.commit('card_m_fb__order_set', keyArray);
       }
+
+      // HACK: no values, but we need to confirm that we have checked
+      if (values === null) {
+        store.commit('card_m_fb__order_set', []);
+      }
     });
 
   }

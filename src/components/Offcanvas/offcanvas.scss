@@ -1,5 +1,7 @@
 @import "variables";
 
+// TODO: clean this mess up
+
 .content,
 .menu,
 .offcanvas,
@@ -63,15 +65,15 @@
     position: absolute;
     bottom: 1rem;
     left: 1rem;
-    height: 5rem;
-    width: 5rem;
+    height: 4rem;
+    width: 4rem;
     border-radius: 100%;
     overflow: hidden;
     text-align: center;
 
     i {
       margin-top: 1rem;
-      font-size: 3rem;
+      font-size: 2rem;
       color: #fff;
       cursor: pointer;
     }

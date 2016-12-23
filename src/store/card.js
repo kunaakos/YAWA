@@ -25,7 +25,8 @@ class Card {
 const card = {
   state: {
     cards: {},
-    order: []
+    order: [],
+    gotFbData: false
   },
 
   // action name pattern: card__[property]_[action]
@@ -91,6 +92,7 @@ const card = {
 
     card_m_fb__order_set: (state, keyArray) => {
       state.order = keyArray;
+      state.gotFbData = true;
     },
 
     // clear all data after unauth
@@ -117,7 +119,10 @@ const card = {
     },
     card_g__order: state => {
       return state.order;
-    }
+    },
+    card_g__gotFbData: state => {
+      return state.gotFbData;
+    },
   }
 };
 

@@ -5,6 +5,7 @@ import './locations.scss';
 
 import LocationSearch from 'components/LocationSearch/locationsearch';
 import LocationCard from 'components/LocationCard/locationcard';
+import Loader from 'components/Loader/loader';
 
 import draggable from 'vuedraggable';
 
@@ -16,7 +17,8 @@ export default Vue.extend({
   components: {
     draggable,
     LocationSearch,
-    LocationCard
+    LocationCard,
+    Loader
   },
 
   data() {
@@ -40,9 +42,14 @@ export default Vue.extend({
       return this.cardsHitSticky;
     },
 
+    hasCards() {
+      return this.localOrder.length > 0;
+    },
+
     ...mapGetters({
       order: 'card_g__order',
-      cards: 'card_g__cards'
+      cards: 'card_g__cards',
+      gotFbData: 'card_g__gotFbData'
     })
   },
 
