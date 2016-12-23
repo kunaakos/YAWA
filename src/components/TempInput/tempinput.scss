@@ -1,32 +1,39 @@
 @import "variables";
 
 .temp-input {
-  // border: 1px solid red;
   cursor: ew-resize;
   display: flex;
+  * {
+    transition: opacity $tr2, color $tr2;
+  }
+  .clear {
+    color: #fff;
+    cursor: pointer;
+    opacity: 1;
+  }
+  .label {
+  }
+  .val {
+    color: #fff;
+  }
+  &.unset {
+    opacity: 0.5;
+    .clear {
+      color: unset;
+      cursor: ew-resize;
+    }
+    .val {
+      color: unset;
+    }
+  }
   span {
     font-size: $font-size-h5;
-    // border: 1px solid blue;
-    &.unset {
-      color: $gray;
-      // &:hover {
-      //   color: $gray-light;
-      // }
-    }
     &.label {
-      flex-basis: 20%;
-      &.unset {
-        font-size: $font-size-h6;
-      }
+      flex-basis: 30%;
     }
     &.val {
-      flex-basis: 65%;
+      flex-basis: 70%;
       text-align: right;
-    }
-    &.unset-btn {
-      text-align: right;
-      cursor: pointer;
-      flex-basis: 15%;
     }
   }
 }

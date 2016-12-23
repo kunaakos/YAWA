@@ -1,8 +1,5 @@
-<div class="temp-input" v-touch:pan="onPan">
-  <span class="label"><slot></slot></span>
-  <span v-if="isUnset" class="val unset">drag to set</span>
+<div class="temp-input" v-touch:pan="onPan" v-bind:class="{ unset: isUnset }">
+  <span class="label"><i class="clear fa fa-times" @click="unset"></i>&nbsp;&nbsp;<slot></slot></span>
+  <span v-if="isUnset" class="val">drag left/right to set</span>
   <span v-else class="val">{{ localVal }} ˚C</span>
-  <span class="unset-btn" v-bind:class="{ unset: isUnset }">
-    <i class="fa fa-times" @click="unset"></i>
-  </span>
 </div>
