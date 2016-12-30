@@ -128,8 +128,9 @@ $ls-color-highlight: $brand-primary;
       border-bottom: $ls-results-border-bottom solid $ls-color-highlight;
       border-bottom-left-radius: $ls-results-border-bottom * 2;
       border-bottom-right-radius: $ls-results-border-bottom * 2;
-      // round off the last result
-      overflow: hidden;
+      // scrollable results
+      max-height: 70vh;
+      overflow-y: auto;
 
       li {
         box-sizing: border-box;
