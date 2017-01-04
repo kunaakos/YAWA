@@ -103,10 +103,10 @@ const card = {
 
     // update the properties of a single card, values from OpenWeatherMap ONLY
     card_m_owm__update: (state, data) => {
-      state.cards[data.key].locationName = data.value.name;
+      state.cards[data.key].locationName = data.value.locationName;
       state.cards[data.key].currentTemp = data.value.currentTemp;
-      state.cards[data.key].currentConditions = data.value.description;
-      state.cards[data.key].isDark = data.value.night;
+      state.cards[data.key].currentConditions = data.value.currentConditions;
+      state.cards[data.key].isDark = data.value.isDark;
       state.cards[data.key].lastUpdate = Date.now();
     },
 
