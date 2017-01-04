@@ -119,7 +119,7 @@ class FirebaseHelper {
 
       if (values) {
         var keys = Object.keys(values);
-        var keyArray = keys.map(toSortable).sort(bySortKey).map(toKeyArray);
+        var keyArray = keys.map(toSortable).sort(bySortKey).map(toKeyArray).reverse();
 
         store.commit('card_m_fb__order_set', keyArray);
       }
@@ -190,7 +190,7 @@ class FirebaseHelper {
 
   _setOrder(keyArray) {
     // create update data
-    var data = keyArray.reduce((acc, currValue, index) => {
+    var data = keyArray.reverse().reduce((acc, currValue, index) => {
       acc['cardOrder/' + currValue] = index;
       return acc;
     }, {});
