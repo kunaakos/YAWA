@@ -85,7 +85,7 @@
   .overlay {
     position: absolute;
     top: 0;
-    left: -100%; // to cover gap between .menu and .content when offcanvas menu is open
+    left: -50%; // to cover gap between .menu and .content when offcanvas menu is open
     width: 200%;
     height: 100%;
     background: rgba(255, 255, 255, 0.7);
