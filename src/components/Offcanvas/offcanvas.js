@@ -34,7 +34,6 @@ export default Vue.extend({
     overlayClick() {
       if (this.overlay.cb) {
         this.overlay.cb();
-        this.$store.dispatch('app__setOverlay', false);
       }
     },
 

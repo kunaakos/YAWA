@@ -2,10 +2,8 @@
 
   <div class="searchbox" v-bind:class="{ focused : state.focused }">
     <input type="text" class="" placeholder="Add a new location" autocomplete="off" v-model="searchQuery" @keydown.down="down" @keydown.up="up" @keydown.enter="hit" @keydown.esc="reset" @focus="focus" @input="update"/>
-
     <div class="indicators">
-      <i class="status-empty fa fa-search" v-bind:class="{ visible : isEmpty }"></i>
-      <i class="status-dirty fa fa-times" v-bind:class="{ visible: !isEmpty, 'fa-spin':isLoading }" @click="reset"></i>
+      <i class="fa fa-search" v-bind:class="{ 'blink' : isLoading }"></i>
     </div>
   </div>
 
@@ -13,8 +11,10 @@
     <transition name="results_ul">
       <ul v-show="hasItems">
         <transition-group name="results_li">
-          <li v-for="(searchResult, index) in searchResults" :class="activeClass(index)" @mousedown="hit" @mousemove="setActive(index)" v-bind:key="searchResult.name">
-            <span class="country-code">{{ searchResult.countryCode }}</span> {{ searchResult.name }}
+          <li v-for="(searchResult, index) in searchResults" :class="activeClass(index)" @mousedown="hit" @mousemove="setActive(index)" v-bind:key="searchResult.id">
+            <div class="text">
+              <span class="country-code">{{ searchResult.countryCode }}</span> {{ searchResult.name }}
+            </div>
           </li>
         </transition-group>
       </ul>

@@ -95,8 +95,13 @@ export default Vue.extend({
       this.currentSelection = -1;
       this.searchQuery = '';
       this.state.loading = false;
-      this.state.focused = false;
-      this.$store.dispatch('app__setOverlay', false);
+      var self = this;
+      setTimeout(function() {
+        self.$store.dispatch('app__setOverlay', false);
+      }, 200);
+      setTimeout(function() {
+        self.state.focused = false;
+      }, 400);
     },
 
     setActive(index) {

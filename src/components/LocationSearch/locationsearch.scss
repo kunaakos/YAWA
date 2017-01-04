@@ -13,8 +13,6 @@ $ls-results-padding: ($spacer-y / 1.5) ($spacer-x * 1.5);
 $ls-results-border-bottom: $ls-results-fontsize / 2.5;
 $ls-results-countrycode-width: ($spacer-x * 2.5);
 
-$ls-transition: opacity 0.2s, background 0.2s, padding 0.4s, max-height 0.4s linear;
-
 $ls-color-dark: $gray;
 $ls-color-light: $gray-light;
 $ls-color-lighter: $gray-lightest;
@@ -72,10 +70,6 @@ $ls-color-highlight: $brand-primary;
         top: 0;
         right: 0;
       }
-
-      .status-dirty { // this one is clickable!
-        cursor: pointer;
-      }
     }
 
   }
@@ -95,7 +89,7 @@ $ls-color-highlight: $brand-primary;
     input, .indicators>i {
       padding: $ls-input-padding-blurred;
       color: $ls-color-light;
-      transition: $ls-transition;
+      transition: opacity $tr2, background $tr2, color $tr2, padding $tr2;
     }
 
     &.focused .indicators i, &.focused input {
@@ -104,9 +98,19 @@ $ls-color-highlight: $brand-primary;
     }
 
     .indicators>i {
-      opacity: 0;
-      &.visible {
-        opacity: 1;
+      &.blink {
+        animation: blink $tr5 infinite;
+      }
+      @keyframes blink {
+        0% {
+          opacity: 1;
+        }
+        30% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
       }
     }
 
@@ -136,25 +140,25 @@ $ls-color-highlight: $brand-primary;
         box-sizing: border-box;
         overflow: hidden;
         width: 100%;
-        font-size: $ls-results-fontsize;
-        font-weight: $ls-input-fontweight;
-        padding: $ls-results-padding;
         background: $ls-color-lighter;
-        color: $ls-color-dark;
         cursor: pointer; // clickables!
+        .text {
+          font-size: $ls-results-fontsize;
+          font-weight: $ls-input-fontweight;
+          padding: $ls-results-padding;
+          color: $ls-color-dark;
+          .country-code {
+            display: inline-block;
+            text-align: center;
+            color: $ls-color-light;
+            width: $ls-results-countrycode-width;
+          }
 
-        .country-code {
-          display: inline-block;
-          text-align: center;
-          color: $ls-color-light;
-          width: $ls-results-countrycode-width;
         }
-
-        &.active {
+        &.active .text {
           background: $ls-color-highlight;
           color: $ls-color-bg;
         }
-
       }
     }
   }
@@ -164,10 +168,13 @@ $ls-color-highlight: $brand-primary;
   .results {
 
     ul {
-      transition: $ls-transition;
+      transition: max-height $tr2 linear, border $tr2 linear;
       li {
-        transition: $ls-transition;
+        transition: max-height $tr2 linear;
         max-height: 5rem;
+        .text {
+          transition: color $tr2, background $tr2;
+        }
       }
     }
 
@@ -181,14 +188,10 @@ $ls-color-highlight: $brand-primary;
 
     .results_li-enter {
       max-height: 0rem !important;
-      padding-top: 0 !important;
-      padding-bottom: 0 !important;
     }
 
     .results_li-leave-active {
       max-height: 0 !important;
-      padding-top: 0 !important;
-      padding-bottom: 0 !important;
     }
   }
   // SEARCH RESULTS ANIMATIONS END

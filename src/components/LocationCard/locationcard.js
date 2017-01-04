@@ -118,24 +118,20 @@ export default Vue.extend({
         this.isOpen = true;
         this.isRaised = true;
         this.$store.dispatch('app__setOverlay', {
-          cb: this.extClose
+          cb: this.close
         });
       }
     },
 
     close() {
       if (this.isOpen) {
+        var self = this;
         this.$store.dispatch('app__setOverlay', false);
-        this.extClose();
+        setTimeout(() => {
+          self.isOpen = false;
+          self.isRaised = false;
+        }, 200);
       }
-    },
-
-    extClose() {
-      var self = this;
-      setTimeout(() => {
-        self.isOpen = false;
-        self.isRaised = false;
-      }, 200);
     }
 
   }
