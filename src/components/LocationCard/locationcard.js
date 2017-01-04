@@ -127,10 +127,10 @@ export default Vue.extend({
       if (this.isOpen) {
         var self = this;
         this.$store.dispatch('app__setOverlay', false);
+        self.isOpen = false;
         setTimeout(() => {
-          self.isOpen = false;
           self.isRaised = false;
-        }, 200);
+        }, 400);
       }
     }
 

@@ -7,7 +7,7 @@
 .offcanvas,
 .trigger,
 .trigger > i {
-  transition: opacity 0.5s, transform 0.5s, background 0.5s, color 0.5s, box-shadow 1s;
+  transition: opacity $tr1, transform $tr2, background $tr2, color $tr2, box-shadow $tr3;
 }
 // usage of z-index in component CSS is not advised
 // layers be like:
