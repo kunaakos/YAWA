@@ -32,6 +32,7 @@ export default Vue.extend({
       dragging: false,
       cardsHitSticky: false,
       pixelsTillSticky: 0,
+      stickyHeight: 0,
       localOrder: [],
       dangerZone: []
     };
@@ -75,6 +76,62 @@ export default Vue.extend({
       } else if (this.cardsHitSticky) {
         this.cardsHitSticky = false;
       }
+    },
+
+    // quick and dirty vanilla js animated scroll based on:
+    // http://stackoverflow.com/questions/17722497/scroll-smoothly-to-specific-element-on-page/39494245#39494245
+    doScrollToEl(el, targetScr) {
+      return new Promise(function(resolve) {
+        var startScr = el.scrollTop;
+        var diff = targetScr - startScr;
+        var start_ts;
+        var duration = 100;
+
+        function step(current_ts) {
+          if (!start_ts) start_ts = current_ts;
+          var elapsed = current_ts - start_ts;
+          var percent = Math.min(elapsed / duration, 1);
+          el.scrollTop = startScr + diff * percent;
+          if (elapsed < duration) {
+            window.requestAnimationFrame(step);
+          } else {
+            resolve();
+          }
+        }
+
+        window.requestAnimationFrame(step);
+      });
+    },
+
+    // called by clicked elements
+    // check if element is fully visible, scroll if needed
+    // fire callback when finished
+    // NOTE: don't forget to fire callback
+    // NOTE: could use scrollIntoView instead, with polyfills?
+    // https://developer.mozilla.org/en/docs/Web/API/Element/scrollIntoView
+    scrollToEl(options) {
+      console.log('scrollToEl');
+      var sc = this.$el.querySelector('.scrollable');
+      var sc_h = sc.offsetHeight; // scroll container height
+      var sc_st = sc.scrollTop; // scroll container scrollTop
+      var el_h = options.el.offsetHeight; // element height
+      var el_ot = options.el.offsetTop; // element offsetTop
+      var st_h = this.stickyHeight; // sticky container height
+
+      // element distance from top of sticky container bottom
+      var dt = el_ot - sc_st - st_h;
+      // element distance from top of scroll container bottom
+      var db = sc_st - el_ot - el_h + sc_h;
+
+      if (dt < 0) {
+        // scroll down
+        this.doScrollToEl(sc, el_ot - st_h - 10).then(options.cb);
+      } else if (db < 0) {
+        // scroll up
+        this.doScrollToEl(sc, sc_st - db + 10).then(options.cb);
+      } else {
+        options.cb();
+      }
     }
 
   },
@@ -90,7 +147,10 @@ export default Vue.extend({
       self.localOrder = newVal.slice();
     });
 
+    // needed by scrollToEl
+    this.stickyHeight = this.$el.querySelector('.sticky').offsetHeight;
+
     // this is needed to hide/show the shadow under the sticky top bar
-    this.pixelsTillSticky = this.$el.querySelector('.location-cards').offsetTop - this.$el.querySelector('.sticky').offsetHeight;
+    this.pixelsTillSticky = this.$el.querySelector('.location-cards').offsetTop - this.stickyHeight;
   }
 });

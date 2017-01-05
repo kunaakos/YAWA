@@ -11,7 +11,7 @@
       <loader v-if="!gotFbData"></loader>
 
       <draggable class="location-cards" :options="draggableOptions" :list="localOrder" @start="dragStart" @end="dragEnd">
-        <location-card v-for="key in localOrder" v-bind:data="cards[key]" v-bind:fuckey="key" v-bind:key="key"></location-card>
+        <location-card v-for="key in localOrder" v-bind:data="cards[key]" v-bind:fuckey="key" v-bind:key="key" v-on:scroll-request="scrollToEl"></location-card>
       </draggable>
 
     </div>

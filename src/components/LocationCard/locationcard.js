@@ -105,11 +105,24 @@ export default Vue.extend({
       this.$store.dispatch('card__cards_weatherUpdate', this.fuckey);
     },
 
+    // emits a 'scrollToRequest' - parent checks if card fully visible, scrolls
+    // promise is resolved when scrolling is finished
+    requestScrollTo() {
+      var self = this;
+      console.log('requestScrollTo');
+      return new Promise(function(resolve) {
+        self.$emit('scroll-request', {
+          cb: resolve,
+          el: self.$el
+        });
+      });
+    },
+
     toggle() {
       if (this.isOpen) {
         this.close();
       } else {
-        this.open();
+        this.requestScrollTo().then(this.open);
       }
     },
 
