@@ -113,7 +113,7 @@
     }
   }
 
-  @include media-breakpoint-up(sm) {
+  @include media-breakpoint-up(xs) {
     .menu {
       width: 80%;
     }
@@ -132,7 +132,7 @@
       }
     }
   }
-  @include media-breakpoint-only(md) {
+  @include media-breakpoint-up(md) {
     .menu {
       width: 40%;
     }
