@@ -69,15 +69,15 @@ export default Vue.extend({
             }
           }
         },
-        (data, resultToken) => {
+        (data) => {
           // fail nooo
-          console.log(data);
-          console.log(resultToken);
-          this.searchResults = [{
-            countryCode: ':(',
-            name: 'Server Downtown'
-          }];
-          this.state.loading = false;
+          if (this.lastSearchToken === data.resultToken) {
+            this.searchResults = [{
+              countryCode: ':(',
+              name: 'Serverdown Town'
+            }];
+            this.state.loading = false;
+          }
         }
       );
       return null;

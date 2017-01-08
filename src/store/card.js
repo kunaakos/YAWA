@@ -35,8 +35,8 @@ const card = {
     card__cards_add(context, owmCityId) {
       firebaseHelper._check(owmCityId).then(() => {
         return firebaseHelper._add(owmCityId);
-      }).catch((err) => {
-        console.log(err);
+      }).catch(() => {
+        // TODO: handle error
       });
       // mutations will be commited by firebaseHelper
     },

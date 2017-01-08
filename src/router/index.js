@@ -47,15 +47,6 @@ router.beforeEach((to, from, next) => {
   const authInitialized = function() { return store.getters.auth_isInitialized; };
   const userAuthenticated = function() { return store.getters.auth_isAuthenticated; };
 
-  // console.log('-------------------------------');
-  // console.log('routing - from ' + from.path + ' to ' + to.path);
-  // console.log('-------------------------------');
-  // console.log('dest requires auth: ' + destRequiresAuth);
-  // console.log('dest is login: ' + destIsLogin);
-  // console.log('auth is initialized: ' + authInitialized());
-  // console.log('user authenticated: ' + userAuthenticated());
-  // console.log('-------------------------------');
-
   function keepMoving() {
     if (destRequiresAuth && !userAuthenticated()) {
       // not authenticated, redirect to login

@@ -85,8 +85,7 @@ var owmHelper = {
         // process result
         resolve(self._processWeatherData(response.data));
       }, (errorResponse) => {
-        console.log('weather API responded with:', errorResponse.status);
-        reject(null);
+        reject(errorResponse);
       });
     });
   },
@@ -126,8 +125,10 @@ var owmHelper = {
           resultToken: resultToken
         });
       }, (errorResponse) => {
-        console.log('weather API responded with:', errorResponse.status);
-        reject(null, resultToken);
+        reject({
+          result: errorResponse,
+          resultToken: resultToken
+        });
       });
     });
     return { resultPromise, resultToken };

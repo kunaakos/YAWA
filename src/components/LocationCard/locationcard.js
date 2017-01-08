@@ -109,7 +109,6 @@ export default Vue.extend({
     // promise is resolved when scrolling is finished
     requestScrollTo() {
       var self = this;
-      console.log('requestScrollTo');
       return new Promise(function(resolve) {
         self.$emit('scroll-request', {
           cb: resolve,

@@ -110,7 +110,6 @@ export default Vue.extend({
     // NOTE: could use scrollIntoView instead, with polyfills?
     // https://developer.mozilla.org/en/docs/Web/API/Element/scrollIntoView
     scrollToEl(options) {
-      console.log('scrollToEl');
       var sc = this.$el.querySelector('.scrollable');
       var sc_h = sc.offsetHeight; // scroll container height
       var sc_st = sc.scrollTop; // scroll container scrollTop
