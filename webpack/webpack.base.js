@@ -1,5 +1,6 @@
 var path = require('path');
 var autoprefixer = require('autoprefixer');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
 
@@ -72,8 +73,14 @@ module.exports = {
     ]
   },
 
+  plugins: [
+    new CopyWebpackPlugin([
+       { from: path.resolve(__dirname, '../src/favicons') },
+    ])
+  ],
+
   sassLoader: {
-    includePaths: [path.resolve(__dirname, "../src/styles")]
+    includePaths: [path.resolve(__dirname, '../src/styles')]
   },
 
   babel: {
