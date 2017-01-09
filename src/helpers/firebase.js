@@ -199,8 +199,18 @@ class FirebaseHelper {
     return this._update(data);
   }
 
-  login() {
+  fbLogin() {
     firebase.auth().signInWithRedirect(this.fbAuthProvider);
+  }
+
+  anonLogin() {
+    return new Promise((resolve, reject) => {
+      firebase.auth().signInAnonymously().then(() => {
+        resolve();
+      }, (error) => {
+        reject(error);
+      });
+    });
   }
 
   logout() {

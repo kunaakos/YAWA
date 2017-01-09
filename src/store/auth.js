@@ -20,9 +20,14 @@ const auth = {
 
   actions: {
 
-    auth_initiateLogin() {
+    auth_initiateFbLogin() {
       // redirects to facebook, kills app, no need to handle anything
-      firebaseHelper.login();
+      firebaseHelper.fbLogin();
+    },
+
+    auth_initiateAnonLogin() {
+      // no redirect!
+      return firebaseHelper.anonLogin();
     },
 
     auth_initiateLogout() {
