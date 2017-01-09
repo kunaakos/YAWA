@@ -75,7 +75,8 @@ module.exports = {
 
   plugins: [
     new CopyWebpackPlugin([
-       { from: path.resolve(__dirname, '../src/favicons') },
+      { from: path.resolve(__dirname, '../src/favicons') },
+      { from: path.resolve(__dirname, '../src/social') }
     ])
   ],
 
