@@ -40,8 +40,13 @@ class FirebaseHelper {
     firebase.auth().onAuthStateChanged(function(user) {
       // check auth state
       if (user) {
-        // user is authenticated
-        self.__authenticated(user);
+        if (user.isAnonymous) {
+          // treat all anons as one user
+          self.__anonymous(user);
+        } else {
+          // user is authenticated
+          self.__authenticated(user);
+        }
       } else {
         // user not authenticated, or just logged out
         self.__unauthenticated();
@@ -60,6 +65,14 @@ class FirebaseHelper {
     this.__setupMutations();
   }
 
+  __anonymous(user) {
+    store.commit('auth_setUser', user); // should map data!
+    this.userRef = this.db.ref('anons');
+    this.cardsRef = this.db.ref('anons/cards');
+    this.cardOrderRef = this.db.ref('anons/cardOrder');
+    this.__setupMutations();
+  }
+
   __unauthenticated() {
     this.userRef = null;
     this.cardsRef = null;
@@ -69,7 +82,7 @@ class FirebaseHelper {
   }
 
   __setupMutations() {
-
+    
     // card added
     this.cardsRef.on('child_added', function(childSnapshot) {
       var data = {

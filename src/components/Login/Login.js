@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import template from './login.html';
 
+import './login.scss';
+
 import { mapActions } from 'vuex';
 
 export default Vue.extend({

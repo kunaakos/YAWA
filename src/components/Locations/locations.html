@@ -2,6 +2,7 @@
 
   <div class="scrollable" v-on:scroll="checkScroll">
     <div class="container">
+      <div class="topmost"></div>
 
       <div v-if="!hasCards && gotFbData" class="no-cards">
         Seems like you don't have any locations on your watchlist.<br/>
@@ -12,7 +13,13 @@
 
       <draggable class="location-cards" :options="draggableOptions" :list="localOrder" @start="dragStart" @end="dragEnd">
         <location-card v-for="key in localOrder" v-bind:data="cards[key]" v-bind:fuckey="key" v-bind:key="key" v-on:scroll-request="scrollToEl"></location-card>
+        <div class="clearfix" style="clear: both;"></div>
       </draggable>
+
+      <div v-if="gotFbData && user.isAnonymous" class="is-anon">
+        Don't forget! You are logged in <strong>anonymously</strong>.<br>
+        Other anons have access to these cards at the same time as you, collaborate wisely.
+      </div>
 
     </div>
   </div>

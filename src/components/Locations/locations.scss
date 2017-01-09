@@ -8,12 +8,20 @@
   width: 100%;
   height: 100%;
 
-  .no-cards {
+  .no-cards, .is-anon {
     // NOTE: same as LocationSearch input but a bit darker
+    padding-bottom: 2rem;
     font-size: $font-size-h5;
     font-weight: 300;
     color: $gray-light;
     text-align: center;
+  }
+  .is-anon {
+    margin-top: 2rem;
+    strong {
+      font-weight: 400;
+      color: $brand-danger;
+    }
   }
 
   .scrollable {

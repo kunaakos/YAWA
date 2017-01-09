@@ -1,9 +1,30 @@
 <div class="settings container" style="padding-top: 3rem; padding-bottom: 5rem;">
   <div v-if="authenticated">
     <h1>Settings</h1>
-    <p>
-      There aren't many things to fiddle with. ...yet.
-    </p>
+    <br>
+
+    <div v-if="user.isAnonymous">
+      <p>
+        Logged in anonymously. Nothing for you here!
+      </p>
+    </div>
+
+    <div v-else>
+      <p>Logged in with facebook as <strong>{{ user.displayName }}</strong></span></p>
+      <div v-if="user.email">
+        <p>
+          Your email address is <strong>{{ user.email }}</strong>
+        </p>
+      </div>
+      <div v-else>
+        <p>
+          You didn't give us access to your email address.
+        </p>
+      </div>
+    </div>
+
+    <br>
+
     <button class="btn btn-primary" v-on:click="logout"><i class="fa fa-sign-out"></i>&nbsp;LOG OUT</button>
   </div>
 </div>

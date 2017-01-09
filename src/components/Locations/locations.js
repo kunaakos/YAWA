@@ -50,7 +50,8 @@ export default Vue.extend({
     ...mapGetters({
       order: 'card_g__order',
       cards: 'card_g__cards',
-      gotFbData: 'card_g__gotFbData'
+      gotFbData: 'card_g__gotFbData',
+      user: 'auth_getUser'
     })
   },
 
@@ -150,6 +151,6 @@ export default Vue.extend({
     this.stickyHeight = this.$el.querySelector('.sticky').offsetHeight;
 
     // this is needed to hide/show the shadow under the sticky top bar
-    this.pixelsTillSticky = this.$el.querySelector('.location-cards').offsetTop - this.stickyHeight;
+    this.pixelsTillSticky = this.$el.querySelector('.topmost').offsetTop - this.stickyHeight;
   }
 });
