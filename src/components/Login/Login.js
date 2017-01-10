@@ -11,6 +11,7 @@ export default Vue.extend({
   methods: {
     anonLogin() {
       var self = this;
+      this.setOverlay({ loader: true });
       this._anonLogin().then(
         () => {
           self.$router.push('/');
@@ -19,8 +20,9 @@ export default Vue.extend({
       );
     },
     ...mapActions({
-      'fbLogin': 'auth_initiateFbLogin',
-      '_anonLogin': 'auth_initiateAnonLogin'
+      setOverlay: 'app__setOverlay',
+      fbLogin: 'auth_initiateFbLogin',
+      _anonLogin: 'auth_initiateAnonLogin'
     })
   }
 

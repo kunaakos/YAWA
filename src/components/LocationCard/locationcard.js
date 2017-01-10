@@ -80,6 +80,19 @@ export default Vue.extend({
     this.update();
   },
 
+  watch: {
+    // HACK: cards refresh after firebase auth session expires
+    // the firebase auth token expires every 45 minutes, card data is re-added.
+    // setting a watcher to force an update when this happens is just enough to
+    // keep the cards refreshed for this demo, since OpenWeatherMap data is only
+    // refreshed roughly once every 20-30 minutes, on a good day
+    'data.lastUpdate': function(value) {
+      if (value === null) {
+        this.update();
+      }
+    }
+  },
+
   methods: {
     deleteCard() {
       this.$store.dispatch('card__cards_delete', this.fuckey);

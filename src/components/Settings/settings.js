@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import template from './settings.html';
 
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default Vue.extend({
   name: 'Settings',
@@ -15,12 +15,17 @@ export default Vue.extend({
   methods: {
     logout() {
       var self = this;
-      this.$store.dispatch('auth_initiateLogout').then(
+      this.setOverlay({ loader: true });
+      this._logout().then(
         () => {
           self.$router.push('/login');
         },
         null // no error handling
       );
-    }
+    },
+    ...mapActions({
+      setOverlay: 'app__setOverlay',
+      _logout: 'auth_initiateLogout'
+    })
   }
 });

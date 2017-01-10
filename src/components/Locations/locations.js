@@ -9,7 +9,7 @@ import Loader from 'components/Loader/loader';
 
 import draggable from 'vuedraggable';
 
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default Vue.extend({
   name: 'Locations',
@@ -47,6 +47,14 @@ export default Vue.extend({
       return this.localOrder.length > 0;
     },
 
+    isAnon() {
+      if (this.user) {
+        return this.user.isAnonymous;
+      } else {
+        return false;
+      }
+    },
+
     ...mapGetters({
       order: 'card_g__order',
       cards: 'card_g__cards',
@@ -62,13 +70,13 @@ export default Vue.extend({
 
     dragEnd() {
       this.dragging = false;
-      this.$store.dispatch('card__order_set', this.localOrder);
+      this.setOrder(this.localOrder);
       // TODO: shouldn't dispatch if element was deleted, since it's not visible locally, going to be removed from remote automatically
     },
 
     dangerZoneAdd(event) {
       // card was AADDDED TOOO THHEE DANGERR ZONE ... erm we delete it
-      this.$store.dispatch('card__cards_delete', this.dangerZone[event.newIndex]);
+      this.deleteCard(this.dangerZone[event.newIndex]);
     },
 
     checkScroll(event) {
@@ -132,25 +140,29 @@ export default Vue.extend({
       } else {
         options.cb();
       }
-    }
+    },
+
+    ...mapActions({
+      setOrder: 'card__order_set',
+      deleteCard: 'card__cards_delete'
+    })
 
   },
 
   mounted: function() {
     // vuedraggable needs a local copy of the card order array beause it
-    // can't deal with vuex
+    // can't deal with vuex - a watcher is set to keep this up to date
     this.localOrder = this.order;
-    // we set up a watcher to update this local array if the card order
-    // changes in the store
-    var self = this;
-    this.$watch('order', function(newVal) {
-      self.localOrder = newVal.slice();
-    });
 
     // needed by scrollToEl
     this.stickyHeight = this.$el.querySelector('.sticky').offsetHeight;
-
     // this is needed to hide/show the shadow under the sticky top bar
     this.pixelsTillSticky = this.$el.querySelector('.topmost').offsetTop - this.stickyHeight;
+  },
+
+  watch: {
+    'order': function(newVal) {
+      this.localOrder = newVal.slice();
+    }
   }
 });

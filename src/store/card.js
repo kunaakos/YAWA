@@ -99,6 +99,7 @@ const card = {
     card_m_fb__nuke: (state) => {
       state.cards = {};
       state.order = [];
+      state.gotFbData = false;
     },
 
     // update the properties of a single card, values from OpenWeatherMap ONLY

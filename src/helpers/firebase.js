@@ -82,7 +82,7 @@ class FirebaseHelper {
   }
 
   __setupMutations() {
-    
+
     // card added
     this.cardsRef.on('child_added', function(childSnapshot) {
       var data = {
