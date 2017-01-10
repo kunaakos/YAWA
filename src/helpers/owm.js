@@ -14,6 +14,7 @@ Vue.http.options = {
 
 var owmHelper = {
   _processWeatherData(result) {
+
     // OpenWeatherMap icon codes:
     // NNd day
     // NNn night
@@ -27,14 +28,13 @@ var owmHelper = {
     // 13X snow
     // 50X mist
     // let's make use of them!
-    var iconCodeRegEx = new RegExp(/^(\d{2})(\D{1})$/, 'g');
-    var iconData = iconCodeRegEx.exec(result.weather[0].icon);
+    var iconData = result.weather[0].icon;
 
     // return a word that describes the current weather conditions
     // must be user-readable, for eventual use in views
     var currentConditions = '';
 
-    switch (parseInt(iconData[1])) {
+    switch (parseInt(iconData.substr(0, 2))) {
       case 1:
         currentConditions = 'clear';
         break;
@@ -64,7 +64,7 @@ var owmHelper = {
       locationName: result.name,
       currentTemp: Math.round(result.main.temp * 10) / 10,
       currentConditions: currentConditions,
-      isDark: (iconData[2] === 'd') ? false : true
+      isDark: (iconData.substr(2, 1) === 'd') ? false : true
     };
 
     // whoo-ey, was THAT a mess.
