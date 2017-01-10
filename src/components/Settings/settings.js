@@ -12,20 +12,24 @@ export default Vue.extend({
     authenticated: 'auth_isAuthenticated'
   }),
 
+  watch: {
+    // redirect after logout
+    authenticated: function(value) {
+      if (value === false) {
+        this.$router.push('/login');
+      }
+    }
+  },
+
   methods: {
     logout() {
-      var self = this;
       this.setOverlay({ loader: true });
-      this._logout().then(
-        () => {
-          self.$router.push('/login');
-        },
-        null // no error handling
-      );
+      this._logout();
     },
     ...mapActions({
       setOverlay: 'app__setOverlay',
       _logout: 'auth_initiateLogout'
     })
   }
+
 });

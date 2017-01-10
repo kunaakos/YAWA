@@ -3,21 +3,29 @@ import template from './login.html';
 
 import './login.scss';
 
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default Vue.extend({
   name: 'Login',
   template,
+
+  computed: mapGetters({
+    authenticated: 'auth_isAuthenticated'
+  }),
+
+  watch: {
+    // redirect after auth
+    authenticated: function(value) {
+      if (value === true) {
+        this.$router.push('/');
+      }
+    }
+  },
+
   methods: {
     anonLogin() {
-      var self = this;
       this.setOverlay({ loader: true });
-      this._anonLogin().then(
-        () => {
-          self.$router.push('/');
-        },
-        null // no error handling
-      );
+      this._anonLogin();
     },
     ...mapActions({
       setOverlay: 'app__setOverlay',
