@@ -23,14 +23,14 @@
   },
   "dependencies": {
     "bootstrap": "4.0.0-alpha.5",
-    "firebase": "^3.6.0",
-    "font-awesome": "^4.7.0",
-    "vue": "^2.0.5",
-    "vue-resource": "^1.0.3",
-    "vue-router": "^2.1.1",
+    "firebase": "3.6.4",
+    "font-awesome": "4.7.0",
+    "vue": "2.1.8",
+    "vue-resource": "1.0.3",
+    "vue-router": "2.1.1",
     "vue-touch": "git://github.com/vuejs/vue-touch.git#next",
-    "vuedraggable": "^2.3.1",
-    "vuex": "^2.0.0"
+    "vuedraggable": "2.4.0",
+    "vuex": "2.1.1"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.7",
