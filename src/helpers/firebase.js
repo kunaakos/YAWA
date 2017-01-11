@@ -114,7 +114,19 @@ class FirebaseHelper {
 
       // comparator
       function bySortKey(a, b) {
-        return (a.sortKey > b.sortKey) ? true : false;
+        // NOTE: comparing strings
+        // if a new card was added, sortKey will be the card's unique ID until
+        // cards are reordered for the first time after new ones were added
+        // a handy way to keep the newest cards at the end of the array and
+        // avoid write conflicts, hopefully
+        if (a.sortKey < b.sortKey) {
+          return -1;
+        }
+        if (a.sortKey > b.sortKey) {
+          return 1;
+        }
+        // a must be equal to b
+        return 0;
       }
       // mapping: an array of keys to a sortable aray of objects
       function toSortable(key) {
@@ -132,6 +144,7 @@ class FirebaseHelper {
 
       if (values) {
         var keys = Object.keys(values);
+        // NOTE: reverse order! newest cards stored last, appear first
         var keyArray = keys.map(toSortable).sort(bySortKey).map(toKeyArray).reverse();
 
         store.commit('card_m_fb__order_set', keyArray);
@@ -203,6 +216,7 @@ class FirebaseHelper {
 
   _setOrder(keyArray) {
     // create update data
+    // NOTE: reverse order!
     var data = keyArray.reverse().reduce((acc, currValue, index) => {
       acc['cardOrder/' + currValue] = index;
       return acc;
