@@ -2,8 +2,13 @@
 
   <!-- secondary content / bottom layer: settings -->
   <div class="lc-sec">
-    <temp-input :val="data.tempThresholds.minC" :settings="{ 'min' : -40, 'max': data.tempThresholds.maxC, 'initial': data.currentTemp }" v-on:newval="setMinThresh">LOW</temp-input>
-    <temp-input :val="data.tempThresholds.maxC" :settings="{ 'min' : data.tempThresholds.minC, 'max': 40, 'initial': data.currentTemp }" v-on:newval="setMaxThresh">HIGH</temp-input>
+    <transition name="fade">
+      <!-- this transition is pretty AND it resets temp-input animations every time card is opened -->
+      <div v-show="isOpen">
+        <temp-input :val="data.tempThresholds.minC" :settings="{ 'min' : -40, 'max': data.tempThresholds.maxC, 'initial': data.currentTemp }" v-on:newval="setMinThresh">LOW</temp-input>
+        <temp-input :val="data.tempThresholds.maxC" :settings="{ 'min' : data.tempThresholds.minC, 'max': 40, 'initial': data.currentTemp }" v-on:newval="setMaxThresh">HIGH</temp-input>
+      </div>
+    </transition>
   </div>
 
   <!-- primary content / top layer container: needed for animations -->

@@ -57,6 +57,11 @@
   .lc-sec {
     @include abs-pos(0, 0, 0, 0);
     padding: $spacer-y $spacer-x;
+
+    // HACK: remove bottom hairline when card is open
+    @include media-breakpoint-only(md) {
+      margin-bottom: 1px;
+    }
   }
 
   // NOTE:
@@ -119,6 +124,18 @@
 // TRANSITIONS ONLY
 .location-card {
 
+  // vue transition classes
+  .fade-enter-active {
+    transition: opacity $tr2 $tr1 ease-out;
+  }
+  .fade-leave-active {
+    transition: opacity $tr2 ease-out;
+  }
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
+  }
+
+  // non-vue
   transition: opacity $tr1, box-shadow $tr1, transform $tr1, background $tr2, color $tr2;
 
   // when closing
@@ -220,7 +237,6 @@
       }
     }
   }
-
 
   // open/close animations
   &.open {

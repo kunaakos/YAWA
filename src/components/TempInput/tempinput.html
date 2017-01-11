@@ -1,5 +1,25 @@
-<div class="temp-input" v-touch:pan="onPan" v-bind:class="{ unset: isUnset }">
-  <span class="label"><i class="clear fa fa-times" @click="unset"></i>&nbsp;&nbsp;<slot></slot></span>
-  <span v-if="isUnset" class="val">drag left/right to set</span>
-  <span v-else class="val">{{ localVal }} ˚C</span>
-</div>
+<v-touch class="temp-input" v-on:pan="onPan" v-bind:class="{ unset: isUnset }">
+
+  <div class="left">
+    <div class="label">
+      <slot></slot>
+    </div>
+    <div class="button" @click="unset">&#x2715;</div>
+  </div>
+
+  <div class="right">
+    <transition name="fade">
+      <span v-if="isUnset" class="pan-guide">
+        <i class="arrow fa fa-angle-left" aria-hidden="true"></i>
+        <i class="hand fa fa-hand-pointer-o" aria-hidden="true"></i>
+        <i class="arrow fa fa-angle-right" aria-hidden="true"></i>
+      </span>
+    </transition>
+    <transition name="fade">
+      <span v-if="!isUnset" class="value">
+        {{ localVal }} ˚C
+      </span>
+    </transition>
+  </div>
+
+</v-touch>

@@ -9,7 +9,7 @@ import store from 'src/store';
 import 'src/styles/main.scss';
 
 import VueTouch from 'vue-touch';
-Vue.use(VueTouch);
+Vue.use(VueTouch, { name: 'v-touch' });
 
 VueTouch.config.pan = {
   direction: 'horizontal',
