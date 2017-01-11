@@ -16,7 +16,7 @@
     text-align: left;
     .title {
       cursor: pointer;
-      font-size: $font-size-h1 * 1.3;
+      font-size: $font-size-h1;
       font-weight: bold;
       letter-spacing: 0;
       color: $brand-primary;
@@ -24,11 +24,11 @@
       margin-bottom: 1rem;
     }
     a {
-      // padding-left: 0.5rem;
       display: block;
       text-transform: uppercase;
-      font-size: $font-size-h2;
-      font-weight: bold;
+      line-height: 1.1;
+      font-size: $font-size-h1;
+      font-weight: $headings-font-weight;
       transition: all 0.5s;
       color: $gray-dark;
       &:active, &:visited, &.active {
