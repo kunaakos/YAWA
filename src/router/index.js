@@ -4,6 +4,7 @@ import VueRouter from 'vue-router';
 import Locations from 'components/Locations/locations';
 import Settings from 'components/Settings/settings';
 import Login from 'components/Login/login';
+import About from 'components/About/about';
 
 import store from 'src/store';
 
@@ -14,6 +15,10 @@ const routes = [
     path: '/',
     component: Locations,
     meta: { requiresAuth: true }
+  },
+  {
+    path: '/wtf',
+    component: About,
   },
   {
     path: '/login',
