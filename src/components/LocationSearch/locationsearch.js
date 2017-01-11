@@ -1,5 +1,6 @@
 // Based on VueTypeahead
 // https://github.com/pespantelis/vue-typeahead
+// currently a mess but hey it's kinda pretty ain't it
 
 import Vue from 'vue';
 import template from './locationsearch.html';
@@ -45,6 +46,10 @@ export default Vue.extend({
 
   methods: {
     update() {
+
+      if (!this.state.focused) {
+        this.state.focused = true;
+      }
 
       if (this.options.minChars && this.searchQuery.length < this.options.minChars) {
         this.searchResults = [];
