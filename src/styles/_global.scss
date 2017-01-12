@@ -1,3 +1,6 @@
+@import "variables";
+@import "~bootstrap/scss/_mixins";
+
 ::selection {
   background: $brand-primary;
   color: #fff;
@@ -32,4 +35,14 @@ body {
 
 input{
   user-select: initial;
+}
+
+p {
+  font-size: $font-size-h5;
+  font-weight: 300;
+  color: $gray-light;
+}
+
+h1, h2, h3, h4, h5 {
+  color: $gray;
 }

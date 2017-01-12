@@ -31,10 +31,10 @@
       font-size: $font-size-h1;
       font-weight: $headings-font-weight;
       transition: all 0.5s;
-      color: $gray-dark;
+      color: $gray;
       &:active, &:visited, &.active {
         text-decoration: none;
-        color: $gray-dark;
+        color: $gray;
       }
       &:hover {
         text-decoration: none;
