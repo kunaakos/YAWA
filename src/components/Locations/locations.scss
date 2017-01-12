@@ -73,10 +73,13 @@
     bottom: 0;
     left: 0;
     right: 0;
-    color: $brand-danger;
     display: flex;
     justify-content: center;
     align-items: center;
+
+    .caption {
+      color: $brand-danger;
+    }
 
     @include media-breakpoint-up(md) {
       // full width on mobile
